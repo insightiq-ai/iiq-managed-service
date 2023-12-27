@@ -25,7 +25,9 @@ mappings:
             status: status
             platform_profile_name: platform_profile_name
             platform_profile_id: platform_profile_id
-            platform_profile_published_at: platform_profile_published_at
+            platform_profile_published_at: iiq_platform_profile_published_at
+        value_post_processors:
+            iiq_platform_profile_published_at: app.events.db.value_post_processors.cast_iso_formatted_string_to_datetime
 
     profile:
         name: profiles

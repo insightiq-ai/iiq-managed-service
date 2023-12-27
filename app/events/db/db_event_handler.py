@@ -5,8 +5,8 @@ from app.events.base_event import BaseEvent
 from app.events.db.deps import AsyncDataStore
 from app.events.db.repository.base_templated import base_templated_repository
 from app.events.db.session import AsyncSessionLocal
-from app.utils.mapping_utils import flatten_dict, preprocess_and_map_obj_to_another_obj, \
-    preprocess_and_map_obj_list_to_another_list
+from app.utils.mapping_utils import flatten_dict, map_obj_to_another_obj, map_obj_list_to_another_list,\
+    post_process_obj, post_process_obj_list
 
 
 class DbEventHandler(BaseEvent):
@@ -22,32 +22,32 @@ class DbEventHandler(BaseEvent):
             logging.error(f"Table mapping configurations are missing. Please configure them.")
             return
 
-        value_processors: Optional[Dict] = table_mappings.get('value_preprocessors')
-        flattened_value_preprocessors: Optional[Dict] = None
-        if value_processors:
-            flattened_value_preprocessors = flatten_dict(value_processors)
+        value_post_processors: Optional[Dict] = table_mappings.get('value_post_processors')
 
         ds: Union[AsyncDataStore, None] = None
 
         try:
             ds = AsyncDataStore(db=AsyncSessionLocal())
             if isinstance(data, Dict):
-                mapped_account: Dict = preprocess_and_map_obj_to_another_obj(
-                    obj=data, mapping_config=flatten_dict(fields),
-                    preprocess_mapping_config=flattened_value_preprocessors)
+                mapped_account: Dict = map_obj_to_another_obj(obj=data, mapping_config=flatten_dict(fields))
+                if value_post_processors:
+                    mapped_account = post_process_obj(obj=mapped_account,
+                                                      post_process_mapping_config=value_post_processors)
+
                 await base_templated_repository.upsert_one(ds=ds, table=table_mappings.get('name'),
                                                            schema=table_mappings.get('schema'),
                                                            unique_key=table_mappings.get('unique_key'),
                                                            data=mapped_account)
             else:
-                mapped_account: List[Dict] = preprocess_and_map_obj_list_to_another_list(
-                    obj_list=data, mapping_config=flatten_dict(fields),
-                    preprocess_mapping_config=flattened_value_preprocessors)
-
+                mapped_accounts: List[Dict] = map_obj_list_to_another_list(obj_list=data,
+                                                                           mapping_config=flatten_dict(fields))
+                if value_post_processors:
+                    mapped_accounts = post_process_obj_list(obj_list=mapped_accounts,
+                                                            post_process_mapping_config=value_post_processors)
                 await base_templated_repository.upsert_batch(ds=ds, table=table_mappings.get('name'),
                                                              schema=table_mappings.get('schema'),
                                                              unique_key=table_mappings.get('unique_key'),
-                                                             data=mapped_account)
+                                                             data=mapped_accounts)
             await base_templated_repository.db_commit(ds=ds)
         finally:
             if ds and ds.db:

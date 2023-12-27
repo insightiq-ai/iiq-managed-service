@@ -61,7 +61,7 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
 
 ## Configuration of field-mapper.yaml file
 - Format:
-![field-mapper](https://user-images.githubusercontent.com/61679210/228170639-c923dd9c-60b5-4c3e-a67b-78b4e38d1657.png)
+![field-mapper](https://github.com/insightiq-ai/iiq-managed-service/assets/135609264/32240d3c-e6e4-48c0-b0a9-44fad1fec931)
 
 
 - mappings:
@@ -71,6 +71,8 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
     - unique_key: <unique key of your db-table>
     - fields:
       - \<api response field-name\>: \<your db-table column name\>
+    - value_post_processors:
+      - \<your db-table column name\>: \<Full path of the method which needs to be executed which expects value as string argument\>
 
 
 - api response-field-names can be referred from the doc-links below:
