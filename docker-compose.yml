@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+    web:
+        build: .
+        ports:
+            - "8000:8000"
+        environment:
+            - APP_NAME=IIQManagedService
+            - ENVIRONMENT=SANDBOX
+            - TENANT_APP_ID=<TENANT_APP_ID>
+            - TENANT_APP_SECRET=<TENANT_APP_SECRET>
+            - LOG_LEVEL=DEBUG
+            - SUPPORTED_PRODUCTS=IDENTITY,ENGAGEMENT
+            - EVENT_EXECUTORS=app.events.db.db_event_handler.DbEventHandler
+            - WEBHOOK_BASE_URL=https://api.getabc.com
+            - DB_ENABLED=True
+            - DB_TYPE=POSTGRES
+            - DB_USER=iiq
+            - DB_PASSWORD=iiq123
+            - DB_HOST=host.docker.internal
+            - DB_PORT=5432
+            - DB_NAME=iiq_db
+
+        # Configure iiq_table_field_mapper.yaml only if db is enabled otherwise don't configure
+        volumes:
+            - /Users/kushal/Desktop/Projects/Ph/iiq-managed-service/iiq_table_field_mapper.yaml:/etc/iiq_table_field_mapper.yaml:ro

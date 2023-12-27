@@ -1,0 +1,24 @@
+from app.events.db.db_config import db_settings
+from app.utils.mapping_utils import get_mapping_config_from_yaml_file
+
+config = get_mapping_config_from_yaml_file(db_settings.MAPPER_CONFIG_FILE_PATH)
+
+USER_TABLE_MAPPINGS = config.get('mappings', {}).get('user', {})
+ACCOUNT_TABLE_MAPPINGS = config.get('mappings', {}).get('account', {})
+PROFILE_TABLE_MAPPINGS = config.get('mappings', {}).get('profile', {})
+PROFILE_AUDIENCE_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_audience', {})
+CONTENT_TABLE_MAPPINGS = config.get('mappings', {}).get('content', {})
+CONTENT_COMMENT_TABLE_MAPPINGS = config.get('mappings', {}).get('content_comment', {})
+CONTENT_GROUP_TABLE_MAPPINGS = config.get('mappings', {}).get('content_group', {})
+SOCIAL_TRANSACTION_TABLE_MAPPINGS = config.get('mappings', {}).get('social_transaction', {})
+COMMERCE_TRANSACTION_TABLE_MAPPINGS = config.get('mappings', {}).get('commerce_transaction', {})
+SOCIAL_PAYOUT_TABLE_MAPPINGS = config.get('mappings', {}).get('social_payout', {})
+COMMERCE_PAYOUT_TABLE_MAPPINGS = config.get('mappings', {}).get('commerce_payout', {})
+COMMERCE_BALANCE_TABLE_MAPPINGS = config.get('mappings', {}).get('commerce_balance', {})
+ACTIVITY_ARTISTS_TABLE_MAPPINGS = config.get('mappings', {}).get('activity_artist', {})
+ACTIVITY_CONTENTS_TABLE_MAPPINGS = config.get('mappings', {}).get('activity_content', {})
+PROFILE_SEARCH_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_search', {})
+PROFILE_FETCH_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_fetch', {})
+PROFILE_ANALYTICS_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_analytics', {})
+CONTENTS_INFORMATION_TABLE_MAPPINGS = config.get('mappings', {}).get('contents_information', {})
+PUBLISH_CONTENT_TABLE_MAPPINGS = config.get('mappings', {}).get('publish_content', {})

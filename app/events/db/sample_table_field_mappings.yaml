@@ -1,0 +1,216 @@
+mappings:
+    user:
+        name: users
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            name: name
+            external_id: external_id
+            status: status
+
+    account:
+        name: accounts
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            user:
+                id: iiq_user_id
+            work_platform:
+                id: work_platform_id
+            username: username
+            platform_username: platform_username
+            profile_pic_url: profile_pic_url
+            status: status
+            platform_profile_name: platform_profile_name
+            platform_profile_id: platform_profile_id
+            platform_profile_published_at: platform_profile_published_at
+
+    profile:
+        name: profiles
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            user:
+                id: iiq_user_id
+            work_platform:
+                id: work_platform_id
+            platform_username: platform_username
+            image_url: profile_pic_url
+            platform_profile_published_at: platform_profile_published_at
+            external_id: platform_external_id
+
+    profile_audience:
+        name: profile_demographics
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            user:
+                id: iiq_user_id
+            work_platform:
+                id: work_platform_id
+            account:
+                id: account_id
+
+    content:
+        name: posts
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            external_id: platform_external_id
+            engagement:
+                like_count: total_like_count
+
+    content_group:
+        name: albums
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            external_id: platform_external_id
+            engagement:
+                like_count: total_like_count
+
+    social_transaction:
+        name: social_transactions
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            external_id: platform_external_id
+            amount: amount
+            currency: currency
+            transaction_at: transaction_at
+
+    commerce_transaction:
+        name: commerce_transactions
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            external_id: platform_external_id
+            amount: amount
+            currency: currency
+            transaction_at: transaction_at
+
+    social_payout:
+        name: social_payouts
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            external_id: platform_external_id
+            amount: amount
+            currency: currency
+            status: status
+            payout_at: payout_at
+
+    commerce_payout:
+        name: commerce_payouts
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            external_id: platform_external_id
+            amount: amount
+            currency: currency
+            status: status
+            payout_at: payout_at
+
+    commerce_balance:
+        name: commerce_balances
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            balance: balances
+            balance_at: balance_at
+
+    activity_artist:
+        name: activity_artist
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            platform_artist_id: platform_artist_id
+            image_url: image_url
+            artist_name: artist_name
+            artist_url: artist_url
+            genre: genre
+            activity_type: activity_type
+
+
+    activity_content:
+        name: activity_content
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            platform_content_id: platform_content_id
+            title: title
+            format: format
+            type: type
+            url: url
+            description: description
+            thumbnail_url: thumbnail_url
+            embed_url: embed_url
+            activity_type: activity_type
+            additional_info:
+                genre: genre
+                artists: artists
+                album: album
+
+
+    profile_search:
+        name: profile_search
+        schema: xyz_schema
+        unique_key: work_platform_id, platform_username
+        fields:
+            platform_username: platform_username
+            url: url
+            follower_count: follower_count
+            work_platform:
+                id: work_platform_id
+
+    profile_analytics:
+        name: profile_analytics
+        schema: xyz_schema
+        unique_key: work_platform_id, platform_username
+        fields:
+            profile:
+                platform_username: platform_username
+                url: url
+                engagement_rate: engagement_rate
+                location:
+                    city: city
+            work_platform:
+                id: work_platform_id
+
+
+    contents_information:
+        name: contents_information
+        schema: xyz_schema
+        unique_key: work_platform_id, platform_content_id
+        fields:
+            platform_content_id: platform_content_id
+            url: url
+            engagement:
+                like_count: like_count
+                comment_count: comment_count
+            work_platform:
+                id: work_platform_id
+
+    publish_content:
+        name: published_posts
+        schema: xyz_schema
+        unique_key: iiq_id
+        fields:
+            data:
+                id: iiq_id
+            work_platform:
+                id: work_platform_id
+            status: status
