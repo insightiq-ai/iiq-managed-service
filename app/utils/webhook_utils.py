@@ -12,7 +12,7 @@ from app.core.config import settings
 
 async def webhook_signature_validator(request: Request):
 
-    signatures = request.headers.get('Phyllo-Signatures') or request.headers.get('Webhook-Signatures')
+    signatures = request.headers.get('Webhook-Signatures')
     body = await request.body()
     if not signatures:
         logging.warning("Webhook Signatures are missing in the headers.")

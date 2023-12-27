@@ -8,9 +8,11 @@ from app.services import creator_service
 
 api_router = APIRouter()
 
+
 @api_router.get("/profiles", status_code=HTTPStatus.OK, response_model=Optional[Dict])
 async def get_basic_creator_profile(request: Request) -> Optional[Dict]:
     return await creator_service.get_basic_creator_profile(params=dict(request.query_params.items()))
+
 
 @api_router.post("/profiles/search", status_code=HTTPStatus.OK, response_model=Optional[Dict])
 async def search_profiles(request: Request,
