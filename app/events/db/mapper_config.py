@@ -1,7 +1,10 @@
-from app.events.db.db_config import db_settings
 from app.utils.mapping_utils import get_mapping_config_from_yaml_file
+import os
 
-config = get_mapping_config_from_yaml_file(db_settings.MAPPER_CONFIG_FILE_PATH)
+current_dir = os.path.dirname(__file__)
+mapping_file_path = 'db_table_field_mappings.yaml'
+mapper_config_file_path = os.path.join(current_dir, mapping_file_path)
+config = get_mapping_config_from_yaml_file(mapper_config_file_path)
 
 USER_TABLE_MAPPINGS = config.get('mappings', {}).get('user', {})
 ACCOUNT_TABLE_MAPPINGS = config.get('mappings', {}).get('account', {})

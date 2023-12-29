@@ -29,7 +29,7 @@ class DbEventHandler(BaseEvent):
         try:
             ds = AsyncDataStore(db=AsyncSessionLocal())
             if isinstance(data, Dict):
-                mapped_account: Dict = map_obj_to_another_obj(obj=data, mapping_config=flatten_dict(fields))
+                mapped_account: Dict = map_obj_to_another_obj(obj=data, mapping_config=flatten_dict(data=fields))
                 if value_post_processors:
                     mapped_account = post_process_obj(obj=mapped_account,
                                                       post_process_mapping_config=value_post_processors)
@@ -40,7 +40,7 @@ class DbEventHandler(BaseEvent):
                                                            data=mapped_account)
             else:
                 mapped_accounts: List[Dict] = map_obj_list_to_another_list(obj_list=data,
-                                                                           mapping_config=flatten_dict(fields))
+                                                                           mapping_config=flatten_dict(data=fields))
                 if value_post_processors:
                     mapped_accounts = post_process_obj_list(obj_list=mapped_accounts,
                                                             post_process_mapping_config=value_post_processors)

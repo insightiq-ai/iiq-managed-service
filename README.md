@@ -37,7 +37,7 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
 
   - DB_configuration: Currently, supporting only postgres-db for integration. Configure the attributes as defined in the file.
 
-  - Volumes: Configure the location of field-mapping.yaml file to /etc/iiq_table_field_mapper.yaml  Sample file is [here](app/events/db/sample_table_field_mappings.yaml). 
+- If db-event is enabled then need to Configure the field-mapping inside the file [here](app/events/db/db_table_field_mappings.yaml). This file is currently having sample mappings. Remove whichever is not applicable.
 
 - Go to the base directory and then build the docker-compose using following command:
 

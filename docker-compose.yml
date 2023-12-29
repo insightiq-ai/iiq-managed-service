@@ -20,7 +20,3 @@ services:
             - DB_HOST=host.docker.internal
             - DB_PORT=5432
             - DB_NAME=iiq_db
-
-        # Configure iiq_table_field_mapper.yaml only if db is enabled otherwise don't configure
-        volumes:
-            - /Users/kushal/Desktop/Projects/Ph/iiq-managed-service/iiq_table_field_mapper.yaml:/etc/iiq_table_field_mapper.yaml:ro
