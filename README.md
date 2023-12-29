@@ -37,7 +37,7 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
 
   - DB_configuration: Currently, supporting only postgres-db for integration. Configure the attributes as defined in the file.
 
-  - Volumes: Configure the location of field-mapping.yaml file to /etc/iiq_table_field_mapper.yaml  Sample file is [here](app/events/db/sample_table_field_mappings.yaml). 
+- If db-event is enabled then need to Configure the field-mapping inside the file [here](app/events/db/db_table_field_mappings.yaml). This file is currently having sample mappings. Remove whichever is not applicable.
 
 - Go to the base directory and then build the docker-compose using following command:
 
@@ -86,9 +86,10 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
   - [commerce_transaction](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-commerce-income-transaction-search#Responses)
   - [social_payout](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-income-payout-search#Responses)
   - [commerce_payout](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-commerce-income-payout-search#Responses)
-  - [commerce_balance](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-income-payout-search#Responses)
+  - [commerce_balance](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-commerce-income-balance-search#Responses)
   - [activity_artist](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-media-activity-artist-search#Responses)
   - [activity_content](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-media-activity-content-search#Responses)
+  - [profile_fetch](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-profiles#Responses)
   - [profile_search](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-search#Responses)
   - [profile_analytics](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-analytics#Responses)
   - [contents_information](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-content-fetch#Responses) 

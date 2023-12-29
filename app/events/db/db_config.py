@@ -5,7 +5,6 @@ config = Config(".env")
 
 
 class DbSettings:
-    MAPPER_CONFIG_FILE_PATH = config("MAPPER_CONFIG_FILE_PATH", cast=str, default="/etc/iiq_table_field_mapper.yaml")
     DB_ENABLED = config("DB_ENABLED", cast=bool, default=False)
 
     # TODO: Add mysql support

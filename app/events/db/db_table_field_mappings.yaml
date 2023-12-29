@@ -166,6 +166,16 @@ mappings:
                 artists: artists
                 album: album
 
+    profile_fetch:
+        name: profile_fetch
+        schema: xyz_schema
+        unique_key: work_platform_id, platform_username
+        fields:
+            platform_username: platform_username
+            url: url
+            follower_count: follower_count
+            work_platform:
+                id: work_platform_id
 
     profile_search:
         name: profile_search
