@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, date
 from typing import Optional
 
@@ -38,5 +39,13 @@ def cast_string_to_bool(value: Optional[str]) -> Optional[bool]:
     # Convert the string to bool
     if value is not None:
         return value.lower() == "true"
+    else:
+        return None
+
+
+def cast_to_json(value: Optional) -> Optional[str]:
+    # Convert any to json-string
+    if value is not None:
+        return json.dumps(value)
     else:
         return None
