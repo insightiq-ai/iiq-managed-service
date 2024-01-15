@@ -35,8 +35,8 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
             and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
         await add_update_contents(webhook_request_data=webhook_request_data)
 
-    elif (webhook_request_data.event == WebhookEvent.CONTENT_COMMENTS_ADDED
-          or webhook_request_data.event == WebhookEvent.CONTENT_COMMENTS_UPDATED) \
+    elif (webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_ADDED
+          or webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_UPDATED) \
             and Product.ENGAGEMENT_AUDIENCE in settings.SUPPORTED_PRODUCTS:
         await add_update_content_comments(webhook_request_data=webhook_request_data)
 
@@ -95,9 +95,9 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
             await executor_event.contents_added_event_handler(data=data)
         elif webhook_event == WebhookEvent.CONTENTS_UPDATED:
             await executor_event.contents_updated_event_handler(data=data)
-        elif webhook_event == WebhookEvent.CONTENT_COMMENTS_ADDED:
+        elif webhook_event == WebhookEvent.CONTENTS_COMMENTS_ADDED:
             await executor_event.content_comments_added_event_handler(data=data)
-        elif webhook_event == WebhookEvent.CONTENT_COMMENTS_UPDATED:
+        elif webhook_event == WebhookEvent.CONTENTS_COMMENTS_UPDATED:
             await executor_event.content_comments_updated_event_handler(data=data)
         elif webhook_event == WebhookEvent.CONTENT_GROUPS_ADDED:
             await executor_event.content_groups_added_event_handler(data=data)
