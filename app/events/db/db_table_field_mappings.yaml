@@ -430,6 +430,17 @@ mappings:
             work_platform:
                 id: work_platform_id
 
+    profile_quick_search:
+        name: profile_quick_search
+        schema: iiq_schema
+        unique_key: work_platform_id, platform_username
+        fields:
+            platform_username: platform_username
+            url: url
+            follower_count: follower_count
+            work_platform:
+                id: work_platform_id
+
     profile_analytics:
         name: profile_analytics
         schema: iiq_schema

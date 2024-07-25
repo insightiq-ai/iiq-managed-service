@@ -22,6 +22,7 @@ ACTIVITY_ARTISTS_TABLE_MAPPINGS = config.get('mappings', {}).get('activity_artis
 ACTIVITY_CONTENTS_TABLE_MAPPINGS = config.get('mappings', {}).get('activity_content', {})
 PROFILE_FETCH_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_fetch', {})
 PROFILE_SEARCH_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_search', {})
+PROFILE_QUICK_SEARCH_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_quick_search', {})
 PROFILE_ANALYTICS_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_analytics', {})
 CONTENTS_INFORMATION_TABLE_MAPPINGS = config.get('mappings', {}).get('contents_information', {})
 PUBLISH_CONTENT_TABLE_MAPPINGS = config.get('mappings', {}).get('publish_content', {})
