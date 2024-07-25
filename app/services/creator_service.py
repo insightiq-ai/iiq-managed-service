@@ -2,8 +2,8 @@ import logging
 from typing import Dict, Optional
 
 from app.events.event_executor_registry import EventExecutorRegistry
-from app.services.resource_service import fetch_profile_analytics, find_profiles, fetch_content_information, \
-    fetch_basic_creator_profile
+from app.services.resource_service import fetch_profile_analytics, fetch_content_information, \
+    fetch_basic_creator_profile, fetch_search_profiles, fetch_quick_search_profiles
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -20,7 +20,7 @@ async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
 
 
 async def search_profiles(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
-    profiles: Dict = await find_profiles(request_body=request_body, params=params)
+    profiles: Dict = await fetch_search_profiles(request_body=request_body, params=params)
 
     if not profiles:
         logging.error(f"Profiles does not exists with requested-filters")
@@ -28,6 +28,19 @@ async def search_profiles(request_body: object, params: Optional[Dict]) -> Optio
 
     for executor_event in EventExecutorRegistry.get_all_events():
         await executor_event.profile_search_event_handler(data=profiles)
+
+    return profiles
+
+
+async def quick_search_profiles(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    profiles: Dict = await fetch_quick_search_profiles(request_body=request_body, params=params)
+
+    if not profiles:
+        logging.error(f"Profiles do not exist with requested-filters")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.profile_quick_search_event_handler(data=profiles)
 
     return profiles
 

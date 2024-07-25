@@ -30,3 +30,9 @@ async def profile_analytics(request: Request,
 async def fetch_contents(request: Request,
                          request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
     return await creator_service.fetch_contents(request_body=request_body, params=dict(request.query_params.items()))
+
+
+@api_router.post("/profiles/quick-search", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def quick_search_profiles(request: Request,
+                                request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
+    return await creator_service.quick_search_profiles(request_body=request_body, params=dict(request.query_params.items()))
