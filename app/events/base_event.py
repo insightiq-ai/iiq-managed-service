@@ -147,7 +147,10 @@ class BaseEvent(ABC):
     async def profile_search_event_handler(cls, data: Dict):
         pass
 
-
     @classmethod
     async def profile_fetch_event_handler(cls, data: Dict):
+        pass
+
+    @classmethod
+    async def dictionary_userhandle_event_handler(cls, data: Dict):
         pass
