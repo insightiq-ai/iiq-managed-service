@@ -435,11 +435,28 @@ mappings:
         schema: iiq_schema
         unique_key: work_platform_id, platform_username
         fields:
-            platform_username: platform_username
-            url: url
-            follower_count: follower_count
+            platform_username: data.platform_username
+            url: data.url
+            image_url: data.image_url
+            follower_count: data.follower_count
+            subscriber_count: data.subscriber_count
+            is_verified: data.is_verified
             work_platform:
-                id: work_platform_id
+                id: data.work_platform.id
+                name: data.work_platform.name
+                logo_url: data.work_platform.logo_url
+            full_name: data.full_name
+            introduction: data.introduction
+            platform_account_type: data.platform_account_type
+            gender: data.gender
+            age_group: data.age_group
+            language: data.language
+            content_count: data.content_count
+            engagement_rate: data.engagement_rate
+            location:
+                city: data.location.city
+                state: data.location.state
+                country: data.location.country
 
     profile_analytics:
         name: profile_analytics
