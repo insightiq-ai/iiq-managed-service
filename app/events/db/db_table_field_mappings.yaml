@@ -468,3 +468,15 @@ mappings:
             work_platform:
                 id: work_platform_id
             status: status
+
+    #TBD
+    dictionary_userhandles:
+        name: dictionary_userhandles
+        schema: iiq_schema
+        unique_key: iiq_id
+        fields:
+            data:
+                id: iiq_id
+            work_platform:
+                id: work_platform_id
+            status: status
