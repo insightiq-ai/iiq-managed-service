@@ -472,12 +472,10 @@ mappings:
     dictionary_userhandles:
         name: dictionary_userhandles
         schema: iiq_schema
-        unique_key: iiq_id
+        unique_key: user_id
         fields:
             user_info:
                 id: user_id
-            handle_details:
-                id: handle_id
             attributes:
                 username: username
                 fullname: fullname
