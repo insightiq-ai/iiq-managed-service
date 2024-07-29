@@ -468,3 +468,11 @@ mappings:
             work_platform:
                 id: work_platform_id
             status: status
+
+    dictionary_interests:
+        name: dictionary_interests
+        schema: iiq_schema
+        unique_key: interest_id
+        fields:
+            interest_id: id
+            name: name

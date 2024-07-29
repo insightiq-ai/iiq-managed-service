@@ -30,3 +30,8 @@ async def profile_analytics(request: Request,
 async def fetch_contents(request: Request,
                          request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
     return await creator_service.fetch_contents(request_body=request_body, params=dict(request.query_params.items()))
+
+
+@api_router.get("/dictionary/interests", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def get_dictionary_interests(request: Request) -> Optional[Dict]:
+    return await creator_service.get_dictionary_interests(params=dict(request.query_params.items()))
