@@ -232,8 +232,7 @@ class DbEventHandler(BaseEvent):
         from app.events.db.mapper_config import PROFILE_FETCH_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFILE_FETCH_TABLE_MAPPINGS, data=data.get('data'))
 
-    #TBD
     @classmethod
-    async def dictionary_userhandle_event_handler(cls, data: Dict):
+    async def dictionary_userhandles_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import DICTIONARY_USERHANDLES_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=DICTIONARY_USERHANDLES_TABLE_MAPPINGS, data=data.get('data'))

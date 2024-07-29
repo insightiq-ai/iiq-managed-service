@@ -152,5 +152,5 @@ class BaseEvent(ABC):
         pass
 
     @classmethod
-    async def dictionary_userhandle_event_handler(cls, data: Dict):
+    async def dictionary_userhandles_event_handler(cls, data: Dict):
         pass

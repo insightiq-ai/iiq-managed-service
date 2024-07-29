@@ -469,14 +469,18 @@ mappings:
                 id: work_platform_id
             status: status
 
-    #TBD
     dictionary_userhandles:
         name: dictionary_userhandles
         schema: iiq_schema
         unique_key: iiq_id
         fields:
-            data:
-                id: iiq_id
-            work_platform:
-                id: work_platform_id
-            status: status
+            user_info:
+                id: user_id
+            handle_details:
+                id: handle_id
+            attributes:
+                username: username
+                fullname: fullname
+                picture: picture
+                followers: followers
+                is_verified: is_verified

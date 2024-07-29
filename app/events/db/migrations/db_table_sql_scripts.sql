@@ -486,3 +486,23 @@ CREATE TABLE IF NOT EXISTS iiq_schema.basic_profile_info
 );
 ALTER TABLE iiq_schema.basic_profile_info
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_userhandles
+(
+    id             UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    updated_at     TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    created_at     TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    iiq_id         UUID                                 NOT NULL,
+    user_id        UUID                                 NOT NULL,
+    handle_id      UUID                                 NOT NULL,
+    username       VARCHAR(255)                         NOT NULL,
+    fullname       VARCHAR(255)                         NOT NULL,
+    picture        VARCHAR(2048),
+    followers      VARCHAR(255),
+    is_verified    BOOL                                 NOT NULL,
+    CONSTRAINT dictionary_userhandles_iiq_id_uq UNIQUE (iiq_id)
+);
+
+ALTER TABLE iiq_schema.dictionary_userhandles
+    OWNER TO iiq;
