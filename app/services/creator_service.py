@@ -66,6 +66,6 @@ async def get_dictionary_topics(params: Optional[Dict]) -> Optional[Dict]:
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.dictionary_userhandles_event_handler(data=topics)
+        await executor_event.dictionary_topics_event_handler(data=topics)
 
     return topics
