@@ -468,3 +468,12 @@ mappings:
             work_platform:
                 id: work_platform_id
             status: status
+
+
+dictionary_languages:
+    name: dictionary_languages
+    schema: iiq_schema
+    unique_key: code
+    fields:
+        code: code
+        name: name
