@@ -235,4 +235,4 @@ class DbEventHandler(BaseEvent):
     @classmethod
     async def dictionary_interests_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import DICTIONARY_INTERESTS_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=DICTIONARY_INTERESTS_TABLE_MAPPINGS, data=data.get('data'))
+        await cls.persist_to_db(table_mappings=DICTIONARY_INTERESTS_TABLE_MAPPINGS, data=data.get('interests'))
