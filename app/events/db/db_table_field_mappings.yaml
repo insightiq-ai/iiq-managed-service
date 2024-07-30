@@ -474,3 +474,11 @@ mappings:
         schema: iiq_schema
         fields:
             name: name
+
+    dictionary_topics:
+        name: dictionary_topics
+        schema: iiq_schema
+        unique_key: name
+        fields:
+            name: name
+            value: value
