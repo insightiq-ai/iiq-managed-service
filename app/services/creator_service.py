@@ -66,6 +66,6 @@ async def get_dictionary_interests(params: Optional[Dict]) -> Optional[Dict]:
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.dictionary_topics_event_handler(data=interests)
+        await executor_event.dictionary_interests_event_handler(data=interests)
 
     return interests
