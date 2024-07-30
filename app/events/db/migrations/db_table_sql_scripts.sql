@@ -502,7 +502,6 @@ ALTER TABLE iiq_schema.dictionary_topics
     OWNER TO iiq;
 
 
-
 CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_userhandles
 (
     id             UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,

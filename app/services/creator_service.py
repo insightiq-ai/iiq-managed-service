@@ -88,7 +88,7 @@ async def get_dictionary_userhandles(params: Optional[Dict]) -> Optional[Dict]:
     userhandles: Dict = await fetch_dictionary_userhandles(params=params)
 
     if not userhandles:
-        logging.error(f"Userhandle does not exist with requested-filters")
+        logging.error(f"Userhandles do not exist with requested-filters")
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
