@@ -15,9 +15,9 @@ CREATE TABLE IF NOT EXISTS iiq_schema.users
     status         VARCHAR(100),
     CONSTRAINT users_iiq_id_uq UNIQUE (iiq_id)
 );
-
 ALTER TABLE iiq_schema.users
     OWNER TO iiq;
+
 
 CREATE TABLE IF NOT EXISTS iiq_schema.accounts
 (
@@ -68,10 +68,8 @@ CREATE TABLE IF NOT EXISTS iiq_schema.accounts
 
     CONSTRAINT accounts_iiq_id_uq UNIQUE (iiq_id)
 );
-
 ALTER TABLE iiq_schema.accounts
     OWNER TO iiq;
-
 
 
 CREATE TABLE IF NOT EXISTS iiq_schema.profiles
@@ -138,7 +136,6 @@ ALTER TABLE iiq_schema.profiles
     OWNER TO iiq;
 
 
-
 CREATE TABLE IF NOT EXISTS iiq_schema.profile_audiences
 (
     id                        UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
@@ -163,7 +160,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profile_audiences
 );
 ALTER TABLE iiq_schema.profile_audiences
     OWNER TO iiq;
-
 
 
 CREATE TABLE IF NOT EXISTS iiq_schema.contents
@@ -231,7 +227,6 @@ ALTER TABLE iiq_schema.contents
     OWNER TO iiq;
 
 
-
 CREATE TABLE IF NOT EXISTS iiq_schema.content_groups
 (
     id                                  UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
@@ -281,7 +276,6 @@ ALTER TABLE iiq_schema.content_groups
     OWNER TO iiq;
 
 
-
 CREATE TABLE IF NOT EXISTS iiq_schema.social_transactions
 (
     id                        UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
@@ -311,7 +305,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.social_transactions
 );
 ALTER TABLE iiq_schema.social_transactions
     OWNER TO iiq;
-
 
 
 CREATE TABLE IF NOT EXISTS iiq_schema.social_payouts
@@ -346,7 +339,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.social_payouts
 );
 ALTER TABLE iiq_schema.social_payouts
     OWNER TO iiq;
-
 
 
 CREATE TABLE IF NOT EXISTS iiq_schema.activity_artists
@@ -415,7 +407,6 @@ ALTER TABLE iiq_schema.activity_contents
     OWNER TO iiq;
 
 
-
 CREATE TABLE IF NOT EXISTS iiq_schema.publish_contents
 (
     id                                 UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
@@ -454,7 +445,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.publish_contents
 );
 ALTER TABLE iiq_schema.publish_contents
     OWNER TO iiq;
-
 
 
 CREATE TABLE IF NOT EXISTS iiq_schema.basic_profile_info
