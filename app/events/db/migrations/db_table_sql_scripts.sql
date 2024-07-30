@@ -486,3 +486,15 @@ CREATE TABLE IF NOT EXISTS iiq_schema.basic_profile_info
 );
 ALTER TABLE iiq_schema.basic_profile_info
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_topics
+(
+    id          UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    updated_at  TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    created_at  TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    name        VARCHAR(255) UNIQUE NOT NULL,
+    value       VARCHAR(255) NOT NULL
+);
+ALTER TABLE iiq_schema.dictionary_topics
+    OWNER TO iiq;
