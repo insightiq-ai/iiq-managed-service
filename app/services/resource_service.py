@@ -228,6 +228,7 @@ async def fetch_publish_content_by_id(id: str) -> Dict:
 
     return response
 
+
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
 async def fetch_basic_creator_profile(params: Optional[Dict]) -> Dict:
 
@@ -237,6 +238,7 @@ async def fetch_basic_creator_profile(params: Optional[Dict]) -> Dict:
     # TODO do error-handling over here
 
     return response
+
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
 async def find_profiles(request_body: object, params: Optional[Dict]) -> Dict:
