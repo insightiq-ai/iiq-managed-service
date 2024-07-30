@@ -14,6 +14,7 @@ mappings:
             iiq_created_at: app.events.db.value_post_processors.cast_iso_formatted_string_to_datetime
             iiq_updated_at: app.events.db.value_post_processors.cast_iso_formatted_string_to_datetime
 
+
     account:
         name: accounts
         schema: iiq_schema
@@ -86,6 +87,7 @@ mappings:
             data_activity_monitor_type: app.events.db.value_post_processors.cast_iso_formatted_string_to_datetime
             data_activity_refresh_since: app.events.db.value_post_processors.cast_iso_formatted_string_to_datetime
             data_activity_data_available_from: app.events.db.value_post_processors.cast_iso_formatted_string_to_datetime
+
 
     profile:
         name: profiles
@@ -195,6 +197,7 @@ mappings:
             cities: app.events.db.value_post_processors.cast_to_json
             gender_age_distribution: app.events.db.value_post_processors.cast_to_json
 
+
     content:
         name: contents
         schema: iiq_schema
@@ -266,6 +269,7 @@ mappings:
             engagement_additional_info: app.events.db.value_post_processors.cast_to_json
             media_urls: app.events.db.value_post_processors.cast_to_json
 
+
     content_group:
         name: content_groups
         schema: iiq_schema
@@ -330,6 +334,7 @@ mappings:
             currency: currency
             transaction_at: transaction_at
 
+
     commerce_transaction:
         name: commerce_transactions
         schema: iiq_schema
@@ -340,6 +345,7 @@ mappings:
             amount: amount
             currency: currency
             transaction_at: transaction_at
+
 
     social_payout:
         name: social_payouts
@@ -353,6 +359,7 @@ mappings:
             status: status
             payout_at: payout_at
 
+
     commerce_payout:
         name: commerce_payouts
         schema: iiq_schema
@@ -365,6 +372,7 @@ mappings:
             status: status
             payout_at: payout_at
 
+
     commerce_balance:
         name: commerce_balances
         schema: iiq_schema
@@ -373,6 +381,7 @@ mappings:
             id: iiq_id
             balance: balances
             balance_at: balance_at
+
 
     activity_artist:
         name: activity_artist
@@ -408,6 +417,7 @@ mappings:
                 artists: artists
                 album: album
 
+
     profile_fetch:
         name: profile_fetch
         schema: iiq_schema
@@ -419,6 +429,7 @@ mappings:
             work_platform:
                 id: work_platform_id
 
+
     profile_search:
         name: profile_search
         schema: iiq_schema
@@ -429,6 +440,7 @@ mappings:
             follower_count: follower_count
             work_platform:
                 id: work_platform_id
+
 
     profile_analytics:
         name: profile_analytics
@@ -458,6 +470,7 @@ mappings:
             work_platform:
                 id: work_platform_id
 
+
     publish_content:
         name: published_posts
         schema: iiq_schema
@@ -468,6 +481,22 @@ mappings:
             work_platform:
                 id: work_platform_id
             status: status
+
+
+    dictionary_interests:
+        name: dictionary_interests
+        schema: iiq_schema
+        fields:
+            name: name
+
+
+    dictionary_topics:
+        name: dictionary_topics
+        schema: iiq_schema
+        unique_key: name
+        fields:
+            name: name
+            value: value
 
     dictionary_userhandles:
         name: dictionary_userhandles
