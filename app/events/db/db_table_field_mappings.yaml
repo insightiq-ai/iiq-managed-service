@@ -469,6 +469,12 @@ mappings:
                 id: work_platform_id
             status: status
 
+    dictionary_interests:
+        name: dictionary_interests
+        schema: iiq_schema
+        fields:
+            name: name
+
     dictionary_topics:
         name: dictionary_topics
         schema: iiq_schema

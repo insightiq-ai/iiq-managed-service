@@ -488,6 +488,18 @@ ALTER TABLE iiq_schema.basic_profile_info
     OWNER TO iiq;
 
 
+CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_interests
+(
+    id          UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    name        VARCHAR(255)                                     NOT NULL,
+    created_at  TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at  TIMESTAMP DEFAULT timezone('utc'::text, now())
+);
+
+ALTER TABLE iiq_schema.dictionary_interests
+    OWNER TO iiq;
+
+
 CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_topics
 (
     id          UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
