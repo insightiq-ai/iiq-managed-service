@@ -474,6 +474,5 @@ mappings:
         schema: iiq_schema
         unique_key: name
         fields:
-            data:
-                name: name
-                value: value
+            name: name
+            value: value
