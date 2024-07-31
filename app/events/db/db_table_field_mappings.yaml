@@ -497,3 +497,17 @@ mappings:
         fields:
             name: name
             value: value
+
+    dictionary_userhandles:
+        name: dictionary_userhandles
+        schema: iiq_schema
+        unique_key: user_id
+        fields:
+            user_id: user_id
+            username: username
+            fullname: fullname
+            picture: picture
+            followers: followers
+            is_verified: is_verified
+        value_post_processors:
+            followers: app.events.db.value_post_processors.cast_integer_to_string

@@ -500,3 +500,21 @@ CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_topics
 );
 ALTER TABLE iiq_schema.dictionary_topics
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_userhandles
+(
+    id             UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    updated_at     TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    created_at     TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    user_id        VARCHAR(255)                         NOT NULL,
+    username       VARCHAR(255)                         NOT NULL,
+    fullname       VARCHAR(255)                         NOT NULL,
+    picture        VARCHAR(2048),
+    followers      VARCHAR(255),
+    is_verified    BOOL                                 NOT NULL,
+    CONSTRAINT dictionary_userhandles_user_id_uq UNIQUE (user_id)
+);
+
+ALTER TABLE iiq_schema.dictionary_userhandles
+    OWNER TO iiq;

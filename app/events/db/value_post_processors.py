@@ -49,3 +49,11 @@ def cast_to_json(value: Optional) -> Optional[str]:
         return json.dumps(value)
     else:
         return None
+
+
+def cast_integer_to_string(value: Optional[int]) -> Optional[str]:
+    # Convert the integer to string
+    if value:
+        return str(value)
+    else:
+        return None
