@@ -470,10 +470,10 @@ mappings:
             status: status
 
 
-dictionary_languages:
-    name: dictionary_languages
-    schema: iiq_schema
-    unique_key: code
-    fields:
-        code: code
-        name: name
+    dictionary_languages:
+        name: dictionary_languages
+        schema: iiq_schema
+        unique_key: code
+        fields:
+            code: code
+            name: name
