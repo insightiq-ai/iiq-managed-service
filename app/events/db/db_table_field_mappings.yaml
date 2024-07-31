@@ -497,3 +497,11 @@ mappings:
         fields:
             name: name
             value: value
+
+
+    dictionary_brands:
+        name: dictionary_brands
+        schema: iiq_schema
+        unique_key: name
+        fields:
+            name: name
