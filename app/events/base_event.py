@@ -158,3 +158,7 @@ class BaseEvent(ABC):
     @classmethod
     async def dictionary_topics_event_handler(cls, data: Dict):
         pass
+
+    @classmethod
+    async def dictionary_userhandles_event_handler(cls, data: Dict):
+        pass

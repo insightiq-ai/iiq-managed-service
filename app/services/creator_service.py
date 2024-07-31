@@ -3,7 +3,7 @@ from typing import Dict, Optional
 
 from app.events.event_executor_registry import EventExecutorRegistry
 from app.services.resource_service import fetch_profile_analytics, find_profiles, fetch_content_information, \
-    fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics
+    fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics, fetch_dictionary_userhandles
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -82,3 +82,16 @@ async def get_dictionary_topics(params: Optional[Dict]) -> Optional[Dict]:
         await executor_event.dictionary_topics_event_handler(data=topics)
 
     return topics
+
+
+async def get_dictionary_userhandles(params: Optional[Dict]) -> Optional[Dict]:
+    userhandles: Dict = await fetch_dictionary_userhandles(params=params)
+
+    if not userhandles:
+        logging.error(f"Userhandles do not exist with requested-filters")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.dictionary_userhandles_event_handler(data=userhandles)
+
+    return userhandles
