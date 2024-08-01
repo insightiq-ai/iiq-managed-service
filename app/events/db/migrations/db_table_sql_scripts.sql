@@ -517,37 +517,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_userhandles
 ALTER TABLE iiq_schema.dictionary_userhandles
 
 
-CREATE TABLE IF NOT EXISTS iiq_schema.profile_search
-(
-    id                                  UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    updated_at                          TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    created_at                          TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    platform_username                   VARCHAR(100)                        NOT NULL,
-    url                                 VARCHAR(2048),
-    image_url                           VARCHAR(2048),
-    follower_count                      INTEGER,
-    subscriber_count                    INTEGER,
-    is_verified                         BOOLEAN,
-    work_platform_id                    UUID                                 NOT NULL,
-    work_platform_name                  VARCHAR(100)                        NOT NULL,
-    work_platform_logo_url              VARCHAR(2048),
-    full_name                           VARCHAR(100),
-    introduction                        TEXT,
-    platform_account_type               VARCHAR(50),
-    gender                              VARCHAR(50),
-    age_group                           VARCHAR(50),
-    language                            VARCHAR(50),
-    content_count                       INTEGER,
-    engagement_rate                     FLOAT,
-    location_city                       VARCHAR(100),
-    location_state                      VARCHAR(100),
-    location_country                    VARCHAR(100),
-    CONSTRAINT profile_search_platform_username_work_platform_id_uq UNIQUE (platform_username, work_platform_id)
-);
-ALTER TABLE iiq_schema.profile_search
-    OWNER TO iiq;
-
-
 CREATE TABLE IF NOT EXISTS iiq_schema.profile_quick_search
 (
     id                                  UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,

@@ -33,19 +33,6 @@ async def search_profiles(request_body: object, params: Optional[Dict]) -> Optio
     return profiles
 
 
-async def quick_search_profiles(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
-    profiles: Dict = await fetch_quick_search_profiles(request_body=request_body, params=params)
-
-    if not profiles:
-        logging.error(f"Profiles do not exist with requested-filters")
-        return None
-
-    for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.profile_quick_search_event_handler(data=profiles)
-
-    return profiles
-
-
 async def profile_analytics(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
     profile_analytics: Dict = await fetch_profile_analytics(request_body=request_body, params=params)
 
@@ -109,3 +96,16 @@ async def get_dictionary_userhandles(params: Optional[Dict]) -> Optional[Dict]:
         await executor_event.dictionary_userhandles_event_handler(data=userhandles)
 
     return userhandles
+
+
+async def quick_search_profiles(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    profiles: Dict = await fetch_quick_search_profiles(request_body=request_body, params=params)
+
+    if not profiles:
+        logging.error(f"Profiles do not exist with requested-filters")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.profile_quick_search_event_handler(data=profiles)
+
+    return profiles
