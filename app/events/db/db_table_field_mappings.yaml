@@ -541,3 +541,15 @@ mappings:
                 city: location_city
                 state: location_state
                 country: location_country
+
+    dictionary_topics_relevance:
+        name: dictionary_topics_relevance
+        schema: iiq_schema
+        unique_key: work_platform_id, identifier
+        fields:
+            identifier: identifier
+            work_platform_id: work_platform_id
+            data:
+                name: topic_name
+                distance: distance
+                frequency: frequency

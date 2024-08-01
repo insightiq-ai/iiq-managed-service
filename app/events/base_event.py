@@ -166,3 +166,7 @@ class BaseEvent(ABC):
     @classmethod
     async def profile_quick_search_event_handler(cls, data: Dict):
         pass
+
+    @classmethod
+    async def dictionary_relevant_topics_event_handler(cls, data: Dict):
+        pass
