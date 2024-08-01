@@ -29,3 +29,4 @@ DICTIONARY_INTERESTS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary
 DICTIONARY_TOPICS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_topics', {})
 DICTIONARY_USERHANDLES_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_userhandles', {})
 PROFILE_QUICK_SEARCH_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_quick_search', {})
+DICTIONARY_BRANDS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_brands', {})

@@ -546,3 +546,15 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profile_quick_search
 );
 ALTER TABLE iiq_schema.profile_quick_search
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_brands
+(
+    id          UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    updated_at  TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    created_at  TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    name        VARCHAR(255) UNIQUE NOT NULL
+);
+
+ALTER TABLE iiq_schema.dictionary_brands
+    OWNER TO iiq;
