@@ -45,3 +45,8 @@ async def get_dictionary_topics(request: Request) -> Optional[Dict]:
 @api_router.get("/dictionary/userhandles", status_code=HTTPStatus.OK, response_model=Optional[Dict])
 async def get_dictionary_userhandles(request: Request) -> Optional[Dict]:
     return await creator_service.get_dictionary_userhandles(params=dict(request.query_params.items()))
+
+
+@api_router.get("/dictionary/locations", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def get_dictionary_locations(request: Request) -> Optional[Dict]:
+    return await creator_service.get_dictionary_locations(params=dict(request.query_params.items()))

@@ -511,3 +511,13 @@ mappings:
             is_verified: is_verified
         value_post_processors:
             followers: app.events.db.value_post_processors.cast_integer_to_string
+
+
+    dictionary_locations:
+        name: dictionary_locations
+        schema: iiq_schema
+        unique_key: id
+        fields:
+            id: id
+            name: name
+            type: type

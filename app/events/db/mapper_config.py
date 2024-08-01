@@ -28,3 +28,4 @@ PUBLISH_CONTENT_TABLE_MAPPINGS = config.get('mappings', {}).get('publish_content
 DICTIONARY_INTERESTS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_interests', {})
 DICTIONARY_TOPICS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_topics', {})
 DICTIONARY_USERHANDLES_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_userhandles', {})
+DICTIONARY_LOCATIONS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_locations', {})
