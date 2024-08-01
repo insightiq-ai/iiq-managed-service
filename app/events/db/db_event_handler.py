@@ -228,6 +228,11 @@ class DbEventHandler(BaseEvent):
         await cls.persist_to_db(table_mappings=PROFILE_SEARCH_TABLE_MAPPINGS, data=data.get('data'))
 
     @classmethod
+    async def profile_quick_search_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import PROFILE_QUICK_SEARCH_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=PROFILE_QUICK_SEARCH_TABLE_MAPPINGS, data=data.get('data'))
+
+    @classmethod
     async def profile_fetch_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import PROFILE_FETCH_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFILE_FETCH_TABLE_MAPPINGS, data=data.get('data'))
