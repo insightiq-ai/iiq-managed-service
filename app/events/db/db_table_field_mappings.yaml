@@ -498,6 +498,7 @@ mappings:
             name: name
             value: value
 
+
     dictionary_userhandles:
         name: dictionary_userhandles
         schema: iiq_schema
