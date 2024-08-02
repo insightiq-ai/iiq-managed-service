@@ -111,7 +111,7 @@ async def quick_search_profiles(request_body: object, params: Optional[Dict]) ->
     return profiles
 
 
-async def get_dictionary_languages(params: Optional[Dict]) -> Optional[Dict]:
+async def get_dictionary_brands(params: Optional[Dict]) -> Optional[Dict]:
     brands: Dict = await fetch_dictionary_brands(params=params)
 
     if not brands:
@@ -119,6 +119,6 @@ async def get_dictionary_languages(params: Optional[Dict]) -> Optional[Dict]:
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.dictionary_languages_event_handler(data=brands)
+        await executor_event.dictionary_brands_event_handler(data=brands)
 
     return brands

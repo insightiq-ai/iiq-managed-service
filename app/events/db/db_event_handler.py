@@ -255,4 +255,4 @@ class DbEventHandler(BaseEvent):
     @classmethod
     async def dictionary_brands_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import DICTIONARY_BRANDS_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=DICTIONARY_BRANDS_TABLE_MAPPINGS, data=data.get('languages'))
+        await cls.persist_to_db(table_mappings=DICTIONARY_BRANDS_TABLE_MAPPINGS, data=data.get('brands'))
