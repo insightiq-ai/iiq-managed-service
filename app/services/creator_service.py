@@ -106,6 +106,6 @@ async def get_dictionary_locations(params: Optional[Dict]) -> Optional[Dict]:
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.dictionary_languages_event_handler(data=locations)
+        await executor_event.dictionary_locations_event_handler(data=locations)
 
     return locations
