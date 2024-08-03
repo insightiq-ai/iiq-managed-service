@@ -558,3 +558,13 @@ mappings:
         unique_key: name
         fields:
             name: name
+
+
+    dictionary_locations:
+        name: dictionary_locations
+        schema: iiq_schema
+        unique_key: id
+        fields:
+            id: id
+            name: name
+            type: type
