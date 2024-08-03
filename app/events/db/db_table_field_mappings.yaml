@@ -550,3 +550,11 @@ mappings:
         fields:
             code: code
             name: name
+
+
+    dictionary_brands:
+        name: dictionary_brands
+        schema: iiq_schema
+        unique_key: name
+        fields:
+            name: name
