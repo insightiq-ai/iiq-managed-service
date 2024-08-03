@@ -541,3 +541,12 @@ mappings:
                 city: location_city
                 state: location_state
                 country: location_country
+
+
+    dictionary_languages:
+        name: dictionary_languages
+        schema: iiq_schema
+        unique_key: code
+        fields:
+            code: code
+            name: name
