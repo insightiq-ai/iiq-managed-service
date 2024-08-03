@@ -570,3 +570,16 @@ CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_brands
 
 ALTER TABLE iiq_schema.dictionary_brands
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_locations
+(
+    id         UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    updated_at TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    created_at TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    name       VARCHAR(255)                         NOT NULL,
+    type       VARCHAR(50)                          NOT NULL,
+    CONSTRAINT dictionary_locations_id_uq UNIQUE (id)
+);
+ALTER TABLE iiq_schema.dictionary_locations
+    OWNER TO iiq;
