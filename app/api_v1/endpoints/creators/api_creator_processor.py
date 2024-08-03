@@ -45,3 +45,9 @@ async def get_dictionary_topics(request: Request) -> Optional[Dict]:
 @api_router.get("/dictionary/userhandles", status_code=HTTPStatus.OK, response_model=Optional[Dict])
 async def get_dictionary_userhandles(request: Request) -> Optional[Dict]:
     return await creator_service.get_dictionary_userhandles(params=dict(request.query_params.items()))
+
+
+@api_router.post("/profiles/quick-search", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def quick_search_profiles(request: Request,
+                                request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
+    return await creator_service.quick_search_profiles(request_body=request_body, params=dict(request.query_params.items()))
