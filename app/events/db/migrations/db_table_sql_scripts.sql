@@ -485,7 +485,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_interests
     created_at  TIMESTAMP DEFAULT timezone('utc'::text, now()),
     updated_at  TIMESTAMP DEFAULT timezone('utc'::text, now())
 );
-
 ALTER TABLE iiq_schema.dictionary_interests
     OWNER TO iiq;
 
@@ -515,6 +514,5 @@ CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_userhandles
     is_verified    BOOL                                 NOT NULL,
     CONSTRAINT dictionary_userhandles_user_id_uq UNIQUE (user_id)
 );
-
 ALTER TABLE iiq_schema.dictionary_userhandles
     OWNER TO iiq;
