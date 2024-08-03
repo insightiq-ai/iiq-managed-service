@@ -547,3 +547,14 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profile_quick_search
 );
 ALTER TABLE iiq_schema.profile_quick_search
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_languages
+(
+    code   VARCHAR(10)  NOT NULL PRIMARY KEY,
+    name   VARCHAR(100) NOT NULL,
+    updated_at TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    created_at TIMESTAMP DEFAULT timezone('utc'::text, now())
+);
+ALTER TABLE iiq_schema.dictionary_languages
+    OWNER TO iiq;

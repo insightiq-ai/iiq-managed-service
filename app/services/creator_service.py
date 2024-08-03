@@ -4,7 +4,7 @@ from typing import Dict, Optional
 from app.events.event_executor_registry import EventExecutorRegistry
 from app.services.resource_service import fetch_profile_analytics, fetch_search_profiles, fetch_content_information, \
     fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics, fetch_dictionary_userhandles, \
-    fetch_quick_search_profiles
+    fetch_quick_search_profiles, fetch_dictionary_languages
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -109,3 +109,16 @@ async def quick_search_profiles(request_body: object, params: Optional[Dict]) ->
         await executor_event.profile_quick_search_event_handler(data=profiles)
 
     return profiles
+
+
+async def get_dictionary_languages(params: Optional[Dict]) -> Optional[Dict]:
+    languages: Dict = await fetch_dictionary_languages(params=params)
+
+    if not languages:
+        logging.error(f"Languages do not exist with requested-filters")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.dictionary_languages_event_handler(data=languages)
+
+    return languages
