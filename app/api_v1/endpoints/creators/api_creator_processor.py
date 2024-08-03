@@ -32,6 +32,21 @@ async def fetch_contents(request: Request,
     return await creator_service.fetch_contents(request_body=request_body, params=dict(request.query_params.items()))
 
 
+@api_router.get("/dictionary/interests", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def get_dictionary_interests(request: Request) -> Optional[Dict]:
+    return await creator_service.get_dictionary_interests(params=dict(request.query_params.items()))
+
+
+@api_router.get("/dictionary/topics", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def get_dictionary_topics(request: Request) -> Optional[Dict]:
+    return await creator_service.get_dictionary_topics(params=dict(request.query_params.items()))
+
+
+@api_router.get("/dictionary/userhandles", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def get_dictionary_userhandles(request: Request) -> Optional[Dict]:
+    return await creator_service.get_dictionary_userhandles(params=dict(request.query_params.items()))
+
+
 @api_router.get("/dictionary/languages", status_code=HTTPStatus.OK, response_model=Optional[Dict])
 async def get_dictionary_languages(request: Request) -> Optional[Dict]:
     return await creator_service.get_dictionary_languages(params=dict(request.query_params.items()))

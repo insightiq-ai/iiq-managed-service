@@ -25,4 +25,7 @@ PROFILE_SEARCH_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_search',
 PROFILE_ANALYTICS_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_analytics', {})
 CONTENTS_INFORMATION_TABLE_MAPPINGS = config.get('mappings', {}).get('contents_information', {})
 PUBLISH_CONTENT_TABLE_MAPPINGS = config.get('mappings', {}).get('publish_content', {})
+DICTIONARY_INTERESTS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_interests', {})
+DICTIONARY_TOPICS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_topics', {})
+DICTIONARY_USERHANDLES_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_userhandles', {})
 DICTIONARY_LANGUAGES_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_languages', {})
