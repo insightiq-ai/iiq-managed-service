@@ -56,3 +56,8 @@ async def quick_search_profiles(request: Request,
 @api_router.get("/dictionary/languages", status_code=HTTPStatus.OK, response_model=Optional[Dict])
 async def get_dictionary_languages(request: Request) -> Optional[Dict]:
     return await creator_service.get_dictionary_languages(params=dict(request.query_params.items()))
+
+
+@api_router.get("/dictionary/brands", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def get_dictionary_brands(request: Request) -> Optional[Dict]:
+    return await creator_service.get_dictionary_brands(params=dict(request.query_params.items()))

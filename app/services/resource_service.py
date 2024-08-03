@@ -378,3 +378,14 @@ async def fetch_dictionary_languages(params: Optional[Dict]) -> Dict:
     # TODO do error-handling over here
 
     return response
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def fetch_dictionary_brands(params: Optional[Dict]) -> Dict:
+
+    url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/dictionary/brands")
+
+    response: Dict = await invoke_get_url(url=url, headers={}, auth=get_auth(), query=params)
+    # TODO do error-handling over here
+
+    return response

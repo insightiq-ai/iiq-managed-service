@@ -170,3 +170,7 @@ class BaseEvent(ABC):
     @classmethod
     async def dictionary_languages_event_handler(cls, data: Dict):
         pass
+
+    @classmethod
+    async def dictionary_brands_event_handler(cls, data: Dict):
+        pass

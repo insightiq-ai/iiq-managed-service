@@ -30,3 +30,4 @@ DICTIONARY_TOPICS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_to
 DICTIONARY_USERHANDLES_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_userhandles', {})
 PROFILE_QUICK_SEARCH_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_quick_search', {})
 DICTIONARY_LANGUAGES_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_languages', {})
+DICTIONARY_BRANDS_TABLE_MAPPINGS = config.get('mappings', {}).get('dictionary_brands', {})
