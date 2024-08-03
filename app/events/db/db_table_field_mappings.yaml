@@ -498,6 +498,7 @@ mappings:
             name: name
             value: value
 
+
     dictionary_userhandles:
         name: dictionary_userhandles
         schema: iiq_schema
@@ -520,3 +521,32 @@ mappings:
         fields:
             code: code
             name: name
+
+
+    profile_quick_search:
+        name: profile_quick_search
+        schema: iiq_schema
+        unique_key: work_platform_id, platform_username
+        fields:
+            platform_username: platform_username
+            url: url
+            image_url: image_url
+            follower_count: follower_count
+            subscriber_count: subscriber_count
+            is_verified: is_verified
+            work_platform:
+                id: work_platform_id
+                name: work_platform_name
+                logo_url: work_platform_logo_url
+            full_name: full_name
+            introduction: introduction
+            platform_account_type: platform_account_type
+            gender: gender
+            age_group: age_group
+            language: language
+            content_count: content_count
+            engagement_rate: engagement_rate
+            location:
+                city: location_city
+                state: location_state
+                country: location_country
