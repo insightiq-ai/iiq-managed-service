@@ -542,7 +542,6 @@ mappings:
                 state: location_state
                 country: location_country
 
-
     dictionary_languages:
         name: dictionary_languages
         schema: iiq_schema
