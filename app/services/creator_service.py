@@ -4,7 +4,8 @@ from typing import Dict, Optional
 from app.events.event_executor_registry import EventExecutorRegistry
 from app.services.resource_service import fetch_profile_analytics, fetch_search_profiles, fetch_content_information, \
     fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics, fetch_dictionary_userhandles, \
-    fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations
+    fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations, \
+    fetch_professional_profile_analytics
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -148,3 +149,16 @@ async def get_dictionary_locations(params: Optional[Dict]) -> Optional[Dict]:
         await executor_event.dictionary_locations_event_handler(data=locations)
 
     return locations
+
+
+async def professional_profile_analytics(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    professional_profile_analytics: Dict = await fetch_professional_profile_analytics(request_body=request_body, params=params)
+
+    if not professional_profile_analytics:
+        logging.error(f"Profile Analytics do not exist with requested-filters")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.profile_analytics_event_handler(data=professional_profile_analytics)
+
+    return professional_profile_analytics

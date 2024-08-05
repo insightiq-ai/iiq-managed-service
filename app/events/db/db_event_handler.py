@@ -266,3 +266,8 @@ class DbEventHandler(BaseEvent):
     async def dictionary_locations_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import DICTIONARY_LOCATIONS_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=DICTIONARY_LOCATIONS_TABLE_MAPPINGS, data=data.get('data'))
+
+    @classmethod
+    async def professional_profile_analytics_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import PROFESSIONAL_PROFILE_ANALYTICS_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=PROFESSIONAL_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
