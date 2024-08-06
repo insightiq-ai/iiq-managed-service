@@ -486,6 +486,7 @@ mappings:
     dictionary_interests:
         name: dictionary_interests
         schema: iiq_schema
+        unique_key: name
         fields:
             name: name
 
