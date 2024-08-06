@@ -66,3 +66,8 @@ async def get_dictionary_brands(request: Request) -> Optional[Dict]:
 @api_router.get("/dictionary/locations", status_code=HTTPStatus.OK, response_model=Optional[Dict])
 async def get_dictionary_locations(request: Request) -> Optional[Dict]:
     return await creator_service.get_dictionary_locations(params=dict(request.query_params.items()))
+
+
+@api_router.get("/dictionary/topics/relevance", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def get_dictionary_relevant_topics(request: Request) -> Optional[Dict]:
+    return await creator_service.get_dictionary_relevant_topics(params=dict(request.query_params.items()))

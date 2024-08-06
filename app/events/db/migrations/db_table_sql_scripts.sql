@@ -583,3 +583,20 @@ CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_locations
 );
 ALTER TABLE iiq_schema.dictionary_locations
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_topics_relevance
+(
+    id             UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    updated_at     TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    created_at     TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    identifier     VARCHAR(255)                         NOT NULL,
+    work_platform_id UUID                                NOT NULL,
+    topic_name     VARCHAR(255)                         NOT NULL,
+    distance       FLOAT                                NOT NULL,
+    frequency      FLOAT                                NOT NULL,
+    CONSTRAINT dictionary_topics_relevance_unique_key UNIQUE (work_platform_id, identifier)
+);
+
+ALTER TABLE iiq_schema.dictionary_topics_relevance
+    OWNER TO iiq;
