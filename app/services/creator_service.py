@@ -4,7 +4,8 @@ from typing import Dict, Optional
 from app.events.event_executor_registry import EventExecutorRegistry
 from app.services.resource_service import fetch_profile_analytics, fetch_search_profiles, fetch_content_information, \
     fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics, fetch_dictionary_userhandles, \
-    fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations
+    fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations, \
+    fetch_dictionary_relevant_topics
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -148,3 +149,16 @@ async def get_dictionary_locations(params: Optional[Dict]) -> Optional[Dict]:
         await executor_event.dictionary_locations_event_handler(data=locations)
 
     return locations
+
+
+async def get_dictionary_relevant_topics(params: Optional[Dict]) -> Optional[Dict]:
+    relevant_topics: Dict = await fetch_dictionary_relevant_topics(params=params)
+
+    if not relevant_topics:
+        logging.error(f"Relevant topics do not exist with requested-filters")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.dictionary_relevant_topics_event_handler(data=relevant_topics)
+
+    return relevant_topics
