@@ -480,7 +480,8 @@ ALTER TABLE iiq_schema.basic_profile_info
 
 CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_interests
 (
-    name        VARCHAR(255) NOT NULL PRIMARY KEY,
+    id          UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    name        VARCHAR(255) UNIQUE NOT NULL,
     created_at  TIMESTAMP DEFAULT timezone('utc'::text, now()),
     updated_at  TIMESTAMP DEFAULT timezone('utc'::text, now())
 );
@@ -550,7 +551,8 @@ ALTER TABLE iiq_schema.profile_quick_search
 
 CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_languages
 (
-    code   VARCHAR(10)  NOT NULL PRIMARY KEY,
+    id          UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    code   VARCHAR(10)  UNIQUE NOT NULL,
     name   VARCHAR(100) NOT NULL,
     updated_at TIMESTAMP DEFAULT timezone('utc'::text, now()),
     created_at TIMESTAMP DEFAULT timezone('utc'::text, now())
