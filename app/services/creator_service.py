@@ -152,13 +152,13 @@ async def get_dictionary_locations(params: Optional[Dict]) -> Optional[Dict]:
 
 
 async def professional_profile_analytics(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
-    professional_profile_analytics: Dict = await fetch_professional_profile_analytics(request_body=request_body, params=params)
+    analytics: Dict = await fetch_professional_profile_analytics(request_body=request_body, params=params)
 
-    if not professional_profile_analytics:
+    if not analytics:
         logging.error(f"Profile Analytics do not exist with requested-filters")
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.profile_analytics_event_handler(data=professional_profile_analytics)
+        await executor_event.profile_analytics_event_handler(data=analytics)
 
-    return professional_profile_analytics
+    return analytics

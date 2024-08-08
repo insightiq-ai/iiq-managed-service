@@ -442,19 +442,19 @@ mappings:
                 id: work_platform_id
 
 
-    profile_analytics:
-        name: profile_analytics
-        schema: iiq_schema
-        unique_key: work_platform_id, platform_username
-        fields:
-            profile:
-                platform_username: platform_username
-                url: url
-                engagement_rate: engagement_rate
-                location:
-                    city: city
-            work_platform:
-                id: work_platform_id
+#    profile_analytics:
+#        name: profile_analytics
+#        schema: iiq_schema
+#        unique_key: work_platform_id, platform_username
+#        fields:
+#            profile:
+#                platform_username: platform_username
+#                url: url
+#                engagement_rate: engagement_rate
+#                location:
+#                    city: city
+#            work_platform:
+#                id: work_platform_id
 
 
     contents_information:
@@ -570,8 +570,8 @@ mappings:
             type: type
 
 
-    professional_profile_analytics:
-        name: professional_profile_analytics
+    profile_analytics:
+        name: profile_analytics
         schema: iiq_schema
         unique_key: work_platform_id, platform_username
         fields:

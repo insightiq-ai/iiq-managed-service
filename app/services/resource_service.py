@@ -407,8 +407,11 @@ async def fetch_professional_profile_analytics(request_body: object, params: Opt
 
     url = urllib.parse.urljoin(get_base_url(), "/v1/professional/creators/profiles/analytics")
 
-    response: Dict = await invoke_post_url(url=url, body=json.dumps(request_body), query=params,
-                                           headers={}, auth=get_auth())
+    response: Dict = await invoke_post_url(url=url,
+                                           body=json.dumps(request_body),
+                                           query=params,
+                                           headers={},
+                                           auth=get_auth())
     # TODO do error-handling over here
 
     return response
