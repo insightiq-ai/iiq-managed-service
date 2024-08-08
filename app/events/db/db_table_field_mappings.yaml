@@ -568,3 +568,43 @@ mappings:
             id: id
             name: name
             type: type
+
+
+    professional_profile_analytics:
+        name: professional_profile_analytics
+        schema: iiq_schema
+        unique_key: work_platform_id, platform_username
+        fields:
+            first_name: first_name
+            last_name: last_name
+            platform_username: platform_username
+            external_id: external_id
+            profile_headline: profile_headline
+            introduction: introduction
+            url: url
+            image_url: image_url
+            industry: industry
+            work_platform:
+                id: work_platform_id
+                name: work_platform_name
+                logo_url: work_platform_logo_url
+            location:
+                name: location_name
+                country: location_country
+            languages: languages
+            work_experiences: work_experiences
+            education: education
+            publications: publications
+            certifications: certifications
+            volunteer_experiences: volunteer_experiences
+            honors: honors
+            projects: projects
+        value_post_processors:
+            languages: app.events.db.value_post_processors.cast_to_json
+            work_experiences: app.events.db.value_post_processors.cast_to_json
+            education: app.events.db.value_post_processors.cast_to_json
+            publications: app.events.db.value_post_processors.cast_to_json
+            certifications: app.events.db.value_post_processors.cast_to_json
+            volunteer_experiences: app.events.db.value_post_processors.cast_to_json
+            honors: app.events.db.value_post_processors.cast_to_json
+            projects: app.events.db.value_post_processors.cast_to_json
