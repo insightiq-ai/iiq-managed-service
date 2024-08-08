@@ -6,6 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.api_v1.endpoints.connect import api_user
 from app.api_v1.endpoints.creators import api_creator
+from app.api_v1.endpoints.professional_creators import api_professional_creator
 from app.api_v1.endpoints.webhook import api_webhook
 from app.core.config import settings
 from app.utils.setup_config import configure_webhooks, register_event_listeners
@@ -16,6 +17,7 @@ app = FastAPI()
 app.include_router(api_webhook.api_router, prefix='/v1')
 app.include_router(api_creator.api_router, prefix='/v1')
 app.include_router(api_user.api_router, prefix='/v1')
+app.include_router(api_professional_creator.api_router, prefix='/v1')
 
 app.add_middleware(
     CORSMiddleware,

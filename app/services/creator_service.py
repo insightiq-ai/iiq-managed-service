@@ -5,7 +5,7 @@ from app.events.event_executor_registry import EventExecutorRegistry
 from app.services.resource_service import fetch_profile_analytics, fetch_search_profiles, fetch_content_information, \
     fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics, fetch_dictionary_userhandles, \
     fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations, \
-    fetch_dictionary_relevant_topics, fetch_contact_info
+    fetch_dictionary_relevant_topics, fetch_contact_info, fetch_professional_profile_analytics
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -175,3 +175,16 @@ async def get_contact_info(request_body: object, params: Optional[Dict]) -> Opti
         await executor_event.profile_contact_info_event_handler(data=profiles)
 
     return profiles
+
+
+async def professional_profile_analytics(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    analytics: Dict = await fetch_professional_profile_analytics(request_body=request_body, params=params)
+
+    if not analytics:
+        logging.error(f"Profile Analytics do not exist with requested-filters")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.profile_analytics_event_handler(data=analytics)
+
+    return analytics

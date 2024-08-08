@@ -622,3 +622,36 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profile_contact_info
 );
 ALTER TABLE iiq_schema.profile_contact_info
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.professional_profile_analytics
+(
+    id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    first_name             VARCHAR(255),
+    last_name              VARCHAR(255),
+    platform_username      VARCHAR(255),
+    external_id            VARCHAR(255),
+    profile_headline       TEXT,
+    introduction           TEXT,
+    url                   TEXT,
+    image_url              TEXT,
+    industry               VARCHAR(255),
+    work_platform_id       UUID,
+    work_platform_name     VARCHAR(255),
+    work_platform_logo_url TEXT,
+    location_name          VARCHAR(255),
+    location_country       VARCHAR(255),
+    languages              JSONB,
+    work_experiences       JSONB,
+    education              JSONB,
+    publications           JSONB,
+    certifications         JSONB,
+    volunteer_experiences  JSONB,
+    honors                 JSONB,
+    projects               JSONB,
+    CONSTRAINT unique_profile UNIQUE (work_platform_id, platform_username)
+);
+ALTER TABLE iiq_schema.professional_profile_analytics
+    OWNER TO iiq;
