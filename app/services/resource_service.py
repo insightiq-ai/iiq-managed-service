@@ -411,3 +411,15 @@ async def fetch_dictionary_relevant_topics(params: Optional[Dict]) -> Dict:
     # TODO do error-handling over here
 
     return response
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def fetch_contact_info(request_body: object, params: Optional[Dict]) -> Dict:
+
+    url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/profiles/contact-info")
+
+    response: Dict = await invoke_post_url(url=url, body=json.dumps(request_body), query=params,
+                                           headers={}, auth=get_auth())
+    # TODO do error-handling over here
+
+    return response

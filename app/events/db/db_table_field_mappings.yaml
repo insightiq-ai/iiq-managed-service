@@ -579,3 +579,32 @@ mappings:
             name: topic_name
             distance: distance
             frequency: frequency
+
+
+    profile_contact_info:
+        name: profile_contact_info
+        schema: iiq_schema
+        unique_key: work_platform_id, profile_platform_username
+        fields:
+            work_platform:
+                id: work_platform_id
+                name: work_platform_name
+                logo_url: work_platform_logo_url
+            profile:
+                platform_username: profile_platform_username
+                url: profile_url
+                image_url: profile_image_url
+                full_name: profile_full_name
+                follower_count: profile_follower_count
+                following_count: profile_following_count
+                subscriber_count: profile_subscriber_count
+                is_verified: profile_is_verified
+                is_business: profile_is_business
+                external_id: profile_external_id
+                platform_profile_id: profile_platform_profile_id
+            contact_details: contact_details
+        value_post_processors:
+            profile_follower_count: app.events.db.value_post_processors.cast_string_to_int
+            profile_following_count: app.events.db.value_post_processors.cast_string_to_int
+            profile_subscriber_count: app.events.db.value_post_processors.cast_string_to_int
+            contact_details: app.events.db.value_post_processors.cast_to_json
