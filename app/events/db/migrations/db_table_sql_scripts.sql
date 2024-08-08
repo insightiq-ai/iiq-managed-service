@@ -596,3 +596,29 @@ CREATE TABLE IF NOT EXISTS iiq_schema.dictionary_topics_relevance
 );
 ALTER TABLE iiq_schema.dictionary_topics_relevance
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.profile_contact_info
+(
+    id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    work_platform_id       UUID                                  NOT NULL,
+    work_platform_name     VARCHAR(255)                          NOT NULL,
+    work_platform_logo_url VARCHAR(255)                          NOT NULL,
+    profile_platform_username      VARCHAR(255)                  NOT NULL,
+    profile_url                    VARCHAR(255)                  NOT NULL,
+    profile_image_url              VARCHAR(255),
+    profile_full_name              VARCHAR(255),
+    profile_follower_count         INT,
+    profile_following_count        INT,
+    profile_subscriber_count       INT,
+    profile_is_verified            BOOLEAN,
+    profile_is_business            BOOLEAN,
+    profile_external_id            VARCHAR(255)                  NOT NULL,
+    profile_platform_profile_id    VARCHAR(255)                  NOT NULL,
+    contact_details                JSONB,
+    CONSTRAINT profile_contact_info_unique UNIQUE (work_platform_id, profile_platform_username)
+);
+ALTER TABLE iiq_schema.profile_contact_info
+    OWNER TO iiq;

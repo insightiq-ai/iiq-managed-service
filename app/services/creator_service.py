@@ -5,7 +5,7 @@ from app.events.event_executor_registry import EventExecutorRegistry
 from app.services.resource_service import fetch_profile_analytics, fetch_search_profiles, fetch_content_information, \
     fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics, fetch_dictionary_userhandles, \
     fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations, \
-    fetch_dictionary_relevant_topics
+    fetch_dictionary_relevant_topics, fetch_contact_info
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -162,3 +162,16 @@ async def get_dictionary_relevant_topics(params: Optional[Dict]) -> Optional[Dic
         await executor_event.dictionary_relevant_topics_event_handler(data=relevant_topics)
 
     return relevant_topics
+
+
+async def get_contact_info(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    profiles: Dict = await fetch_contact_info(request_body=request_body, params=params)
+
+    if not profiles:
+        logging.error(f"Contact info for the profiles do not exist with requested-filters")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.profile_contact_info_event_handler(data=profiles)
+
+    return profiles
