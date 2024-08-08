@@ -276,3 +276,8 @@ class DbEventHandler(BaseEvent):
     async def profile_contact_info_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import PROFILE_CONTACT_INFO_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFILE_CONTACT_INFO_TABLE_MAPPINGS, data=data)
+
+    @classmethod
+    async def professional_profile_analytics_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import PROFESSIONAL_PROFILE_ANALYTICS_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=PROFESSIONAL_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
