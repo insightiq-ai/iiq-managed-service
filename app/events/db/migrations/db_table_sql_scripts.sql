@@ -651,7 +651,7 @@ CREATE TABLE IF NOT EXISTS iiq_schema.professional_profile_analytics
     volunteer_experiences  JSONB,
     honors                 JSONB,
     projects               JSONB,
-    CONSTRAINT unique_profile UNIQUE (work_platform_id, platform_username)
+    CONSTRAINT unique_professional_profile UNIQUE (work_platform_id, platform_username)
 );
 ALTER TABLE iiq_schema.professional_profile_analytics
     OWNER TO iiq;
