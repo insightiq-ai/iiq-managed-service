@@ -93,7 +93,18 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
   - [profile_search](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-search#Responses)
   - [profile_analytics](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-analytics#Responses)
   - [contents_information](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-content-fetch#Responses) 
-  - [publish_content](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-content-publish#response-body) 
+  - [publish_content](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-content-publish#response-body)
+  - [brands](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-brands#Responses)
+  - [interests](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-interests#Responses)
+  - [languages](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-languages#Responses)
+  - [locations](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-locations#Responses)
+  - [topics](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-topics#Responses)
+  - [topics_relevance](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-dictionary-topic-relevance#Responses)
+  - [userhandles](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-userhandles#Responses)
+  - [profile_quick_search](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-quick-search#Responses)
+  - [profile_contact_info](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-contact-info#Responses)
+  - [professional_profile_analytics](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#Responses)
+
 
 ## APIs
 - Create User
@@ -157,4 +168,82 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
 
          Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-content-fetch#Responses)
 
+  - Fetch a dictionary of brands.
+    - Dictionary of brands for the public profiles search endpoint:
+      - **GET** <BASE-URL>/v1/social/creators/dictionary/brands
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-brands#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-brands#Responses)
+
+  - Fetch a dictionary of interests.
+    - Dictionary of interests for the public profiles search endpoint:
+      - **GET** <BASE-URL>/v1/social/creators/dictionary/interests
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-interests#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-interests#Responses)
  
+  - Fetch a dictionary of languages.
+    - Dictionary of languages for the public profiles search endpoint:
+      - **GET** <BASE-URL>/v1/social/creators/dictionary/languages
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-languages#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-languages#Responses)
+
+  - Fetch a dictionary of locations.
+    - Dictionary of countries for the public profiles search endpoint:
+      - **GET** <BASE-URL>/v1/social/creators/dictionary/locations
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-locations#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-locations#Responses)
+
+  - Fetch a dictionary of topics.
+    - Dictionary of topic tags for the public profiles search endpoint:
+      - **GET** <BASE-URL>/v1/social/creators/dictionary/topics
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-topics#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-topics#Responses)
+
+  - Fetch a dictionary of relevance weights of topic tags:
+    - Dictionary of relevance weights of topic tags for the public profiles search endpoint.
+      - **GET** <BASE-URL>/v1/social/creators/dictionary/topics/relevance
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-dictionary-topic-relevance#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-dictionary-topic-relevance#Responses)
+
+  - Get a dictionary of userhandles for whom creator lookalikes data is available:
+    - Retrieve list of userhandles matching the query text.
+      - **GET** <BASE-URL>/v1/social/creators/dictionary/userhandles
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-userhandles#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/list-v-1-social-creator-dictionary-userhandles#Responses)
+
+  - Get public analytics of a profile:
+    - Search for creator profiles using publicly available data based on available filters.
+      - **POST** <BASE-URL>/v1/social/creators/profiles/quick-search
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-quick-search#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-quick-search#Responses)
+
+  - Get contact details of a profile:
+    - Get contact details of a particular handle on Instagram, YouTube and TikTok, without fetching the analytics.
+      - **POST** <BASE-URL>/v1/social/creators/profiles/contact-info
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-contact-info#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-contact-info#Responses)
+
+  - Get contact details of a professional:
+    - Get analytics of profile using publicly available data based on their profile link.
+      - **POST** <BASE-URL>/v1/professional/creators/profiles/analytics
+
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#request-body)
+
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#Responses)
