@@ -624,7 +624,7 @@ ALTER TABLE iiq_schema.profile_contact_info
     OWNER TO iiq;
 
 
-CREATE TABLE IF NOT EXISTS iiq_schema.profile_analytics
+CREATE TABLE IF NOT EXISTS iiq_schema.professional_profile_analytics
 (
     id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
     created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
@@ -653,5 +653,5 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profile_analytics
     projects               JSONB,
     CONSTRAINT unique_profile UNIQUE (work_platform_id, platform_username)
 );
-ALTER TABLE iiq_schema.profile_analytics
+ALTER TABLE iiq_schema.professional_profile_analytics
     OWNER TO iiq;
