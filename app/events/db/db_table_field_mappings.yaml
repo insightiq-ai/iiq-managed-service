@@ -610,8 +610,8 @@ mappings:
             contact_details: app.events.db.value_post_processors.cast_to_json
 
 
-    professional_profile_analytics:
-        name: professional_profile_analytics
+    profile_analytics:
+        name: profile_analytics
         schema: iiq_schema
         unique_key: work_platform_id, platform_username
         fields:
