@@ -185,6 +185,6 @@ async def professional_profile_analytics(request_body: object, params: Optional[
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.profile_analytics_event_handler(data=analytics)
+        await executor_event.professional_profile_analytics_event_handler(data=analytics)
 
     return analytics
