@@ -438,3 +438,18 @@ async def fetch_professional_profile_analytics(request_body: object, params: Opt
     # TODO do error-handling over here
 
     return response
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def fetch_async_profile_analytics(request_body: object, params: Optional[Dict]) -> Dict:
+
+    url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/async/profiles/analytics")
+
+    response: Dict = await invoke_post_url(url=url,
+                                          body=json.dumps(request_body),
+                                          query=params,
+                                          headers={},
+                                          auth=get_auth())
+    #TODO do error-handling over here
+
+    return response

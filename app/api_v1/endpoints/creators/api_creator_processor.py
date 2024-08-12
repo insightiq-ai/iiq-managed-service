@@ -77,3 +77,9 @@ async def get_dictionary_relevant_topics(request: Request) -> Optional[Dict]:
 async def get_contact_info(request: Request,
                            request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
     return await creator_service.get_contact_info(request_body=request_body, params=dict(request.query_params.items()))
+
+
+@api_router.post("/async/profiles/analytics", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def get_async_profiles(request: Request,
+                             request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
+    return await creator_service.get_async_profiles(request_body=request_body, params=dict(request.query_params.items()))

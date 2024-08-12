@@ -655,3 +655,61 @@ CREATE TABLE IF NOT EXISTS iiq_schema.professional_profile_analytics
 );
 ALTER TABLE iiq_schema.professional_profile_analytics
     OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics
+(
+    id                               UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    iiq_id                           UUID                                 NOT NULL,
+    created_at                       TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at                       TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    status                           VARCHAR(100),
+    identifier                       VARCHAR(100),
+    report_generated_at              TIMESTAMP,
+
+    -- Work Platform Fields
+    work_platform_id                 UUID,
+    work_platform_name               VARCHAR(255),
+    work_platform_logo_url           VARCHAR(255),
+
+    -- Profile Fields (Flattened)
+    platform_username                VARCHAR(255),
+    profile_url                      VARCHAR(255),
+    profile_image_url                VARCHAR(255),
+    profile_follower_count           INTEGER,
+    profile_subscriber_count         INTEGER,
+    profile_is_verified              BOOLEAN,
+    profile_full_name                VARCHAR(255),
+    profile_introduction             VARCHAR(255),
+    profile_platform_account_type    VARCHAR(255),
+    profile_gender                   VARCHAR(50),
+    profile_age_group                VARCHAR(50),
+    profile_language                 VARCHAR(50),
+    profile_average_likes            INTEGER,
+    profile_average_comments         INTEGER,
+    profile_average_views            INTEGER,
+    profile_average_reels_views      INTEGER,
+    profile_engagement_rate          FLOAT,
+    profile_content_count            INTEGER,
+    profile_sponsored_posts_performance FLOAT,
+
+    -- JSON Fields for Complex Data
+    profile_reputation_history       JSONB,
+    profile_location                 JSONB,
+    profile_top_hashtags             JSONB,
+    profile_top_mentions             JSONB,
+    profile_top_interests            JSONB,
+    profile_brand_affinity           JSONB,
+    profile_top_contents             JSONB,
+    profile_recent_contents          JSONB,
+    profile_sponsored_contents       JSONB,
+    profile_lookalikes               JSONB,
+    profile_audience                 JSONB,
+    profile_engagement_rate_histogram JSONB,
+    profile_audience_likers          JSONB,
+    profile_contact_details          JSONB,
+
+    CONSTRAINT unique_async_profile_analytics UNIQUE (iiq_id)
+);
+
+ALTER TABLE iiq_schema.async_profile_analytics OWNER TO iiq;
