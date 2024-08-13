@@ -653,9 +653,9 @@ mappings:
     async_profile_analytics:
         name: async_profile_analytics
         schema: iiq_schema
-        unique_key: id
+        unique_key: iiq_id
         fields:
-            id: id
+            id: iiq_id
             status: status
             identifier: identifier
             report_generated_at: report_generated_at
@@ -684,97 +684,32 @@ mappings:
                 engagement_rate: profile_engagement_rate
                 content_count: profile_content_count
                 sponsored_posts_performance: profile_sponsored_posts_performance
-                reputation_history: profile_reputation_history_json
-                location: profile_location_json
-                top_hashtags: profile_top_hashtags_json
-                top_mentions: profile_top_mentions_json
-                top_interests: profile_top_interests_json
-                brand_affinity: profile_brand_affinity_json
-                top_contents: profile_top_contents_json
-                recent_contents: profile_recent_contents_json
-                sponsored_contents: profile_sponsored_contents_json
-                lookalikes: profile_lookalikes_json
-                audience: profile_audience_json
-                engagement_rate_histogram: profile_engagement_rate_histogram_json
-                audience_likers: profile_audience_likers_json
-                contact_details: profile_contact_details_json
+                reputation_history: profile_reputation_history
+                location: profile_location
+                top_hashtags: profile_top_hashtags
+                top_mentions: profile_top_mentions
+                top_interests: profile_top_interests
+                brand_affinity: profile_brand_affinity
+                top_contents: profile_top_contents
+                recent_contents: profile_recent_contents
+                sponsored_contents: profile_sponsored_contents
+                lookalikes: profile_lookalikes
+                audience: profile_audience
+                engagement_rate_histogram: profile_engagement_rate_histogram
+                audience_likers: profile_audience_likers
+                contact_details: profile_contact_details
         value_post_processors:
-            profile_reputation_history_json: app.events.db.value_post_processors.cast_to_json
-            profile_location_json: app.events.db.value_post_processors.cast_to_json
-            profile_top_hashtags_json: app.events.db.value_post_processors.cast_to_json
-            profile_top_mentions_json: app.events.db.value_post_processors.cast_to_json
-            profile_top_interests_json: app.events.db.value_post_processors.cast_to_json
-            profile_brand_affinity_json: app.events.db.value_post_processors.cast_to_json
-            profile_top_contents_json: app.events.db.value_post_processors.cast_to_json
-            profile_recent_contents_json: app.events.db.value_post_processors.cast_to_json
-            profile_sponsored_contents_json: app.events.db.value_post_processors.cast_to_json
-            profile_lookalikes_json: app.events.db.value_post_processors.cast_to_json
-            profile_audience_json: app.events.db.value_post_processors.cast_to_json
-            profile_engagement_rate_histogram_json: app.events.db.value_post_processors.cast_to_json
-            profile_audience_likers_json: app.events.db.value_post_processors.cast_to_json
-            profile_contact_details_json: app.events.db.value_post_processors.cast_to_json
-
-
-#    get_async_profile_analytics:
-#        name: async_profile_analytics
-#        schema: iiq_schema
-#        unique_key: id
-#        fields:
-#            id: id
-#            status: status
-#            identifier: identifier
-#            report_generated_at: report_generated_at
-#            updated_at: updated_at
-#            work_platform:
-#                id: work_platform_id
-#                name: work_platform_name
-#                logo_url: work_platform_logo_url
-#            profile:
-#                platform_username: platform_username
-#                url: profile_url
-#                image_url: profile_image_url
-#                follower_count: profile_follower_count
-#                subscriber_count: profile_subscriber_count
-#                is_verified: profile_is_verified
-#                full_name: profile_full_name
-#                introduction: profile_introduction
-#                platform_account_type: profile_platform_account_type
-#                gender: profile_gender
-#                age_group: profile_age_group
-#                language: profile_language
-#                average_likes: profile_average_likes
-#                average_comments: profile_average_comments
-#                average_views: profile_average_views
-#                average_reels_views: profile_average_reels_views
-#                engagement_rate: profile_engagement_rate
-#                content_count: profile_content_count
-#                sponsored_posts_performance: profile_sponsored_posts_performance
-#                reputation_history: profile_reputation_history_json
-#                location: profile_location_json
-#                top_hashtags: profile_top_hashtags_json
-#                top_mentions: profile_top_mentions_json
-#                top_interests: profile_top_interests_json
-#                brand_affinity: profile_brand_affinity_json
-#                top_contents: profile_top_contents_json
-#                recent_contents: profile_recent_contents_json
-#                sponsored_contents: profile_sponsored_contents_json
-#                lookalikes: profile_lookalikes_json
-#                audience: profile_audience_json
-#                engagement_rate_histogram: profile_engagement_rate_histogram_json
-#                audience_likers: profile_audience_likers_json
-#                contact_details: profile_contact_details_json
-#        value_post_processors:
-#            profile_reputation_history_json: app.events.db.value_post_processors.cast_to_json
-#            profile_location_json: app.events.db.value_post_processors.cast_to_json
-#            profile_top_hashtags_json: app.events.db.value_post_processors.cast_to_json
-#            profile_top_mentions_json: app.events.db.value_post_processors.cast_to_json
-#            profile_top_interests_json: app.events.db.value_post_processors.cast_to_json
-#            profile_brand_affinity_json: app.events.db.value_post_processors.cast_to_json
-#            profile_top_contents_json: app.events.db.value_post_processors.cast_to_json
-#            profile_recent_contents_json: app.events.db.value_post_processors.cast_to_json
-#            profile_sponsored_contents_json: app.events.db.value_post_processors.cast_to_json
-#            profile_lookalikes_json: app.events.db.value_post_processors.cast_to_json
-#            profile_audience_json: app.events.db.value_post_processors.cast_to_json
-#            profile_engagement_rate_histogram_json: app.events.db.value_post_processors.cast_to_json
-#            profile_audience_likers_json: app.events.db.value_post_processors.cast_to_json
-#            profile_contact_details_json: app.events.db.value_post_processors.cast_to_json
+            profile_reputation_history: app.events.db.value_post_processors.cast_to_json
+            profile_location: app.events.db.value_post_processors.cast_to_json
+            profile_top_hashtags: app.events.db.value_post_processors.cast_to_json
+            profile_top_mentions: app.events.db.value_post_processors.cast_to_json
+            profile_top_interests: app.events.db.value_post_processors.cast_to_json
+            profile_brand_affinity: app.events.db.value_post_processors.cast_to_json
+            profile_top_contents: app.events.db.value_post_processors.cast_to_json
+            profile_recent_contents: app.events.db.value_post_processors.cast_to_json
+            profile_sponsored_contents: app.events.db.value_post_processors.cast_to_json
+            profile_lookalikes: app.events.db.value_post_processors.cast_to_json
+            profile_audience: app.events.db.value_post_processors.cast_to_json
+            profile_engagement_rate_histogram: app.events.db.value_post_processors.cast_to_json
+            profile_audience_likers: app.events.db.value_post_processors.cast_to_json
+            profile_contact_details: app.events.db.value_post_processors.cast_to_json

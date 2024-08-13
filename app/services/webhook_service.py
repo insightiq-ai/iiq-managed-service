@@ -6,12 +6,12 @@ from app.events.event_executor_registry import EventExecutorRegistry
 from app.schemas.enum import WebhookEvent, Product, PlatformCategory
 from app.schemas.webhook_schemas import WebhookRequestData, AccountConnectedEvent, ContentEvent, \
     ContentGroupEvent, ProfileEvent, TransactionEvent, PayoutEvent, BalanceEvent, ActivityArtistEvent, \
-    ActivityContentEvent, ProfileAudienceEvent, ContentCommentEvent, PublishContentEvent
+    ActivityContentEvent, ProfileAudienceEvent, ContentCommentEvent, PublishContentEvent, ProfileAnalyticsEvent
 from app.services.resource_service import fetch_contents_by_ids, fetch_account_by_id, fetch_content_groups_by_ids, \
     fetch_profile_by_id, fetch_social_transactions_by_ids, fetch_social_payouts_by_ids, fetch_balances_by_ids, \
     fetch_activity_artists_by_ids, fetch_activity_contents_by_ids, fetch_profile_audience_by_account_id, \
     fetch_content_comments_by_content_id_account_id, fetch_commerce_transactions_by_ids, fetch_commerce_payouts_by_ids, \
-    fetch_publish_content_by_id
+    fetch_publish_content_by_id, fetch_profile_analytics_by_id
 
 
 async def process_webhook(webhook_request_data: WebhookRequestData):
@@ -75,6 +75,11 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
           or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_FAILURE) \
             and Product.PUBLISH_CONTENT in settings.SUPPORTED_PRODUCTS:
         await add_update_publish_content(webhook_request_data=webhook_request_data)
+
+    elif webhook_request_data.event in [
+            WebhookEvent.PROFILE_ANALYTICS_SUCCESS, WebhookEvent.PROFILE_ANALYTICS_FAILURE
+         ] and Product.CREATOR_SEARCH in settings.SUPPORTED_PRODUCTS:
+        await update_profile_analytics(webhook_request_data=webhook_request_data)
 
 
 async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optional[PlatformCategory] = None):
@@ -141,6 +146,10 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
             await executor_event.contents_publish_ready_event_handler(data=data)
         elif webhook_event == WebhookEvent.SESSION_EXPIRED:
             await executor_event.session_expired_event_handler(data=data)
+        elif webhook_event == WebhookEvent.PROFILE_ANALYTICS_SUCCESS:
+            await executor_event.async_profile_analytics_success_event_handler(data=data)
+        elif webhook_event == WebhookEvent.PROFILE_ANALYTICS_FAILURE:
+            await executor_event.async_profile_analytics_failure_event_handler(data=data)
 
 
 async def add_update_account(webhook_request_data: WebhookRequestData):
@@ -407,3 +416,16 @@ async def _get_work_platform_category_by_account_id(account_id: str):
             return PlatformCategory.COMMERCE
         else:
             return PlatformCategory.SOCIAL
+
+
+async def update_profile_analytics(webhook_request_data: WebhookRequestData):
+    profile_analytics_event: ProfileAnalyticsEvent = ProfileAnalyticsEvent(**webhook_request_data.data)
+
+    if profile_analytics_event.job_id:
+        async_profile_analytics: Dict = await fetch_profile_analytics_by_id(id=profile_analytics_event.job_id)
+
+        if not async_profile_analytics:
+            logging.error(f"Profile-analytics do not exists with publish-id: {profile_analytics_event.job_id}")
+            return
+
+        await send_events(webhook_event=webhook_request_data.event, data=async_profile_analytics)
