@@ -419,13 +419,14 @@ async def _get_work_platform_category_by_account_id(account_id: str):
 
 
 async def update_profile_analytics(webhook_request_data: WebhookRequestData):
-    profile_analytics_event: ProfileAnalyticsEvent = ProfileAnalyticsEvent(**webhook_request_data.data)
+    profile_analytics_event = webhook_request_data.data
+    profile_analytics_event_job_id = profile_analytics_event['job_id']
 
-    if profile_analytics_event.job_id:
-        async_profile_analytics: Dict = await fetch_profile_analytics_by_id(id=profile_analytics_event.job_id)
+    if profile_analytics_event_job_id:
+        async_profile_analytics: Dict = await fetch_profile_analytics_by_id(id=profile_analytics_event_job_id)
 
         if not async_profile_analytics:
-            logging.error(f"Profile-analytics do not exists with publish-id: {profile_analytics_event.job_id}")
+            logging.error(f"Profile-analytics do not exists with publish-id: {profile_analytics_event_job_id}")
             return
 
         await send_events(webhook_event=webhook_request_data.event, data=async_profile_analytics)
