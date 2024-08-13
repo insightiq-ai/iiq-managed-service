@@ -195,7 +195,7 @@ async def get_async_profile_analytics(request_body: object, params: Optional[Dic
     async_profile_analytics: Dict = await request_async_profile_analytics(request_body=request_body, params=params)
 
     if not async_profile_analytics:
-        logging.error(f"Profile Analytics do not exist with requested-filters")
+        logging.error(f"Profile Analytics do not exist with requested-filters: {request_body}")
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
