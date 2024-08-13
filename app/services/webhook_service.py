@@ -79,7 +79,7 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
     elif webhook_request_data.event in [
             WebhookEvent.PROFILE_ANALYTICS_SUCCESS, WebhookEvent.PROFILE_ANALYTICS_FAILURE
          ] and Product.CREATOR_SEARCH in settings.SUPPORTED_PRODUCTS:
-        await update_profile_analytics(webhook_request_data=webhook_request_data)
+        await update_async_profile_analytics(webhook_request_data=webhook_request_data)
 
 
 async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optional[PlatformCategory] = None):
@@ -418,15 +418,14 @@ async def _get_work_platform_category_by_account_id(account_id: str):
             return PlatformCategory.SOCIAL
 
 
-async def update_profile_analytics(webhook_request_data: WebhookRequestData):
-    profile_analytics_event = webhook_request_data.data
-    profile_analytics_event_job_id = profile_analytics_event['job_id']
+async def update_async_profile_analytics(webhook_request_data: WebhookRequestData):
+    profile_analytics_event = ProfileAnalyticsEvent(**webhook_request_data.data)
+    profile_analytics_event_job_id = profile_analytics_event.job_id
 
-    if profile_analytics_event_job_id:
-        async_profile_analytics: Dict = await fetch_profile_analytics_by_id(id=profile_analytics_event_job_id)
+    async_profile_analytics: Dict = await fetch_profile_analytics_by_id(id=profile_analytics_event_job_id)
 
-        if not async_profile_analytics:
-            logging.error(f"Profile-analytics do not exists with publish-id: {profile_analytics_event_job_id}")
-            return
+    if not async_profile_analytics:
+        logging.error(f"Profile-analytics do not exists with publish-id: {profile_analytics_event_job_id}")
+        return
 
-        await send_events(webhook_event=webhook_request_data.event, data=async_profile_analytics)
+    await send_events(webhook_event=webhook_request_data.event, data=async_profile_analytics)
