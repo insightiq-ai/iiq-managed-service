@@ -71,3 +71,7 @@ class ActivityContentEvent(WebhookPayload):
 
 class PublishContentEvent(WebhookPayload):
     publish_id: str
+
+
+class ProfileAnalyticsEvent:
+    job_id: str

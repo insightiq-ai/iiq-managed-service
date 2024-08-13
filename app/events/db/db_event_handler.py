@@ -286,3 +286,13 @@ class DbEventHandler(BaseEvent):
     async def async_profile_analytics_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
+
+    @classmethod
+    async def async_profile_analytics_success_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
+
+    @classmethod
+    async def async_profile_analytics_failure_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
