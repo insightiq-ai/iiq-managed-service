@@ -192,7 +192,7 @@ class BaseEvent(ABC):
         pass
 
     @classmethod
-    async def async_profile_analytics_event_handler(cls, data: Dict):
+    async def async_profile_analytics_request_event_handler(cls, data: Dict):
         pass
 
     @classmethod

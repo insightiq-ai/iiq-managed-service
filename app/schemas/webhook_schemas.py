@@ -73,5 +73,5 @@ class PublishContentEvent(WebhookPayload):
     publish_id: str
 
 
-class ProfileAnalyticsEvent:
+class ProfileAnalyticsEvent(BaseModel):
     job_id: str
