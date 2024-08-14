@@ -6,7 +6,7 @@ from app.services.resource_service import fetch_profile_analytics, fetch_search_
     fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics, fetch_dictionary_userhandles, \
     fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations, \
     fetch_dictionary_relevant_topics, fetch_contact_info, fetch_professional_profile_analytics, \
-    request_async_profile_analytics
+    post_async_profile_analytics_request
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -191,8 +191,8 @@ async def professional_profile_analytics(request_body: object, params: Optional[
     return analytics
 
 
-async def get_async_profile_analytics(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
-    async_profile_analytics: Dict = await request_async_profile_analytics(request_body=request_body, params=params)
+async def post_async_profile_analytics(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    async_profile_analytics: Dict = await post_async_profile_analytics_request(request_body=request_body, params=params)
 
     if not async_profile_analytics:
         logging.error(f"Profile Analytics do not exist with requested-filters: {request_body}")
