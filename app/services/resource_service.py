@@ -451,7 +451,7 @@ async def fetch_professional_profile_analytics(request_body: object, params: Opt
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
-async def request_async_profile_analytics(request_body: object, params: Optional[Dict]) -> Dict:
+async def post_async_profile_analytics_request(request_body: object, params: Optional[Dict]) -> Dict:
 
     url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/async/profiles/analytics")
 

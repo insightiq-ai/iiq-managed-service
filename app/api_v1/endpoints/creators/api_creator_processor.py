@@ -80,6 +80,6 @@ async def get_contact_info(request: Request,
 
 
 @api_router.post("/async/profiles/analytics", status_code=HTTPStatus.OK, response_model=Optional[Dict])
-async def get_async_profiles(request: Request,
-                             request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
-    return await creator_service.get_async_profile_analytics(request_body=request_body, params=dict(request.query_params.items()))
+async def post_async_profile_analytics(request: Request,
+                                       request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
+    return await creator_service.post_async_profile_analytics(request_body=request_body, params=dict(request.query_params.items()))
