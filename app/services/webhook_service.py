@@ -21,61 +21,61 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
             or webhook_request_data.event == WebhookEvent.SESSION_EXPIRED:
         await add_update_account(webhook_request_data=webhook_request_data)
 
-    # elif (webhook_request_data.event == WebhookEvent.PROFILES_ADDED
-    #       or webhook_request_data.event == WebhookEvent.PROFILES_UPDATED) \
-    #         and Product.IDENTITY in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_profile(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.PROFILES_AUDIENCE_ADDED
-    #       or webhook_request_data.event == WebhookEvent.PROFILES_AUDIENCE_UPDATED) \
-    #         and Product.IDENTITY_AUDIENCE in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_profile_audience(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.CONTENTS_ADDED
-    #       or webhook_request_data.event == WebhookEvent.CONTENTS_UPDATED) \
-    #         and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_contents(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_ADDED
-    #       or webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_UPDATED) \
-    #         and Product.ENGAGEMENT_AUDIENCE in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_content_comments(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.CONTENT_GROUPS_ADDED
-    #       or webhook_request_data.event == WebhookEvent.CONTENT_GROUPS_UPDATED) \
-    #         and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_content_groups(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.TRANSACTIONS_ADDED
-    #       or webhook_request_data.event == WebhookEvent.TRANSACTIONS_UPDATED) \
-    #         and Product.INCOME in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_transactions(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.PAYOUTS_ADDED
-    #       or webhook_request_data.event == WebhookEvent.PAYOUTS_UPDATED) \
-    #         and Product.INCOME in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_payouts(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.BALANCES_ADDED
-    #       or webhook_request_data.event == WebhookEvent.BALANCES_UPDATED) \
-    #         and Product.INCOME in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_balances(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.ACTIVITY_ARTISTS_ADDED
-    #       or webhook_request_data.event == WebhookEvent.ACTIVITY_ARTISTS_UPDATED) \
-    #         and Product.ACTIVITY in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_activity_artists(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.ACTIVITY_CONTENTS_ADDED
-    #       or webhook_request_data.event == WebhookEvent.ACTIVITY_CONTENTS_UPDATED) \
-    #         and Product.ACTIVITY in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_activity_contents(webhook_request_data=webhook_request_data)
-    #
-    # elif (webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_READY
-    #       or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_SUCCESS
-    #       or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_FAILURE) \
-    #         and Product.PUBLISH_CONTENT in settings.SUPPORTED_PRODUCTS:
-    #     await add_update_publish_content(webhook_request_data=webhook_request_data)
+    elif (webhook_request_data.event == WebhookEvent.PROFILES_ADDED
+          or webhook_request_data.event == WebhookEvent.PROFILES_UPDATED) \
+            and Product.IDENTITY in settings.SUPPORTED_PRODUCTS:
+        await add_update_profile(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.PROFILES_AUDIENCE_ADDED
+          or webhook_request_data.event == WebhookEvent.PROFILES_AUDIENCE_UPDATED) \
+            and Product.IDENTITY_AUDIENCE in settings.SUPPORTED_PRODUCTS:
+        await add_update_profile_audience(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.CONTENTS_ADDED
+          or webhook_request_data.event == WebhookEvent.CONTENTS_UPDATED) \
+            and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
+        await add_update_contents(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_ADDED
+          or webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_UPDATED) \
+            and Product.ENGAGEMENT_AUDIENCE in settings.SUPPORTED_PRODUCTS:
+        await add_update_content_comments(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.CONTENT_GROUPS_ADDED
+          or webhook_request_data.event == WebhookEvent.CONTENT_GROUPS_UPDATED) \
+            and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
+        await add_update_content_groups(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.TRANSACTIONS_ADDED
+          or webhook_request_data.event == WebhookEvent.TRANSACTIONS_UPDATED) \
+            and Product.INCOME in settings.SUPPORTED_PRODUCTS:
+        await add_update_transactions(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.PAYOUTS_ADDED
+          or webhook_request_data.event == WebhookEvent.PAYOUTS_UPDATED) \
+            and Product.INCOME in settings.SUPPORTED_PRODUCTS:
+        await add_update_payouts(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.BALANCES_ADDED
+          or webhook_request_data.event == WebhookEvent.BALANCES_UPDATED) \
+            and Product.INCOME in settings.SUPPORTED_PRODUCTS:
+        await add_update_balances(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.ACTIVITY_ARTISTS_ADDED
+          or webhook_request_data.event == WebhookEvent.ACTIVITY_ARTISTS_UPDATED) \
+            and Product.ACTIVITY in settings.SUPPORTED_PRODUCTS:
+        await add_update_activity_artists(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.ACTIVITY_CONTENTS_ADDED
+          or webhook_request_data.event == WebhookEvent.ACTIVITY_CONTENTS_UPDATED) \
+            and Product.ACTIVITY in settings.SUPPORTED_PRODUCTS:
+        await add_update_activity_contents(webhook_request_data=webhook_request_data)
+
+    elif (webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_READY
+          or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_SUCCESS
+          or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_FAILURE) \
+            and Product.PUBLISH_CONTENT in settings.SUPPORTED_PRODUCTS:
+        await add_update_publish_content(webhook_request_data=webhook_request_data)
 
     elif webhook_request_data.event in [
             WebhookEvent.PROFILE_ANALYTICS_SUCCESS, WebhookEvent.PROFILE_ANALYTICS_FAILURE
@@ -156,6 +156,10 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
             await executor_event.async_profile_analytics_success_event_handler(data=data)
         elif webhook_event == WebhookEvent.PROFILE_ANALYTICS_FAILURE:
             await executor_event.async_profile_analytics_failure_event_handler(data=data)
+        elif webhook_event == WebhookEvent.CONTENTS_FETCH_SUCCESS:
+            await executor_event.async_contents_fetch_success_event_handler(data=data)
+        elif webhook_event == WebhookEvent.CONTENTS_FETCH_FAILURE:
+            await executor_event.async_contents_fetch_failure_event_handler(data=data)
 
 
 async def add_update_account(webhook_request_data: WebhookRequestData):
