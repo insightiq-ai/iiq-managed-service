@@ -6,12 +6,13 @@ from app.events.event_executor_registry import EventExecutorRegistry
 from app.schemas.enum import WebhookEvent, Product, PlatformCategory
 from app.schemas.webhook_schemas import WebhookRequestData, AccountConnectedEvent, ContentEvent, \
     ContentGroupEvent, ProfileEvent, TransactionEvent, PayoutEvent, BalanceEvent, ActivityArtistEvent, \
-    ActivityContentEvent, ProfileAudienceEvent, ContentCommentEvent, PublishContentEvent, ProfileAnalyticsEvent
+    ActivityContentEvent, ProfileAudienceEvent, ContentCommentEvent, PublishContentEvent, ProfileAnalyticsEvent, \
+    ContentsFetchEvent
 from app.services.resource_service import fetch_contents_by_ids, fetch_account_by_id, fetch_content_groups_by_ids, \
     fetch_profile_by_id, fetch_social_transactions_by_ids, fetch_social_payouts_by_ids, fetch_balances_by_ids, \
     fetch_activity_artists_by_ids, fetch_activity_contents_by_ids, fetch_profile_audience_by_account_id, \
     fetch_content_comments_by_content_id_account_id, fetch_commerce_transactions_by_ids, fetch_commerce_payouts_by_ids, \
-    fetch_publish_content_by_id, fetch_profile_analytics_by_id
+    fetch_publish_content_by_id, fetch_profile_analytics_by_id, fetch_async_contents_by_id
 
 
 async def process_webhook(webhook_request_data: WebhookRequestData):
@@ -20,66 +21,71 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
             or webhook_request_data.event == WebhookEvent.SESSION_EXPIRED:
         await add_update_account(webhook_request_data=webhook_request_data)
 
-    elif (webhook_request_data.event == WebhookEvent.PROFILES_ADDED
-          or webhook_request_data.event == WebhookEvent.PROFILES_UPDATED) \
-            and Product.IDENTITY in settings.SUPPORTED_PRODUCTS:
-        await add_update_profile(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.PROFILES_AUDIENCE_ADDED
-          or webhook_request_data.event == WebhookEvent.PROFILES_AUDIENCE_UPDATED) \
-            and Product.IDENTITY_AUDIENCE in settings.SUPPORTED_PRODUCTS:
-        await add_update_profile_audience(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.CONTENTS_ADDED
-          or webhook_request_data.event == WebhookEvent.CONTENTS_UPDATED) \
-            and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
-        await add_update_contents(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_ADDED
-          or webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_UPDATED) \
-            and Product.ENGAGEMENT_AUDIENCE in settings.SUPPORTED_PRODUCTS:
-        await add_update_content_comments(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.CONTENT_GROUPS_ADDED
-          or webhook_request_data.event == WebhookEvent.CONTENT_GROUPS_UPDATED) \
-            and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
-        await add_update_content_groups(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.TRANSACTIONS_ADDED
-          or webhook_request_data.event == WebhookEvent.TRANSACTIONS_UPDATED) \
-            and Product.INCOME in settings.SUPPORTED_PRODUCTS:
-        await add_update_transactions(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.PAYOUTS_ADDED
-          or webhook_request_data.event == WebhookEvent.PAYOUTS_UPDATED) \
-            and Product.INCOME in settings.SUPPORTED_PRODUCTS:
-        await add_update_payouts(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.BALANCES_ADDED
-          or webhook_request_data.event == WebhookEvent.BALANCES_UPDATED) \
-            and Product.INCOME in settings.SUPPORTED_PRODUCTS:
-        await add_update_balances(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.ACTIVITY_ARTISTS_ADDED
-          or webhook_request_data.event == WebhookEvent.ACTIVITY_ARTISTS_UPDATED) \
-            and Product.ACTIVITY in settings.SUPPORTED_PRODUCTS:
-        await add_update_activity_artists(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.ACTIVITY_CONTENTS_ADDED
-          or webhook_request_data.event == WebhookEvent.ACTIVITY_CONTENTS_UPDATED) \
-            and Product.ACTIVITY in settings.SUPPORTED_PRODUCTS:
-        await add_update_activity_contents(webhook_request_data=webhook_request_data)
-
-    elif (webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_READY
-          or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_SUCCESS
-          or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_FAILURE) \
-            and Product.PUBLISH_CONTENT in settings.SUPPORTED_PRODUCTS:
-        await add_update_publish_content(webhook_request_data=webhook_request_data)
+    # elif (webhook_request_data.event == WebhookEvent.PROFILES_ADDED
+    #       or webhook_request_data.event == WebhookEvent.PROFILES_UPDATED) \
+    #         and Product.IDENTITY in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_profile(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.PROFILES_AUDIENCE_ADDED
+    #       or webhook_request_data.event == WebhookEvent.PROFILES_AUDIENCE_UPDATED) \
+    #         and Product.IDENTITY_AUDIENCE in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_profile_audience(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.CONTENTS_ADDED
+    #       or webhook_request_data.event == WebhookEvent.CONTENTS_UPDATED) \
+    #         and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_contents(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_ADDED
+    #       or webhook_request_data.event == WebhookEvent.CONTENTS_COMMENTS_UPDATED) \
+    #         and Product.ENGAGEMENT_AUDIENCE in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_content_comments(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.CONTENT_GROUPS_ADDED
+    #       or webhook_request_data.event == WebhookEvent.CONTENT_GROUPS_UPDATED) \
+    #         and Product.ENGAGEMENT in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_content_groups(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.TRANSACTIONS_ADDED
+    #       or webhook_request_data.event == WebhookEvent.TRANSACTIONS_UPDATED) \
+    #         and Product.INCOME in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_transactions(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.PAYOUTS_ADDED
+    #       or webhook_request_data.event == WebhookEvent.PAYOUTS_UPDATED) \
+    #         and Product.INCOME in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_payouts(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.BALANCES_ADDED
+    #       or webhook_request_data.event == WebhookEvent.BALANCES_UPDATED) \
+    #         and Product.INCOME in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_balances(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.ACTIVITY_ARTISTS_ADDED
+    #       or webhook_request_data.event == WebhookEvent.ACTIVITY_ARTISTS_UPDATED) \
+    #         and Product.ACTIVITY in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_activity_artists(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.ACTIVITY_CONTENTS_ADDED
+    #       or webhook_request_data.event == WebhookEvent.ACTIVITY_CONTENTS_UPDATED) \
+    #         and Product.ACTIVITY in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_activity_contents(webhook_request_data=webhook_request_data)
+    #
+    # elif (webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_READY
+    #       or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_SUCCESS
+    #       or webhook_request_data.event == WebhookEvent.CONTENTS_PUBLISH_FAILURE) \
+    #         and Product.PUBLISH_CONTENT in settings.SUPPORTED_PRODUCTS:
+    #     await add_update_publish_content(webhook_request_data=webhook_request_data)
 
     elif webhook_request_data.event in [
             WebhookEvent.PROFILE_ANALYTICS_SUCCESS, WebhookEvent.PROFILE_ANALYTICS_FAILURE
          ] and Product.CREATOR_SEARCH in settings.SUPPORTED_PRODUCTS:
         await process_profile_analytics_event(webhook_request_data=webhook_request_data)
+
+    elif webhook_request_data.event in [
+            WebhookEvent.CONTENTS_FETCH_SUCCESS, WebhookEvent.CONTENTS_FETCH_FAILURE
+         ] and Product.CONTENTS_FETCH in settings.SUPPORTED_PRODUCTS:
+        await process_contents_fetch_event(webhook_request_data=webhook_request_data)
 
 
 async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optional[PlatformCategory] = None):
@@ -429,3 +435,16 @@ async def process_profile_analytics_event(webhook_request_data: WebhookRequestDa
         return
 
     await send_events(webhook_event=webhook_request_data.event, data=async_profile_analytics)
+
+
+async def process_contents_fetch_event(webhook_request_data: WebhookRequestData):
+    contents_fetch_event = ContentsFetchEvent(**webhook_request_data.data)
+    contents_fetch_event_job_id = contents_fetch_event.job_id
+
+    async_contents: Dict = await fetch_async_contents_by_id(id=contents_fetch_event_job_id)
+
+    if not async_contents:
+        logging.error(f"Profile-analytics do not exists with publish-id: {contents_fetch_event_job_id}")
+        return
+
+    await send_events(webhook_event=webhook_request_data.event, data=async_contents)

@@ -202,3 +202,15 @@ class BaseEvent(ABC):
     @classmethod
     async def async_profile_analytics_failure_event_handler(cls, data: Dict):
         pass
+
+    @classmethod
+    async def async_contents_fetch_request_event_handler(cls, data: Dict):
+        pass
+
+    @classmethod
+    async def async_contents_fetch_success_event_handler(cls, data: Dict):
+        pass
+
+    @classmethod
+    async def async_contents_fetch_failure_event_handler(cls, data: Dict):
+        pass
