@@ -79,3 +79,7 @@ class ProfileAnalyticsEvent(BaseModel):
 
 class ContentsFetchEvent(BaseModel):
     job_id: str
+
+
+class AudienceOverlapEvent(BaseModel):
+    job_id: str

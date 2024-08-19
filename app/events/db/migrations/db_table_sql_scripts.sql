@@ -777,3 +777,28 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch_request
     CONSTRAINT        unique_async_contents_fetch_request UNIQUE (iiq_id)
 );
 ALTER TABLE iiq_schema.async_contents_fetch_request OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.audience_overlap
+(
+    id                            UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    identifiers                   JSONB,
+    status                        VARCHAR(50),
+    work_platform_id              UUID,
+    work_platform_name            VARCHAR(255),
+    work_platform_logo_url        VARCHAR(255),
+    total_follower_count          INTEGER,
+    unique_follower_count         INTEGER,
+    total_subscriber_count        INTEGER,
+    unique_subscriber_count       INTEGER,
+    platform_username             VARCHAR(255),
+    follower_count                INTEGER,
+    subscriber_count              INTEGER,
+    unique_follower_percentage    FLOAT,
+    overlap_follower_percentage   FLOAT,
+    unique_subscriber_percentage  FLOAT,
+    overlap_subscriber_percentage FLOAT,
+    created_at                    TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at                    TIMESTAMP DEFAULT timezone('utc'::text, now())
+);
+ALTER TABLE iiq_schema.audience_overlap OWNER TO iiq;

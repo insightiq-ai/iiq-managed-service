@@ -277,6 +277,16 @@ async def fetch_async_contents_by_id(id: str) -> Dict:
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def fetch_audience_overlap_by_id(id: str) -> Dict:
+    url = urllib.parse.urljoin(get_base_url(), f"/v1/social/creators/audience-overlap/{id}")
+
+    response: Dict = await invoke_get_url(url=url, headers={}, auth=get_auth())
+    # TODO do error-handling over here
+
+    return response
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
 async def fetch_basic_creator_profile(params: Optional[Dict]) -> Dict:
 
     url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/profiles")

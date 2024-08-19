@@ -793,3 +793,28 @@ mappings:
         fields:
             id: iiq_id
             status: status
+
+    audience_overlap:
+        name: audience_overlap
+        schema: iiq_schema
+        unique_key: id
+        fields:
+            id: id
+            identifiers: identifiers
+            status: status
+            work_platform:
+                id: work_platform_id
+                name: work_platform_name
+                logo_url: work_platform_logo_url
+            total_follower_count: total_follower_count
+            unique_follower_count: unique_follower_count
+            total_subscriber_count: total_subscriber_count
+            unique_subscriber_count: unique_subscriber_count
+            profiles:
+                platform_username: profiles_platform_username
+                follower_count: profiles_follower_count
+                subscriber_count: profiles_subscriber_count
+                unique_follower_percentage: profiles_unique_follower_percentage
+                overlap_follower_percentage: profiles_overlap_follower_percentage
+                unique_subscriber_percentage: profiles_unique_subscriber_percentage
+                overlap_subscriber_percentage: profiles_overlap_subscriber_percentage
