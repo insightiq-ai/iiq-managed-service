@@ -39,3 +39,4 @@ ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS = config.get('mappings', {}).get('async_p
 ASYNC_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch_request', {})
 ASYNC_CONTENTS_FETCH_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch_data', {})
 ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch_response', {})
+AUDIENCE_OVERLAP_TABLE_MAPPINGS = config.get('mappings', {}).get('audience_overlap', {})
