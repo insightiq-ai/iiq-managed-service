@@ -85,7 +85,7 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
 
     elif webhook_request_data.event in [
             WebhookEvent.CONTENTS_FETCH_SUCCESS, WebhookEvent.CONTENTS_FETCH_FAILURE
-         ] and Product.CONTENTS_FETCH in settings.SUPPORTED_PRODUCTS:
+         ] and Product.PUBLIC_CONTENT_SEARCH in settings.SUPPORTED_PRODUCTS:
         await process_contents_fetch_event(webhook_request_data=webhook_request_data)
 
 
