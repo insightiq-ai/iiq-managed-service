@@ -714,6 +714,7 @@ mappings:
             profile_audience_likers: app.events.db.value_post_processors.cast_to_json
             profile_contact_details: app.events.db.value_post_processors.cast_to_json
 
+
     async_contents:
         name: async_contents
         schema: iiq_schema

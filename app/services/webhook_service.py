@@ -8,6 +8,7 @@ from app.schemas.webhook_schemas import WebhookRequestData, AccountConnectedEven
     ContentGroupEvent, ProfileEvent, TransactionEvent, PayoutEvent, BalanceEvent, ActivityArtistEvent, \
     ActivityContentEvent, ProfileAudienceEvent, ContentCommentEvent, PublishContentEvent, ProfileAnalyticsEvent, \
     ContentsFetchEvent
+
 from app.services.resource_service import fetch_contents_by_ids, fetch_account_by_id, fetch_content_groups_by_ids, \
     fetch_profile_by_id, fetch_social_transactions_by_ids, fetch_social_payouts_by_ids, fetch_balances_by_ids, \
     fetch_activity_artists_by_ids, fetch_activity_contents_by_ids, fetch_profile_audience_by_account_id, \
