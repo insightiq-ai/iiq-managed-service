@@ -57,3 +57,10 @@ def cast_integer_to_string(value: Optional[int]) -> Optional[str]:
         return str(value)
     else:
         return None
+
+
+def cast_python_list_to_postgres_list(value: Optional[list]) -> Optional[str]:
+    if value:
+        return '{' + ','.join(value) + '}'
+    else:
+        return None

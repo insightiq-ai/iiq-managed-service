@@ -716,7 +716,7 @@ mappings:
 
 
     async_contents_fetch_data:
-        name: async_contents_fetch
+        name: async_contents_fetch_data
         schema: iiq_schema
         fields:
             work_platform:
@@ -769,17 +769,8 @@ mappings:
             hashtags_json: app.events.db.value_post_processors.cast_to_json
 
 
-    async_contents_fetch:
-        name: async_contents_fetch
-        schema: iiq_schema
-        unique_key: iiq_id
-        fields:
-            id: iiq_id
-            status: status
-
-
-    async_contents_request:
-        name: async_contents_request
+    async_contents_fetch_request:
+        name: async_contents_fetch_request
         schema: iiq_schema
         unique_key: iiq_id
         fields:
@@ -791,3 +782,12 @@ mappings:
                 logo_url: work_platform_logo_url
             profile_url: profile_url
             content_url: content_url
+
+
+    async_contents_fetch:
+        name: async_contents_fetch_request
+        schema: iiq_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            status: status

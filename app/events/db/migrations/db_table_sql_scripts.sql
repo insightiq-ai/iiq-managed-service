@@ -760,19 +760,7 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch_data
 ALTER TABLE iiq_schema.async_contents_fetch_data OWNER TO iiq;
 
 
-CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch
-(
-    id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    iiq_id                 UUID      NOT NULL,
-    status                 VARCHAR(50),
-    created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    CONSTRAINT   unique_async_content_fetch UNIQUE (iiq_id)
-);
-ALTER TABLE iiq_schema.async_contents_fetch OWNER TO iiq;
-
-
-CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_request
+CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch_request
 (
     id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
     iiq_id                 UUID      NOT NULL,
@@ -784,6 +772,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_request
     profile_url            VARCHAR(255),
     created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
     updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    CONSTRAINT   unique_async_content_request UNIQUE (iiq_id)
+    CONSTRAINT   unique_async_contents_fetch_request UNIQUE (iiq_id)
 );
-ALTER TABLE iiq_schema.async_contents_request OWNER TO iiq;
+ALTER TABLE iiq_schema.async_contents_fetch_request OWNER TO iiq;
