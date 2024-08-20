@@ -714,7 +714,55 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics
 ALTER TABLE iiq_schema.async_profile_analytics OWNER TO iiq;
 
 
-CREATE TABLE IF NOT EXISTS iiq_schema.async_contents
+--CREATE TABLE IF NOT EXISTS iiq_schema.async_contents
+--(
+--    id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+--    status                 VARCHAR(50),
+--    work_platform_id       UUID,
+--    work_platform_name     VARCHAR(255),
+--    work_platform_logo_url VARCHAR(255),
+--    platform_username      VARCHAR(255),
+--    profile_url            VARCHAR(255),
+--    external_id            VARCHAR(255),
+--    profile_image_url      VARCHAR(255),
+--    is_verified            BOOLEAN,
+--    platform_content_id    VARCHAR(255),
+--    title                  VARCHAR(255),
+--    format                 VARCHAR(50),
+--    type                   VARCHAR(50),
+--    content_url            VARCHAR(255),
+--    media_url              VARCHAR(255),
+--    thumbnail_url          VARCHAR(255),
+--    duration               INTEGER,
+--    description            VARCHAR(255),
+--    published_at           TIMESTAMP,
+--    is_reposted            BOOLEAN,
+--    audio_track_id         VARCHAR(255),
+--    audio_track_title      VARCHAR(255),
+--    audio_track_artist     VARCHAR(255),
+--    audio_track_original   BOOLEAN,
+--    like_count             INTEGER,
+--    applause_count         INTEGER,
+--    support_count          INTEGER,
+--    love_count             INTEGER,
+--    interest_count         INTEGER,
+--    laugh_count            INTEGER,
+--    comment_count          INTEGER,
+--    view_count             INTEGER,
+--    share_count            INTEGER,
+--    collaborators_json     JSONB,
+--    sponsors_json          JSONB,
+--    mentions_json          JSONB,
+--    links_json             JSONB,
+--    hashtags_json          JSONB,
+--    created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+--    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now())
+--);
+--ALTER TABLE iiq_schema.async_contents OWNER TO iiq;
+
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch
 (
     id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
     status                 VARCHAR(50),
@@ -758,4 +806,19 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_contents
     created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
     updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now())
 );
-ALTER TABLE iiq_schema.async_contents OWNER TO iiq;
+ALTER TABLE iiq_schema.async_contents_fetch OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_request
+(
+    id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    status                 VARCHAR(50),
+    work_platform_id       UUID,
+    work_platform_name     VARCHAR(255),
+    work_platform_logo_url VARCHAR(255),
+    content_url            VARCHAR(255),
+    profile_url            VARCHAR(255),
+    created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now())
+);
+ALTER TABLE iiq_schema.async_contents_request OWNER TO iiq;

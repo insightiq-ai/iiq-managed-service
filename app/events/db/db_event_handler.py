@@ -299,8 +299,8 @@ class DbEventHandler(BaseEvent):
 
     @classmethod
     async def async_contents_fetch_request_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import ASYNC_CONTENTS_FETCH_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_FETCH_TABLE_MAPPINGS, data=data)
+        from app.events.db.mapper_config import ASYNC_CONTENTS_REQUEST_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_REQUEST_TABLE_MAPPINGS, data=data)
 
     @classmethod
     async def async_contents_fetch_success_event_handler(cls, data: Dict):
