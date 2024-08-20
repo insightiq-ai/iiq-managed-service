@@ -36,5 +36,6 @@ DICTIONARY_RELEVANT_TOPICS_TABLE_MAPPINGS = config.get('mappings', {}).get('dict
 PROFILE_CONTACT_INFO_TABLE_MAPPINGS = config.get('mappings', {}).get('profile_contact_info', {})
 PROFESSIONAL_PROFILE_ANALYTICS_TABLE_MAPPINGS = config.get('mappings', {}).get('professional_profile_analytics', {})
 ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS = config.get('mappings', {}).get('async_profile_analytics', {})
-ASYNC_CONTENTS_FETCH_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch', {})
 ASYNC_CONTENTS_REQUEST_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_request', {})
+ASYNC_CONTENTS_FETCH_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch', {})
+ASYNC_CONTENTS_FETCH_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch_data', {})
