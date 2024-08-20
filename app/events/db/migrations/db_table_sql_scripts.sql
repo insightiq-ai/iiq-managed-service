@@ -782,7 +782,7 @@ ALTER TABLE iiq_schema.async_contents_fetch_request OWNER TO iiq;
 CREATE TABLE IF NOT EXISTS iiq_schema.audience_overlap
 (
     id                            UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    identifiers                   JSONB,
+    identifiers                   VARCHAR(100)[],
     status                        VARCHAR(50),
     work_platform_id              UUID,
     work_platform_name            VARCHAR(255),

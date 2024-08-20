@@ -811,10 +811,10 @@ mappings:
             total_subscriber_count: total_subscriber_count
             unique_subscriber_count: unique_subscriber_count
             profiles:
-                platform_username: profiles_platform_username
-                follower_count: profiles_follower_count
-                subscriber_count: profiles_subscriber_count
-                unique_follower_percentage: profiles_unique_follower_percentage
-                overlap_follower_percentage: profiles_overlap_follower_percentage
-                unique_subscriber_percentage: profiles_unique_subscriber_percentage
-                overlap_subscriber_percentage: profiles_overlap_subscriber_percentage
+                platform_username: platform_username
+                follower_count: follower_count
+                subscriber_count: subscriber_count
+                unique_follower_percentage: unique_follower_percentage
+                overlap_follower_percentage: overlap_follower_percentage
+                unique_subscriber_percentage: unique_subscriber_percentage
+                overlap_subscriber_percentage: overlap_subscriber_percentage
