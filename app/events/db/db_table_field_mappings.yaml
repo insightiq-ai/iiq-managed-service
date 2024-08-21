@@ -713,3 +713,23 @@ mappings:
             profile_engagement_rate_histogram: app.events.db.value_post_processors.cast_to_json
             profile_audience_likers: app.events.db.value_post_processors.cast_to_json
             profile_contact_details: app.events.db.value_post_processors.cast_to_json
+
+
+    professional_contents_fetch:
+        name: professional_contents_fetch
+        schema: iiq_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            profile_url: profile_url
+            content_url: content_url
+        value_post_processors:
+            languages: app.events.db.value_post_processors.cast_to_json
+            work_experiences: app.events.db.value_post_processors.cast_to_json
+            education: app.events.db.value_post_processors.cast_to_json
+            publications: app.events.db.value_post_processors.cast_to_json
+            certifications: app.events.db.value_post_processors.cast_to_json
+            volunteer_experiences: app.events.db.value_post_processors.cast_to_json
+            honors: app.events.db.value_post_processors.cast_to_json
+            projects: app.events.db.value_post_processors.cast_to_json
+
