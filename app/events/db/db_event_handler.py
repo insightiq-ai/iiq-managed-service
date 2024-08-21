@@ -326,15 +326,15 @@ class DbEventHandler(BaseEvent):
 
     @classmethod
     async def audience_overlap_request_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import AUDIENCE_OVERLAP_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=AUDIENCE_OVERLAP_TABLE_MAPPINGS, data=data)
+        from app.events.db.mapper_config import AUDIENCE_OVERLAP_REQUEST_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=AUDIENCE_OVERLAP_REQUEST_TABLE_MAPPINGS, data=data)
 
     @classmethod
     async def audience_overlap_success_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import AUDIENCE_OVERLAP_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=AUDIENCE_OVERLAP_TABLE_MAPPINGS, data=data)
+        from app.events.db.mapper_config import AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS, data=data)
 
     @classmethod
     async def audience_overlap_failure_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import AUDIENCE_OVERLAP_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=AUDIENCE_OVERLAP_TABLE_MAPPINGS, data=data)
+        from app.events.db.mapper_config import AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS, data=data)

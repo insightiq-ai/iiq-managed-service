@@ -791,13 +791,9 @@ CREATE TABLE IF NOT EXISTS iiq_schema.audience_overlap
     unique_follower_count         INTEGER,
     total_subscriber_count        INTEGER,
     unique_subscriber_count       INTEGER,
-    platform_username             VARCHAR(255),
-    follower_count                INTEGER,
-    subscriber_count              INTEGER,
-    unique_follower_percentage    FLOAT,
-    overlap_follower_percentage   FLOAT,
-    unique_subscriber_percentage  FLOAT,
-    overlap_subscriber_percentage FLOAT,
+    profiles_json                 JSONB,
+    error                         VARCHAR(255),
+    ignored_profiles_json         JSONB,
     created_at                    TIMESTAMP DEFAULT timezone('utc'::text, now()),
     updated_at                    TIMESTAMP DEFAULT timezone('utc'::text, now())
 );

@@ -794,7 +794,7 @@ mappings:
             id: iiq_id
             status: status
 
-    audience_overlap:
+    audience_overlap_request:
         name: audience_overlap
         schema: iiq_schema
         unique_key: id
@@ -806,15 +806,21 @@ mappings:
                 id: work_platform_id
                 name: work_platform_name
                 logo_url: work_platform_logo_url
+
+    audience_overlap_data:
+        name: audience_overlap
+        schema: iiq_schema
+        unique_key: id
+        fields:
+            id: id
+            status: status
             total_follower_count: total_follower_count
             unique_follower_count: unique_follower_count
             total_subscriber_count: total_subscriber_count
             unique_subscriber_count: unique_subscriber_count
-            profiles:
-                platform_username: platform_username
-                follower_count: follower_count
-                subscriber_count: subscriber_count
-                unique_follower_percentage: unique_follower_percentage
-                overlap_follower_percentage: overlap_follower_percentage
-                unique_subscriber_percentage: unique_subscriber_percentage
-                overlap_subscriber_percentage: overlap_subscriber_percentage
+            profiles: profiles_json
+            error: error
+            ignored_profiles: ignored_profiles_json
+        value_post_processors:
+            profiles_json: app.events.db.value_post_processors.cast_to_json
+            ignored_profiles_json: app.events.db.value_post_processors.cast_to_json
