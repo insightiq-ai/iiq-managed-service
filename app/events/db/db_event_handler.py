@@ -318,8 +318,8 @@ class DbEventHandler(BaseEvent):
         await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
 
     @staticmethod
-    def add_iiq_id_to_data(data: Dict, iiq_id_key: str = 'id') -> List[Dict]:
-        iiq_id = data.get(iiq_id_key)
+    def add_iiq_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
+        iiq_id = data.get(id_key)
         for item in data.get('data', []):
-            item['iiq_id'] = iiq_id
+            item['id'] = iiq_id
         return data.get('data', [])

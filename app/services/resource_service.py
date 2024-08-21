@@ -242,11 +242,29 @@ async def fetch_profile_analytics_by_id(id: str) -> Dict:
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
 async def fetch_async_contents_by_id(id: str) -> Dict:
     url = urllib.parse.urljoin(get_base_url(), f"/v1/social/creators/async/contents/fetch/{id}")
+    final_response = {}
+    limit = 10
+    offset = 0
 
-    response: Dict = await invoke_get_url(url=url, headers={}, auth=get_auth())
-    # TODO do error-handling over here
+    while True:
+        query_params = {
+            'limit': limit,
+            'offset': offset,
+        }
+        response: Dict = await invoke_get_url(url=url, headers={}, auth=get_auth(), query=query_params)
+        # TODO do error-handling over here
 
-    return response
+        if not final_response:
+            final_response = response
+        else:
+            final_response['data'].extend(response['data'])
+
+        number_of_contents = len(response['data'])
+        if not number_of_contents or number_of_contents < limit:
+            break
+        offset += number_of_contents
+
+    return final_response
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))

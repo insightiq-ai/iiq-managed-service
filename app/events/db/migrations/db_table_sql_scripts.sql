@@ -717,7 +717,7 @@ ALTER TABLE iiq_schema.async_profile_analytics OWNER TO iiq;
 CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch_data
 (
     id                        UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    iiq_id                    UUID      NOT NULL,
+    async_contents_fetch_request_iiq_id                    UUID      NOT NULL,
     work_platform_id          UUID,
     work_platform_name        VARCHAR(255),
     work_platform_logo_url    VARCHAR(255),
@@ -757,7 +757,7 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch_data
     hashtags_json             JSONB,
     created_at                TIMESTAMP DEFAULT timezone('utc'::text, now()),
     updated_at                TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    CONSTRAINT unique_async_contents_fetch_request UNIQUE (iiq_id)
+    CONSTRAINT unique_async_contents_fetch_data UNIQUE (async_contents_fetch_request_iiq_id, platform_content_id)
 );
 ALTER TABLE iiq_schema.async_contents_fetch_data OWNER TO iiq;
 
