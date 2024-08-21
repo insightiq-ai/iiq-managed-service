@@ -38,4 +38,4 @@ PROFESSIONAL_PROFILE_ANALYTICS_TABLE_MAPPINGS = config.get('mappings', {}).get('
 ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS = config.get('mappings', {}).get('async_profile_analytics', {})
 ASYNC_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch_request', {})
 ASYNC_CONTENTS_FETCH_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch_data', {})
-ASYNC_CONTENTS_FETCH_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch', {})
+ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch_response', {})

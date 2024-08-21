@@ -1,7 +1,9 @@
 import logging
 from typing import Dict, Optional
 
+from app.core.config import settings
 from app.events.event_executor_registry import EventExecutorRegistry
+from app.schemas.enum import Product
 from app.services.resource_service import fetch_profile_analytics, fetch_search_profiles, fetch_content_information, \
     fetch_basic_creator_profile, fetch_dictionary_interests, fetch_dictionary_topics, fetch_dictionary_userhandles, \
     fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations, \
@@ -192,6 +194,10 @@ async def professional_profile_analytics(request_body: object, params: Optional[
 
 
 async def post_async_profile_analytics(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    # Check if the product is supported
+    if Product.CREATOR_SEARCH not in settings.SUPPORTED_PRODUCTS:
+        raise Exception(f"{Product.CREATOR_SEARCH} is not supported.")
+
     async_profile_analytics: Dict = await post_async_profile_analytics_request(request_body=request_body, params=params)
 
     if not async_profile_analytics:
@@ -205,13 +211,17 @@ async def post_async_profile_analytics(request_body: object, params: Optional[Di
 
 
 async def post_async_contents_fetch(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
-    async_contents: Dict = await post_async_contents_fetch_request(request_body=request_body, params=params)
+    # Check if the product is supported
+    if Product.PUBLIC_CONTENT_SEARCH not in settings.SUPPORTED_PRODUCTS:
+        raise Exception(f"{Product.PUBLIC_CONTENT_SEARCH} is not supported.")
 
-    if not async_contents:
+    response: Dict = await post_async_contents_fetch_request(request_body=request_body, params=params)
+
+    if not response:
         logging.error(f"Contents do not exist with requested-filters: {request_body}")
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.async_contents_fetch_request_event_handler(data=async_contents)
+        await executor_event.async_contents_fetch_request_event_handler(data=response)
 
-    return async_contents
+    return response
