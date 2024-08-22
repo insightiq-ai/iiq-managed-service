@@ -277,6 +277,13 @@ async def fetch_async_contents_by_id(id: str) -> Dict:
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def fetch_async_professional_contents_by_id(id: str) -> Dict:
+    url = urllib.parse.urljoin(get_base_url(), f"/v1/professional/creators/contents/fetch/{id}")
+
+    return await fetch_all_responses_iteratively(url=url)
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
 async def fetch_audience_overlap_by_id(id: str) -> Dict:
     url = urllib.parse.urljoin(get_base_url(), f"/v1/social/creators/audience-overlap/{id}")
 
@@ -528,6 +535,21 @@ async def post_async_contents_fetch_request(request_body: object, params: Option
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def post_professional_contents_fetch_request(request_body: object, params: Optional[Dict]) -> Dict:
+
+    url = urllib.parse.urljoin(get_base_url(), "/v1/professional/creators/contents/fetch")
+
+    response_data: Dict = await invoke_post_url(url=url,
+                                           body=json.dumps(request_body),
+                                           query=params,
+                                           headers={},
+                                           auth=get_auth())
+    # TODO do error-handling over here
+
+    return response_data
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
 async def post_audience_overlap_request(request_body: object, params: Optional[Dict]) -> Dict:
 
     url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/audience-overlap")
@@ -540,18 +562,3 @@ async def post_audience_overlap_request(request_body: object, params: Optional[D
     # TODO do error-handling over here
 
     return response_data
-
-
-@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
-async def post_professional_contents_fetch_request(request_body: object, params: Optional[Dict]) -> Dict:
-
-    url = urllib.parse.urljoin(get_base_url(), "/v1/professional/creators/contents/fetch")
-
-    response: Dict = await invoke_post_url(url=url,
-                                           body=json.dumps(request_body),
-                                           query=params,
-                                           headers={},
-                                           auth=get_auth())
-    # TODO do error-handling over here
-
-    return response

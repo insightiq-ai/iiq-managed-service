@@ -7,12 +7,13 @@ from app.schemas.enum import WebhookEvent, Product, PlatformCategory
 from app.schemas.webhook_schemas import WebhookRequestData, AccountConnectedEvent, ContentEvent, \
     ContentGroupEvent, ProfileEvent, TransactionEvent, PayoutEvent, BalanceEvent, ActivityArtistEvent, \
     ActivityContentEvent, ProfileAudienceEvent, ContentCommentEvent, PublishContentEvent, ProfileAnalyticsEvent, \
-    ContentsFetchEvent, AudienceOverlapEvent
+    ContentsFetchEvent, ProfessionalContentsFetchEvent, AudienceOverlapEvent
 from app.services.resource_service import fetch_contents_by_ids, fetch_account_by_id, fetch_content_groups_by_ids, \
     fetch_profile_by_id, fetch_social_transactions_by_ids, fetch_social_payouts_by_ids, fetch_balances_by_ids, \
     fetch_activity_artists_by_ids, fetch_activity_contents_by_ids, fetch_profile_audience_by_account_id, \
     fetch_content_comments_by_content_id_account_id, fetch_commerce_transactions_by_ids, fetch_commerce_payouts_by_ids, \
-    fetch_publish_content_by_id, fetch_profile_analytics_by_id, fetch_async_contents_by_id, fetch_audience_overlap_by_id
+    fetch_publish_content_by_id, fetch_profile_analytics_by_id, fetch_async_contents_by_id, fetch_audience_overlap_by_id, \
+    fetch_async_professional_contents_by_id
 
 
 async def process_webhook(webhook_request_data: WebhookRequestData):
@@ -86,6 +87,7 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
         WebhookEvent.CONTENTS_FETCH_SUCCESS, WebhookEvent.CONTENTS_FETCH_FAILURE
     ] and Product.PUBLIC_CONTENT_SEARCH in settings.SUPPORTED_PRODUCTS:
         await process_contents_fetch_event(webhook_request_data=webhook_request_data)
+        await process_professional_contents_fetch_event(webhook_request_data=webhook_request_data)
 
     elif webhook_request_data.event in [
             WebhookEvent.AUDIENCE_OVERLAP_SUCCESS, WebhookEvent.AUDIENCE_OVERLAP_FAILURE
@@ -163,8 +165,10 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
             await executor_event.async_profile_analytics_failure_event_handler(data=data)
         elif webhook_event == WebhookEvent.CONTENTS_FETCH_SUCCESS:
             await executor_event.async_contents_fetch_success_event_handler(data=data)
+            await executor_event.professional_contents_fetch_request_success_handler(data=data)
         elif webhook_event == WebhookEvent.CONTENTS_FETCH_FAILURE:
             await executor_event.async_contents_fetch_failure_event_handler(data=data)
+            await executor_event.professional_contents_fetch_request_failure_handler(data=data)
         elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_SUCCESS:
             await executor_event.audience_overlap_success_event_handler(data=data)
         elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_FAILURE:
@@ -457,10 +461,23 @@ async def process_contents_fetch_event(webhook_request_data: WebhookRequestData)
     async_contents: Dict = await fetch_async_contents_by_id(id=contents_fetch_event_job_id)
 
     if not async_contents:
-        logging.error(f"Profile-analytics do not exists with publish-id: {contents_fetch_event_job_id}")
+        logging.error(f"Contents do not exists with publish-id: {contents_fetch_event_job_id}")
         return
 
     await send_events(webhook_event=webhook_request_data.event, data=async_contents)
+
+
+async def process_professional_contents_fetch_event(webhook_request_data: WebhookRequestData):
+    professional_contents_fetch_event = ProfessionalContentsFetchEvent(**webhook_request_data.data)
+    professional_contents_fetch_event_job_id = professional_contents_fetch_event.job_id
+
+    professional_contents: Dict = await fetch_async_professional_contents_by_id(id=professional_contents_fetch_event_job_id)
+
+    if not professional_contents:
+        logging.error(f"Professional-Contents do not exists with publish-id: {professional_contents_fetch_event_job_id}")
+        return
+
+    await send_events(webhook_event=webhook_request_data.event, data=professional_contents)
 
 
 async def process_audience_overlap_event(webhook_request_data: WebhookRequestData):

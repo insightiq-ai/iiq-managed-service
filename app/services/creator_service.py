@@ -254,14 +254,18 @@ async def post_audience_overlap(request_body: object, params: Optional[Dict]) ->
     return response_data
 
 
-async def fetch_professional_contents(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
-    response: Dict = await post_professional_contents_fetch_request(request_body=request_body, params=params)
+async def post_professional_contents_fetch(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    # Check if the product is supported
+    if Product.PUBLIC_CONTENT_SEARCH not in settings.SUPPORTED_PRODUCTS:
+        raise HTTPException(status_code=400, detail=f"{Product.PUBLIC_CONTENT_SEARCH} is not supported.")
 
-    if not response:
-        logging.error(f"Contents do not exist with requested-filters: {request_body}")
+    response_data: Dict = await post_async_contents_fetch_request(request_body=request_body, params=params)
+
+    if not response_data:
+        logging.error(f"Contents do not exist with requested filters: {request_body}")
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.professional_contents_fetch_request_event_handler(data=response)
+        await executor_event.professional_contents_fetch_request_event_handler(data=response_data)
 
-    return response
+    return response_data
