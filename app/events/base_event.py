@@ -214,3 +214,15 @@ class BaseEvent(ABC):
     @classmethod
     async def async_contents_fetch_failure_event_handler(cls, data: Dict):
         pass
+
+    @classmethod
+    async def audience_overlap_request_event_handler(cls, data: Dict):
+        pass
+
+    @classmethod
+    async def audience_overlap_success_event_handler(cls, data: Dict):
+        pass
+
+    @classmethod
+    async def audience_overlap_failure_event_handler(cls, data: Dict):
+        pass
