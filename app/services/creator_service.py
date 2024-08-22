@@ -199,24 +199,20 @@ async def post_async_profile_analytics(request_body: object, params: Optional[Di
     if Product.CREATOR_SEARCH not in settings.SUPPORTED_PRODUCTS:
         raise HTTPException(
             status_code=400,
-            detail=f"{Product.CREATOR_SEARCH} is not supported. Please add it to SUPPORTED_PRODUCTS in config to enable this API."
+            detail=f"{Product.CREATOR_SEARCH} is not supported. \
+            Please add it to SUPPORTED_PRODUCTS in config to enable this API."
         )
 
-    try:
-        response_data: Dict = await post_async_profile_analytics_request(request_body=request_body,params=params)
+    response_data: Dict = await post_async_profile_analytics_request(request_body=request_body,params=params)
 
-        if not response_data:
-            logging.error(f"Profile Analytics do not exist with requested filters: {request_body}")
-            raise HTTPException(status_code=400, detail="Profile analytics not found for the requested filters.")
+    if not response_data:
+        logging.error(f"Profile Analytics do not exist with requested filters: {request_body}")
+        return None
 
-        for executor_event in EventExecutorRegistry.get_all_events():
-            await executor_event.async_profile_analytics_request_event_handler(data=response_data)
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.async_profile_analytics_request_event_handler(data=response_data)
 
-        return response_data
-
-    except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
-        raise HTTPException(status_code=400, detail="An error occurred while processing the request.")
+    return response_data
 
 
 async def post_async_contents_fetch(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
@@ -224,18 +220,13 @@ async def post_async_contents_fetch(request_body: object, params: Optional[Dict]
     if Product.PUBLIC_CONTENT_SEARCH not in settings.SUPPORTED_PRODUCTS:
         raise HTTPException(status_code=400, detail=f"{Product.PUBLIC_CONTENT_SEARCH} is not supported.")
 
-    try:
-        response_data: Dict = await post_async_contents_fetch_request(request_body=request_body, params=params)
+    response_data: Dict = await post_async_contents_fetch_request(request_body=request_body, params=params)
 
-        if not response_data:
-            logging.error(f"Contents do not exist with requested filters: {request_body}")
-            raise HTTPException(status_code=400, detail="No content found for the requested filters.")
+    if not response_data:
+        logging.error(f"Contents do not exist with requested filters: {request_body}")
+        return None
 
-        for executor_event in EventExecutorRegistry.get_all_events():
-            await executor_event.async_contents_fetch_request_event_handler(data=response_data)
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.async_contents_fetch_request_event_handler(data=response_data)
 
-        return response_data
-
-    except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
-        raise HTTPException(status_code=400, detail="An error occurred while processing the request.")
+    return response_data
