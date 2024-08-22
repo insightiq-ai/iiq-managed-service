@@ -31,6 +31,36 @@ def get_auth():
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def fetch_all_responses_iteratively(url: str, limit: int = 10, key_name: str = 'data') -> dict:
+    final_response = {}
+    offset = 0
+
+    while True:
+        query_params = {
+            'limit': limit,
+            'offset': offset,
+        }
+        response: Dict = await invoke_get_url(url=url, headers={}, auth=get_auth(), query=query_params)
+        # TODO do error-handling over here
+
+        if not final_response:
+            final_response = response
+            if key_name not in final_response:
+                raise Exception(f'key: {key_name} missing in response of url: {url}')
+            if not isinstance(final_response[key_name], list):
+                raise Exception(f'key: {key_name} value is not a list in response of url: {url}')
+        else:
+            final_response[key_name].extend(response[key_name])
+
+        count_of_data = len(response[key_name])
+        if not count_of_data or count_of_data < limit:
+            break
+        offset += count_of_data
+
+    return final_response
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
 async def create_users(user_request: UserRequest) -> Dict:
 
     url = urllib.parse.urljoin(get_base_url(), "/v1/users")
@@ -237,6 +267,13 @@ async def fetch_profile_analytics_by_id(id: str) -> Dict:
     # TODO do error-handling over here
 
     return response
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def fetch_async_contents_by_id(id: str) -> Dict:
+    url = urllib.parse.urljoin(get_base_url(), f"/v1/social/creators/async/contents/fetch/{id}")
+
+    return await fetch_all_responses_iteratively(url=url)
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
@@ -463,3 +500,18 @@ async def post_async_profile_analytics_request(request_body: object, params: Opt
     # TODO do error-handling over here
 
     return response
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def post_async_contents_fetch_request(request_body: object, params: Optional[Dict]) -> Dict:
+
+    url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/async/contents/fetch")
+
+    response_data: Dict = await invoke_post_url(url=url,
+                                                body=json.dumps(request_body),
+                                                query=params,
+                                                headers={},
+                                                auth=get_auth())
+    # TODO do error-handling over here
+
+    return response_data

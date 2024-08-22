@@ -296,3 +296,30 @@ class DbEventHandler(BaseEvent):
     async def async_profile_analytics_failure_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
+
+    @classmethod
+    async def async_contents_fetch_request_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import ASYNC_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS, data=data)
+
+    @classmethod
+    async def async_contents_fetch_success_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, ASYNC_CONTENTS_FETCH_DATA_TABLE_MAPPINGS
+
+        await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
+
+        data_with_iiq_id = cls.add_iiq_id_to_data(data)
+
+        await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_FETCH_DATA_TABLE_MAPPINGS, data=data_with_iiq_id)
+
+    @classmethod
+    async def async_contents_fetch_failure_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
+
+    @staticmethod
+    def add_iiq_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
+        iiq_id = data.get(id_key)
+        for item in data.get('data', []):
+            item['id'] = iiq_id
+        return data.get('data', [])
