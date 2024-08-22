@@ -41,3 +41,6 @@ ASYNC_CONTENTS_FETCH_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('async
 ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS = config.get('mappings', {}).get('async_contents_fetch_response', {})
 AUDIENCE_OVERLAP_REQUEST_TABLE_MAPPINGS = config.get('mappings', {}).get('audience_overlap_request', {})
 AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('audience_overlap_data', {})
+PROFESSIONAL_CONTENTS_FETCH_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('professional_contents_fetch_data', {})
+PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS = config.get('mappings', {}).get('professional_contents_fetch_response', {})
+PROFESSIONAL_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS = config.get('mappings', {}).get('professional_contents_fetch_request', {})

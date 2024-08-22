@@ -332,6 +332,27 @@ class DbEventHandler(BaseEvent):
         from app.events.db.mapper_config import AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS, data=data)
 
+    @classmethod
+    async def professional_contents_fetch_request_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import PROFESSIONAL_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS, data=data)
+
+    @classmethod
+    async def professional_contents_fetch_request_success_handler(cls, data: Dict):
+        from app.events.db.mapper_config import PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, \
+            PROFESSIONAL_CONTENTS_FETCH_DATA_TABLE_MAPPINGS
+
+        await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
+
+        data_with_iiq_id = cls.add_iiq_id_to_data(data)
+
+        await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_DATA_TABLE_MAPPINGS, data=data_with_iiq_id)
+
+    @classmethod
+    async def professional_contents_fetch_request_failure_handler(cls, data: Dict):
+        from app.events.db.mapper_config import PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
+
     @staticmethod
     def add_iiq_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
         iiq_id = data.get(id_key)
