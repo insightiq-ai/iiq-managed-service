@@ -797,9 +797,9 @@ mappings:
     audience_overlap_request:
         name: audience_overlap
         schema: iiq_schema
-        unique_key: id
+        unique_key: iiq_id
         fields:
-            id: id
+            id: iiq_id
             identifiers: identifiers
             status: status
             work_platform:
@@ -810,9 +810,9 @@ mappings:
     audience_overlap_data:
         name: audience_overlap
         schema: iiq_schema
-        unique_key: id
+        unique_key: iiq_id
         fields:
-            id: id
+            id: iiq_id
             status: status
             total_follower_count: total_follower_count
             unique_follower_count: unique_follower_count

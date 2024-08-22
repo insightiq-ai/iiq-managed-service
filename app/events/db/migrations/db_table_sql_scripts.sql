@@ -782,6 +782,7 @@ ALTER TABLE iiq_schema.async_contents_fetch_request OWNER TO iiq;
 CREATE TABLE IF NOT EXISTS iiq_schema.audience_overlap
 (
     id                            UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    iiq_id                        UUID      NOT NULL,
     identifiers                   VARCHAR(100)[],
     status                        VARCHAR(50),
     work_platform_id              UUID,
@@ -795,6 +796,7 @@ CREATE TABLE IF NOT EXISTS iiq_schema.audience_overlap
     error                         VARCHAR(255),
     ignored_profiles_json         JSONB,
     created_at                    TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    updated_at                    TIMESTAMP DEFAULT timezone('utc'::text, now())
+    updated_at                    TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    CONSTRAINT                    unique_audience_overlap UNIQUE (iiq_id)
 );
 ALTER TABLE iiq_schema.audience_overlap OWNER TO iiq;

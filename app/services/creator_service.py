@@ -241,7 +241,7 @@ async def post_audience_overlap(request_body: object, params: Optional[Dict]) ->
             Please add it to SUPPORTED_PRODUCTS in config to enable this API."
         )
 
-    response_data: Dict = await post_audience_overlap_request(request_body=request_body, params=params)
+    response_data: dict = await post_audience_overlap_request(request_body=request_body, params=params)
 
     if not response_data:
         logging.error(f"Audience-Overlap does not exist with requested filters: {request_body}")
