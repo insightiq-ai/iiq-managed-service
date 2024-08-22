@@ -532,11 +532,11 @@ async def post_audience_overlap_request(request_body: object, params: Optional[D
 
     url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/audience-overlap")
 
-    response: Dict = await invoke_post_url(url=url,
+    response_data: Dict = await invoke_post_url(url=url,
                                            body=json.dumps(request_body),
                                            query=params,
                                            headers={},
                                            auth=get_auth())
     # TODO do error-handling over here
 
-    return response
+    return response_data
