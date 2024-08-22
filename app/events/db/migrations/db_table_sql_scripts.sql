@@ -708,8 +708,71 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics
     profile_engagement_rate_histogram JSONB,
     profile_audience_likers          JSONB,
     profile_contact_details          JSONB,
-
     CONSTRAINT unique_async_profile_analytics UNIQUE (iiq_id)
 );
-
 ALTER TABLE iiq_schema.async_profile_analytics OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch_data
+(
+    id                        UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    async_contents_fetch_request_iiq_id                              UUID      NOT NULL,
+    work_platform_id          UUID,
+    work_platform_name        VARCHAR(255),
+    work_platform_logo_url    VARCHAR(255),
+    platform_content_id       VARCHAR(255),
+    platform_username         VARCHAR(255),
+    profile_url               VARCHAR(255),
+    external_id               VARCHAR(255),
+    profile_image_url         VARCHAR(2048),
+    is_verified               BOOLEAN,
+    audio_track_id            VARCHAR(255),
+    audio_track_title         VARCHAR(255),
+    audio_track_artist        VARCHAR(255),
+    audio_track_original      BOOLEAN,
+    like_count                INTEGER,
+    applause_count            INTEGER,
+    support_count             INTEGER,
+    love_count                INTEGER,
+    interest_count            INTEGER,
+    laugh_count               INTEGER,
+    comment_count             INTEGER,
+    view_count                INTEGER,
+    share_count               INTEGER,
+    title                     VARCHAR(1000),
+    format                    VARCHAR(100),
+    type                      VARCHAR(100),
+    content_url               VARCHAR(2048),
+    media_url                 VARCHAR(2048),
+    thumbnail_url             VARCHAR(2048),
+    duration                  INTEGER,
+    description               VARCHAR(5000),
+    published_at              TIMESTAMP,
+    is_reposted               BOOLEAN,
+    collaborators_json        JSONB,
+    sponsors_json             JSONB,
+    mentions_json             JSONB,
+    links_json                JSONB,
+    hashtags_json             JSONB,
+    created_at                TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at                TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    CONSTRAINT unique_async_contents_fetch_data UNIQUE (async_contents_fetch_request_iiq_id, platform_content_id)
+);
+ALTER TABLE iiq_schema.async_contents_fetch_data OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch_request
+(
+    id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    iiq_id                 UUID      NOT NULL,
+    status                 VARCHAR(50),
+    work_platform_id       UUID,
+    work_platform_name     VARCHAR(255),
+    work_platform_logo_url VARCHAR(255),
+    content_url            VARCHAR(255),
+    profile_url            VARCHAR(255),
+    created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    CONSTRAINT        unique_async_contents_fetch_request UNIQUE (iiq_id)
+);
+ALTER TABLE iiq_schema.async_contents_fetch_request OWNER TO iiq;

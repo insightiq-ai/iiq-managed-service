@@ -104,6 +104,7 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
   - [profile_quick_search](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-quick-search#Responses)
   - [profile_contact_info](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-contact-info#Responses)
   - [professional_profile_analytics](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#Responses)
+  - [async_contents_fetch](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch)
 
 
 ## APIs
@@ -247,3 +248,44 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
          Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#request-body)
 
          Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#Responses)
+
+  - Get asynchronous content fetch results for a social creator:
+      - Retrieve content data asynchronously using a creator's social profile.
+        - **POST** <BASE-URL>/v1/social/creators/async/contents/fetch
+
+           Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#request-body)
+
+           Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#Responses)
+
+
+## Database Table Mappings
+  
+  ### `async_contents_fetch_data`
+  
+  This table stores the fetched content data related to a social creator. The unique key for this table is a combination of `async_contents_fetch_request_iiq_id` and `platform_content_id`.
+  
+  - Schema: `iiq_schema`
+    - Fields:
+      - `id`: Maps to `async_contents_fetch_request_iiq_id`
+      - `work_platform`: Maps to the platform details, including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+      - `platform_content_id`: Maps to `platform_content_id`
+      - `title`, `format`, `type`, `url`, `media_url`, `thumbnail_url`, `duration`, `description`, `published_at`, `is_reposted`
+      - `profile`: Maps to profile details like `platform_username`, `profile_url`, `external_id`, `profile_image_url`, and `is_verified`
+      - `audio_track_info`: Maps to audio track details such as `audio_track_id`, `audio_track_title`, `audio_track_artist`, and `audio_track_original`
+      - `engagement`: Maps to engagement metrics including `like_count`, `applause_count`, `support_count`, `love_count`, `interest_count`, `laugh_count`, `comment_count`, `view_count`, `share_count`
+      - `collaborators`, `sponsors`, `mentions`, `links`, `hashtags`: Handled via JSON fields with appropriate value processors
+  
+    - Value Processors:
+      - `published_at`: Casts ISO formatted string to datetime.
+      - `collaborators_json`, `sponsors_json`, `mentions_json`, `links_json`, `hashtags_json`: Cast to JSON.
+  
+  ### `async_contents_fetch_request`
+  
+  This table stores the request details for fetching content data asynchronously.
+  
+  - Schema: `iiq_schema`
+    - Fields:
+      - `id`: Maps to `iiq_id`
+      - `status`: Maps to `status`
+      - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, `work_platform_logo_url`
+      - `profile_url`, `content_url`

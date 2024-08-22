@@ -713,3 +713,83 @@ mappings:
             profile_engagement_rate_histogram: app.events.db.value_post_processors.cast_to_json
             profile_audience_likers: app.events.db.value_post_processors.cast_to_json
             profile_contact_details: app.events.db.value_post_processors.cast_to_json
+
+
+    async_contents_fetch_data:
+        name: async_contents_fetch_data
+        schema: iiq_schema
+        unique: async_contents_fetch_request_iiq_id, platform_content_id
+        fields:
+            id: async_contents_fetch_request_iiq_id
+            work_platform:
+                id: work_platform_id
+                name: work_platform_name
+                logo_url: work_platform_logo_url
+            platform_content_id: platform_content_id
+            title: title
+            format: format
+            type: type
+            url: content_url
+            media_url: media_url
+            thumbnail_url: thumbnail_url
+            duration: duration
+            description: description
+            published_at: published_at
+            is_reposted: is_reposted
+            profile:
+                platform_username: platform_username
+                url: profile_url
+                external_id: external_id
+                image_url: profile_image_url
+                is_verified: is_verified
+            audio_track_info:
+                id: audio_track_id
+                title: audio_track_title
+                artist: audio_track_artist
+                original: audio_track_original
+            engagement:
+                like_count: like_count
+                applause_count: applause_count
+                support_count: support_count
+                love_count: love_count
+                interest_count: interest_count
+                laugh_count: laugh_count
+                comment_count: comment_count
+                view_count: view_count
+                share_count: share_count
+            collaborators: collaborators_json
+            sponsors: sponsors_json
+            mentions: mentions_json
+            links: links_json
+            hashtags: hashtags_json
+        value_post_processors:
+            published_at: app.events.db.value_post_processors.cast_iso_formatted_string_to_datetime
+            collaborators_json: app.events.db.value_post_processors.cast_to_json
+            sponsors_json: app.events.db.value_post_processors.cast_to_json
+            mentions_json: app.events.db.value_post_processors.cast_to_json
+            links_json: app.events.db.value_post_processors.cast_to_json
+            hashtags_json: app.events.db.value_post_processors.cast_to_json
+
+
+    async_contents_fetch_request:
+        name: async_contents_fetch_request
+        schema: iiq_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            status: status
+            work_platform:
+                id: work_platform_id
+                name: work_platform_name
+                logo_url: work_platform_logo_url
+            profile_url: profile_url
+            content_url: content_url
+
+
+    async_contents_fetch_response:
+        name: async_contents_fetch_request
+        schema: iiq_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            status: status
