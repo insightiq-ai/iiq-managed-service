@@ -540,3 +540,18 @@ async def post_audience_overlap_request(request_body: object, params: Optional[D
     # TODO do error-handling over here
 
     return response_data
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def post_professional_contents_fetch_request(request_body: object, params: Optional[Dict]) -> Dict:
+
+    url = urllib.parse.urljoin(get_base_url(), "/v1/professional/creators/contents/fetch")
+
+    response: Dict = await invoke_post_url(url=url,
+                                           body=json.dumps(request_body),
+                                           query=params,
+                                           headers={},
+                                           auth=get_auth())
+    # TODO do error-handling over here
+
+    return response
