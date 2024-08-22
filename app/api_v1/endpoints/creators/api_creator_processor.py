@@ -89,3 +89,9 @@ async def post_async_profile_analytics(request: Request,
 async def fetch_async_contents(request: Request,
                                request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
     return await creator_service.post_async_contents_fetch(request_body=request_body, params=dict(request.query_params.items()))
+
+
+@api_router.post("/audience-overlap", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def post_audience_overlap(request: Request,
+                                request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
+    return await creator_service.post_audience_overlap(request_body=request_body, params=dict(request.query_params.items()))
