@@ -7,12 +7,12 @@ from app.schemas.enum import WebhookEvent, Product, PlatformCategory
 from app.schemas.webhook_schemas import WebhookRequestData, AccountConnectedEvent, ContentEvent, \
     ContentGroupEvent, ProfileEvent, TransactionEvent, PayoutEvent, BalanceEvent, ActivityArtistEvent, \
     ActivityContentEvent, ProfileAudienceEvent, ContentCommentEvent, PublishContentEvent, ProfileAnalyticsEvent, \
-    ContentsFetchEvent
+    ContentsFetchEvent, AudienceOverlapEvent
 from app.services.resource_service import fetch_contents_by_ids, fetch_account_by_id, fetch_content_groups_by_ids, \
     fetch_profile_by_id, fetch_social_transactions_by_ids, fetch_social_payouts_by_ids, fetch_balances_by_ids, \
     fetch_activity_artists_by_ids, fetch_activity_contents_by_ids, fetch_profile_audience_by_account_id, \
     fetch_content_comments_by_content_id_account_id, fetch_commerce_transactions_by_ids, fetch_commerce_payouts_by_ids, \
-    fetch_publish_content_by_id, fetch_profile_analytics_by_id, fetch_async_contents_by_id
+    fetch_publish_content_by_id, fetch_profile_analytics_by_id, fetch_async_contents_by_id, fetch_audience_overlap_by_id
 
 
 async def process_webhook(webhook_request_data: WebhookRequestData):
@@ -87,6 +87,11 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
     ] and Product.PUBLIC_CONTENT_SEARCH in settings.SUPPORTED_PRODUCTS:
         await process_contents_fetch_event(webhook_request_data=webhook_request_data)
 
+    elif webhook_request_data.event in [
+            WebhookEvent.AUDIENCE_OVERLAP_SUCCESS, WebhookEvent.AUDIENCE_OVERLAP_FAILURE
+         ] and Product.CREATOR_SEARCH in settings.SUPPORTED_PRODUCTS:
+        await process_audience_overlap_event(webhook_request_data=webhook_request_data)
+
 
 async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optional[PlatformCategory] = None):
     for executor_event in EventExecutorRegistry.get_all_events():
@@ -160,6 +165,10 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
             await executor_event.async_contents_fetch_success_event_handler(data=data)
         elif webhook_event == WebhookEvent.CONTENTS_FETCH_FAILURE:
             await executor_event.async_contents_fetch_failure_event_handler(data=data)
+        elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_SUCCESS:
+            await executor_event.audience_overlap_success_event_handler(data=data)
+        elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_FAILURE:
+            await executor_event.audience_overlap_failure_event_handler(data=data)
 
 
 async def add_update_account(webhook_request_data: WebhookRequestData):
@@ -452,3 +461,16 @@ async def process_contents_fetch_event(webhook_request_data: WebhookRequestData)
         return
 
     await send_events(webhook_event=webhook_request_data.event, data=async_contents)
+
+
+async def process_audience_overlap_event(webhook_request_data: WebhookRequestData):
+    audience_overlap_event = AudienceOverlapEvent(**webhook_request_data.data)
+    audience_overlap_event_job_id = audience_overlap_event.job_id
+
+    audience_overlap: Dict = await fetch_audience_overlap_by_id(id=audience_overlap_event_job_id)
+
+    if not audience_overlap:
+        logging.error(f"Audience-Overlap do not exists with publish-id: {audience_overlap_event_job_id}")
+        return
+
+    await send_events(webhook_event=webhook_request_data.event, data=audience_overlap)

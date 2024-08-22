@@ -105,6 +105,7 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
   - [profile_contact_info](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-contact-info#Responses)
   - [professional_profile_analytics](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#Responses)
   - [async_contents_fetch](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch)
+  - [audience_overlap](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-audience-overlap)
 
 
 ## APIs
@@ -289,3 +290,37 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
       - `status`: Maps to `status`
       - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, `work_platform_logo_url`
       - `profile_url`, `content_url`
+
+
+  ### `audience_overlap_request`
+
+  This table stores the request details for audience overlap calculations.
+
+  - **Schema**: `iiq_schema`
+    - **Unique Key**: `id`
+    - **Fields**:
+      - `id`: Maps to `id`, which uniquely identifies the request.
+      - `identifiers`: Maps to a list of identifiers used for the audience overlap calculation.
+      - `status`: Maps to the current status of the request.
+      - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+
+  ### `audience_overlap_data`
+
+  This table stores the results of the audience overlap calculations.
+
+  - **Schema**: `iiq_schema`
+    - **Unique Key**: `id`
+    - **Fields**:
+      - `id`: Maps to `id`, which uniquely identifies the data.
+      - `status`: Maps to the current status of the data processing.
+      - `total_follower_count`: Maps to the total number of followers across all platforms.
+      - `unique_follower_count`: Maps to the count of unique followers across all platforms.
+      - `total_subscriber_count`: Maps to the total number of subscribers across all platforms.
+      - `unique_subscriber_count`: Maps to the count of unique subscribers across all platforms.
+      - `profiles`: Maps to JSON data containing details of profiles involved in the overlap, processed by the `cast_to_json` value processor.
+      - `error`: Maps to any error message or details encountered during the overlap calculation.
+      - `ignored_profiles`: Maps to JSON data containing details of profiles that were ignored in the overlap, processed by the `cast_to_json` value processor.
+
+    - **Value Processors**:
+      - `profiles_json`: Casts the `profiles` data to JSON format.
+      - `ignored_profiles_json`: Casts the `ignored_profiles` data to JSON format.
