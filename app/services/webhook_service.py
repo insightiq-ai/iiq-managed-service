@@ -99,7 +99,7 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
         await process_audience_overlap_event(webhook_request_data=webhook_request_data)
 
     elif webhook_request_data.event in [
-            WebhookEvent.CREATORS_SEARCH_EXPORT_SUCCESS, WebhookEvent.CREATORS_SEARCH_EXPORT_FAILURE
+            WebhookEvent.CREATOR_SEARCH_EXPORT_SUCCESS, WebhookEvent.CREATOR_SEARCH_EXPORT_FAILURE
          ] and Product.CREATOR_SEARCH in settings.SUPPORTED_PRODUCTS:
         await process_profiles_search_export_event(webhook_request_data=webhook_request_data)
 
@@ -186,9 +186,9 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
             await executor_event.audience_overlap_success_event_handler(data=data)
         elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_FAILURE:
             await executor_event.audience_overlap_failure_event_handler(data=data)
-        elif webhook_event == WebhookEvent.CREATORS_SEARCH_EXPORT_SUCCESS:
+        elif webhook_event == WebhookEvent.CREATOR_SEARCH_EXPORT_SUCCESS:
             await executor_event.profiles_search_export_success_event_handler(data=data)
-        elif webhook_event == WebhookEvent.CREATORS_SEARCH_EXPORT_FAILURE:
+        elif webhook_event == WebhookEvent.CREATOR_SEARCH_EXPORT_FAILURE:
             await executor_event.profiles_search_export_failure_event_handler(data=data)
 
 
