@@ -925,13 +925,13 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_request
     audience_age_percentage               FLOAT,
     creator_age_min                       INTEGER,
     creator_age_max                       INTEGER,
-    description_keywords                  TEXT,
+    description_keywords                  VARCHAR(1000),
     is_verified                           BOOLEAN,
     has_contact_details                   BOOLEAN,
     specific_contact_details              JSONB,
     last_post_timestamp                   TIMESTAMP,
     audience_language                     JSONB,
-    creator_language_code                 VARCHAR(50),
+    creator_language                      VARCHAR(50),
     audience_interests                    JSONB,
     audience_interest_affinities          JSONB,
     creator_interests                     JSONB,
@@ -956,16 +956,16 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_request
     subscriber_growth_interval_unit       VARCHAR(50),
     subscriber_growth_operator            VARCHAR(50),
     subscriber_growth_percentage_value    FLOAT,
-    bio_phrase                            TEXT,
+    bio_phrase                            VARCHAR(1000),
     hashtags                              JSONB,
     mentions                              JSONB,
     topic_relevance_name                  JSONB,
     topic_relevance_weight                FLOAT,
     topic_relevance_threshold             FLOAT,
-    audience_lookalikes                   TEXT,
+    audience_lookalikes                   VARCHAR(1000),
     platform_account_type                 VARCHAR(50),
     creator_account_type                  VARCHAR(50),
-    creator_lookalikes                    TEXT,
+    creator_lookalikes                    VARCHAR(1000),
     creator_location                      JSONB,
     audience_location_name                JSONB,
     audience_location_percentage_value    FLOAT,
@@ -989,4 +989,39 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_request
     CONSTRAINT                            unique_profiles_search_export_request UNIQUE (iiq_id)
 );
 
-ALTER TABLE iiq_schema.profiles_search_export_request OWNER TO iiq;
+ALTER TABLE iiq_schema.profiles_search_export_request OWNER TO insightiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_data
+(
+    id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    iiq_id                 UUID      NOT NULL,
+    status                 VARCHAR(50),
+    work_platform_id       UUID,
+    work_platform_name     VARCHAR(255),
+    work_platform_logo_url VARCHAR(255),
+    platform_username      VARCHAR(255),
+    url                    VARCHAR(255),
+    image_url              VARCHAR(255),
+    full_name              VARCHAR(255),
+    introduction           VARCHAR(2048),
+    is_verified            BOOLEAN,
+    platform_account_type  VARCHAR(255),
+    gender                 VARCHAR(50),
+    age_group              VARCHAR(50),
+    language               VARCHAR(50),
+    follower_count         INTEGER,
+    subscriber_count       INTEGER,
+    content_count          INTEGER,
+    engagement_rate        FLOAT,
+    city                   VARCHAR(255),
+    state                  VARCHAR(255),
+    country                VARCHAR(255),
+    contact_type           VARCHAR(50),
+    contact_value          VARCHAR(255),
+    created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    CONSTRAINT             unique_profiles_search_export_data UNIQUE (iiq_id)
+);
+
+ALTER TABLE iiq_schema.profiles_search_export_data OWNER TO insightiq;

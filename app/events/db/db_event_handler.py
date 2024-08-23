@@ -360,13 +360,14 @@ class DbEventHandler(BaseEvent):
 
     @classmethod
     async def profiles_search_export_success_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS
+        from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, data=data)
+        await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data.get('data'))
 
     @classmethod
     async def profiles_search_export_failure_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, data=data)
+        from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
 
     @staticmethod
     def add_iiq_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
