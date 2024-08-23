@@ -12,11 +12,18 @@ class WebhookPayload(BaseModel):
     last_updated_time: datetime
 
 
+class WorkPlatform(BaseModel):
+    id: str
+    name: str
+    logo_url: str
+
+
 class WebhookRequestData(BaseModel):
     id: str
     event: WebhookEvent
     name: str
     data: Dict
+    work_platform: WorkPlatform
 
     def __str__(self) -> str:
         return super().__str__()
@@ -87,3 +94,4 @@ class AudienceOverlapEvent(BaseModel):
 
 class ProfessionalContentsFetchEvent(BaseModel):
     job_id: str
+    work_platform: WorkPlatform
