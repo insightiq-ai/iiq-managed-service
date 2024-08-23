@@ -15,6 +15,13 @@ from app.services.resource_service import fetch_contents_by_ids, fetch_account_b
     fetch_publish_content_by_id, fetch_profile_analytics_by_id, fetch_async_contents_by_id, fetch_audience_overlap_by_id, \
     fetch_async_professional_contents_by_id
 
+# whitelisted work_platform_ids for professional/contents
+PROFESSIONAL_WORK_PLATFORM_IDS = ["36410629-f907-43ba-aa0d-434ca9c0501a"]
+
+
+def is_professional_platform(work_platform_id: str) -> bool:
+    return work_platform_id in PROFESSIONAL_WORK_PLATFORM_IDS
+
 
 async def process_webhook(webhook_request_data: WebhookRequestData):
     if webhook_request_data.event == WebhookEvent.ACCOUNTS_CONNECTED \
@@ -86,8 +93,10 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
     elif webhook_request_data.event in [
         WebhookEvent.CONTENTS_FETCH_SUCCESS, WebhookEvent.CONTENTS_FETCH_FAILURE
     ] and Product.PUBLIC_CONTENT_SEARCH in settings.SUPPORTED_PRODUCTS:
-        await process_contents_fetch_event(webhook_request_data=webhook_request_data)
-        await process_professional_contents_fetch_event(webhook_request_data=webhook_request_data)
+        if is_professional_platform(webhook_request_data.work_platform.id):
+            await process_professional_contents_fetch_event(webhook_request_data=webhook_request_data)
+        else:
+            await process_contents_fetch_event(webhook_request_data=webhook_request_data)
 
     elif webhook_request_data.event in [
             WebhookEvent.AUDIENCE_OVERLAP_SUCCESS, WebhookEvent.AUDIENCE_OVERLAP_FAILURE
@@ -164,11 +173,15 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
         elif webhook_event == WebhookEvent.PROFILE_ANALYTICS_FAILURE:
             await executor_event.async_profile_analytics_failure_event_handler(data=data)
         elif webhook_event == WebhookEvent.CONTENTS_FETCH_SUCCESS:
-            await executor_event.async_contents_fetch_success_event_handler(data=data)
-            await executor_event.professional_contents_fetch_request_success_handler(data=data)
+            if is_professional_platform(data.get('data')[0]['work_platform']['id']):
+                await executor_event.professional_contents_fetch_request_success_handler(data=data)
+            else:
+                await executor_event.async_contents_fetch_success_event_handler(data=data)
         elif webhook_event == WebhookEvent.CONTENTS_FETCH_FAILURE:
-            await executor_event.async_contents_fetch_failure_event_handler(data=data)
-            await executor_event.professional_contents_fetch_request_failure_handler(data=data)
+            if is_professional_platform(data.get('data')[0]['work_platform']['id']):
+                await executor_event.professional_contents_fetch_request_failure_handler(data=data)
+            else:
+                await executor_event.async_contents_fetch_failure_event_handler(data=data)
         elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_SUCCESS:
             await executor_event.audience_overlap_success_event_handler(data=data)
         elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_FAILURE:
@@ -469,12 +482,8 @@ async def process_contents_fetch_event(webhook_request_data: WebhookRequestData)
 
 async def process_professional_contents_fetch_event(webhook_request_data: WebhookRequestData):
     job_id = webhook_request_data.data.get("job_id")
-    work_platform = webhook_request_data.work_platform
 
-    professional_contents_fetch_event = ProfessionalContentsFetchEvent(
-        job_id=job_id,
-        work_platform=work_platform
-    )
+    professional_contents_fetch_event = ProfessionalContentsFetchEvent(job_id=job_id)
 
     professional_contents_fetch_event_job_id = professional_contents_fetch_event.job_id
 
