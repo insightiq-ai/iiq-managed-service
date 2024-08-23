@@ -827,7 +827,7 @@ CREATE TABLE IF NOT EXISTS iiq_schema.professional_contents_fetch_data
     comment_count             INTEGER,
     view_count                INTEGER,
     share_count               INTEGER,
-    title                     VARCHAR(1000),
+    title                     VARCHAR(2048),
     format                    VARCHAR(100),
     type                      VARCHAR(100),
     content_url               VARCHAR(2048),

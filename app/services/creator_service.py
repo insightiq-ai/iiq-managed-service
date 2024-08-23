@@ -259,7 +259,7 @@ async def post_professional_contents_fetch(request_body: object, params: Optiona
     if Product.PUBLIC_CONTENT_SEARCH not in settings.SUPPORTED_PRODUCTS:
         raise HTTPException(status_code=400, detail=f"{Product.PUBLIC_CONTENT_SEARCH} is not supported.")
 
-    response_data: Dict = await post_async_contents_fetch_request(request_body=request_body, params=params)
+    response_data: Dict = await post_professional_contents_fetch_request(request_body=request_body, params=params)
 
     if not response_data:
         logging.error(f"Contents do not exist with requested filters: {request_body}")

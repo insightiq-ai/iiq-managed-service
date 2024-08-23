@@ -891,12 +891,6 @@ mappings:
         fields:
             id: iiq_id
             status: status
-            work_platform:
-                id: work_platform_id
-                name: work_platform_name
-                logo_url: work_platform_logo_url
-            profile_url: profile_url
-            content_url: content_url
 
 
     professional_contents_fetch_request:
