@@ -94,3 +94,7 @@ class AudienceOverlapEvent(BaseModel):
 
 class ProfessionalContentsFetchEvent(BaseModel):
     job_id: str
+
+
+class ProfilesSearchExportEvent(BaseModel):
+    job_id: str

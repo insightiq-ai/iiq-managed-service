@@ -7,13 +7,14 @@ from app.schemas.enum import WebhookEvent, Product, PlatformCategory
 from app.schemas.webhook_schemas import WebhookRequestData, AccountConnectedEvent, ContentEvent, \
     ContentGroupEvent, ProfileEvent, TransactionEvent, PayoutEvent, BalanceEvent, ActivityArtistEvent, \
     ActivityContentEvent, ProfileAudienceEvent, ContentCommentEvent, PublishContentEvent, ProfileAnalyticsEvent, \
-    ContentsFetchEvent, ProfessionalContentsFetchEvent, AudienceOverlapEvent
+    ContentsFetchEvent, ProfessionalContentsFetchEvent, AudienceOverlapEvent, ProfilesSearchExportEvent
 from app.services.resource_service import fetch_contents_by_ids, fetch_account_by_id, fetch_content_groups_by_ids, \
     fetch_profile_by_id, fetch_social_transactions_by_ids, fetch_social_payouts_by_ids, fetch_balances_by_ids, \
     fetch_activity_artists_by_ids, fetch_activity_contents_by_ids, fetch_profile_audience_by_account_id, \
     fetch_content_comments_by_content_id_account_id, fetch_commerce_transactions_by_ids, fetch_commerce_payouts_by_ids, \
     fetch_publish_content_by_id, fetch_profile_analytics_by_id, fetch_async_contents_by_id, fetch_audience_overlap_by_id, \
-    fetch_async_professional_contents_by_job_id
+    fetch_async_professional_contents_by_job_id, fetch_profiles_search_export_by_id
+
 from app.utils.generic_utils import is_professional_platform
 
 
@@ -96,6 +97,11 @@ async def process_webhook(webhook_request_data: WebhookRequestData):
             WebhookEvent.AUDIENCE_OVERLAP_SUCCESS, WebhookEvent.AUDIENCE_OVERLAP_FAILURE
          ] and Product.CREATOR_SEARCH in settings.SUPPORTED_PRODUCTS:
         await process_audience_overlap_event(webhook_request_data=webhook_request_data)
+
+    elif webhook_request_data.event in [
+            WebhookEvent.CREATORS_SEARCH_EXPORT_SUCCESS, WebhookEvent.CREATORS_SEARCH_EXPORT_FAILURE
+         ] and Product.CREATOR_SEARCH in settings.SUPPORTED_PRODUCTS:
+        await process_profiles_search_export_event(webhook_request_data=webhook_request_data)
 
 
 async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optional[PlatformCategory] = None):
@@ -180,6 +186,10 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
             await executor_event.audience_overlap_success_event_handler(data=data)
         elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_FAILURE:
             await executor_event.audience_overlap_failure_event_handler(data=data)
+        elif webhook_event == WebhookEvent.CREATORS_SEARCH_EXPORT_SUCCESS:
+            await executor_event.profiles_search_export_success_event_handler(data=data)
+        elif webhook_event == WebhookEvent.CREATORS_SEARCH_EXPORT_FAILURE:
+            await executor_event.profiles_search_export_failure_event_handler(data=data)
 
 
 async def add_update_account(webhook_request_data: WebhookRequestData):
@@ -496,3 +506,16 @@ async def process_audience_overlap_event(webhook_request_data: WebhookRequestDat
         return
 
     await send_events(webhook_event=webhook_request_data.event, data=audience_overlap)
+
+
+async def process_profiles_search_export_event(webhook_request_data: WebhookRequestData):
+    profiles_search_export_event = ProfilesSearchExportEvent(**webhook_request_data.data)
+    profiles_search_export_event_job_id = profiles_search_export_event.job_id
+
+    profiles_search_export: Dict = await fetch_profiles_search_export_by_id(id=profiles_search_export_event_job_id)
+
+    if not profiles_search_export:
+        logging.error(f"Profiles Search-Export do not exists with publish-id: {profiles_search_export_event_job_id}")
+        return
+
+    await send_events(webhook_event=webhook_request_data.event, data=profiles_search_export)

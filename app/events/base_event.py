@@ -238,3 +238,15 @@ class BaseEvent(ABC):
     @classmethod
     async def professional_contents_fetch_failure_handler(cls, data: Dict):
         pass
+
+    @classmethod
+    async def profiles_search_export_request_event_handler(cls, data: Dict):
+        pass
+
+    @classmethod
+    async def profiles_search_export_success_event_handler(cls, data: Dict):
+        pass
+
+    @classmethod
+    async def profiles_search_export_failure_event_handler(cls, data: Dict):
+        pass

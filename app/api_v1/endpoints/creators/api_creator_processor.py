@@ -95,3 +95,9 @@ async def fetch_async_contents(request: Request,
 async def post_audience_overlap(request: Request,
                                 request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
     return await creator_service.post_audience_overlap(request_body=request_body, params=dict(request.query_params.items()))
+
+
+@api_router.post("/profiles/search-export", status_code=HTTPStatus.OK, response_model=Optional[Dict])
+async def post_profiles_search_export(request: Request,
+                                      request_body: Optional[object] = Body(default=None)) -> Optional[Dict]:
+    return await creator_service.post_profiles_search_export(request_body=request_body, params=dict(request.query_params.items()))
