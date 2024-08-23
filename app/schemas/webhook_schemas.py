@@ -94,4 +94,3 @@ class AudienceOverlapEvent(BaseModel):
 
 class ProfessionalContentsFetchEvent(BaseModel):
     job_id: str
-    work_platform: WorkPlatform
