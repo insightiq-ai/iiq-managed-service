@@ -10,7 +10,7 @@ from app.services.resource_service import fetch_profile_analytics, fetch_search_
     fetch_quick_search_profiles, fetch_dictionary_languages, fetch_dictionary_brands, fetch_dictionary_locations, \
     fetch_dictionary_relevant_topics, fetch_contact_info, fetch_professional_profile_analytics, \
     post_async_profile_analytics_request, post_async_contents_fetch_request, post_audience_overlap_request, \
-    post_professional_contents_fetch_request
+    post_professional_contents_fetch_request, post_profiles_search_export_request
 
 
 async def get_basic_creator_profile(params: Optional[Dict]) -> Optional[Dict]:
@@ -267,5 +267,26 @@ async def post_professional_contents_fetch(request_body: object, params: Optiona
 
     for executor_event in EventExecutorRegistry.get_all_events():
         await executor_event.professional_contents_fetch_request_handler(data=response_data)
+
+    return response_data
+
+
+async def post_profiles_search_export(request_body: object, params: Optional[Dict]) -> Optional[Dict]:
+    # Check if the product is supported
+    if Product.CREATOR_SEARCH not in settings.SUPPORTED_PRODUCTS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"{Product.CREATOR_SEARCH} is not supported. \
+            Please add it to SUPPORTED_PRODUCTS in config to enable this API."
+        )
+
+    response_data: dict = await post_profiles_search_export_request(request_body=request_body, params=params)
+
+    if not response_data:
+        logging.error(f"Profiles Search-Export do not exist with requested filters: {request_body}")
+        return None
+
+    for executor_event in EventExecutorRegistry.get_all_events():
+        await executor_event.profiles_search_export_request_event_handler(data=response_data)
 
     return response_data

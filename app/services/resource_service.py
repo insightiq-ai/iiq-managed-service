@@ -294,6 +294,16 @@ async def fetch_audience_overlap_by_id(id: str) -> Dict:
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def fetch_profiles_search_export_by_id(id: str) -> Dict:
+    url = urllib.parse.urljoin(get_base_url(), f"/v1/social/creators/profiles/search-export/{id}")
+
+    response_data: Dict = await invoke_get_url(url=url, headers={}, auth=get_auth())
+    # TODO do error-handling over here
+
+    return response_data
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
 async def fetch_basic_creator_profile(params: Optional[Dict]) -> Dict:
 
     url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/profiles")
@@ -553,6 +563,21 @@ async def post_professional_contents_fetch_request(request_body: object, params:
 async def post_audience_overlap_request(request_body: object, params: Optional[Dict]) -> Dict:
 
     url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/audience-overlap")
+
+    response_data: Dict = await invoke_post_url(url=url,
+                                                body=json.dumps(request_body),
+                                                query=params,
+                                                headers={},
+                                                auth=get_auth())
+    # TODO do error-handling over here
+
+    return response_data
+
+
+@retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
+async def post_profiles_search_export_request(request_body: object, params: Optional[Dict]) -> Dict:
+
+    url = urllib.parse.urljoin(get_base_url(), "/v1/social/creators/profiles/search-export")
 
     response_data: Dict = await invoke_post_url(url=url,
                                                 body=json.dumps(request_body),

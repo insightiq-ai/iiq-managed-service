@@ -44,3 +44,5 @@ AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('audience_
 PROFESSIONAL_CONTENTS_FETCH_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('professional_contents_fetch_data', {})
 PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS = config.get('mappings', {}).get('professional_contents_fetch_response', {})
 PROFESSIONAL_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS = config.get('mappings', {}).get('professional_contents_fetch_request', {})
+PROFILES_SEARCH_EXPORT_REQUEST_TABLE_MAPPINGS = config.get('mappings', {}).get('profiles_search_export_request', {})
+PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS = config.get('mappings', {}).get('profiles_search_export_data', {})
