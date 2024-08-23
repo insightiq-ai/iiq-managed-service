@@ -468,7 +468,14 @@ async def process_contents_fetch_event(webhook_request_data: WebhookRequestData)
 
 
 async def process_professional_contents_fetch_event(webhook_request_data: WebhookRequestData):
-    professional_contents_fetch_event = ProfessionalContentsFetchEvent(**webhook_request_data.data)
+    job_id = webhook_request_data.data.get("job_id")
+    work_platform = webhook_request_data.work_platform
+
+    professional_contents_fetch_event = ProfessionalContentsFetchEvent(
+        job_id=job_id,
+        work_platform=work_platform
+    )
+
     professional_contents_fetch_event_job_id = professional_contents_fetch_event.job_id
 
     professional_contents: Dict = await fetch_async_professional_contents_by_id(id=professional_contents_fetch_event_job_id)

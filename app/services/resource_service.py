@@ -540,10 +540,10 @@ async def post_professional_contents_fetch_request(request_body: object, params:
     url = urllib.parse.urljoin(get_base_url(), "/v1/professional/creators/contents/fetch")
 
     response_data: Dict = await invoke_post_url(url=url,
-                                           body=json.dumps(request_body),
-                                           query=params,
-                                           headers={},
-                                           auth=get_auth())
+                                                body=json.dumps(request_body),
+                                                query=params,
+                                                headers={},
+                                                auth=get_auth())
     # TODO do error-handling over here
 
     return response_data
