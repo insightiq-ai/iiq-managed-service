@@ -908,6 +908,40 @@ mappings:
             content_url: content_url
 
 
+    profiles_search_export_data:
+        name: profiles_search_export_data
+        schema: iiq_schema
+        unique_key: iiq_id
+        fields:
+            job_id: profiles_search_export_request_id
+            status: status
+            work_platform:
+                id: work_platform_id
+                name: work_platform_name
+                logo_url: work_platform_logo_url
+            platform_username: platform_username
+            url: url
+            image_url: image_url
+            full_name: full_name
+            introduction: introduction
+            is_verified: is_verified
+            platform_account_type: platform_account_type
+            gender: gender
+            age_group: age_group
+            language: language
+            follower_count: follower_count
+            subscriber_count: subscriber_count
+            content_count: content_count
+            engagement_rate: engagement_rate
+            location:
+                city: city
+                state: state
+                country: country
+            contact_details:
+                type: contact_type
+                value: contact_value
+
+
     profiles_search_export_request:
         name: profiles_search_export_request
         schema: iiq_schema
@@ -1011,40 +1045,6 @@ mappings:
             creator_location: app.events.db.value_post_processors.cast_to_json
             audience_location_name: app.events.db.value_post_processors.cast_to_json
             audience_credibility_category: app.events.db.value_post_processors.cast_to_json
-
-
-    profiles_search_export_data:
-        name: profiles_search_export_data
-        schema: iiq_schema
-        unique_key: iiq_id
-        fields:
-            id: iiq_id
-            status: status
-            work_platform:
-                id: work_platform_id
-                name: work_platform_name
-                logo_url: work_platform_logo_url
-            platform_username: platform_username
-            url: url
-            image_url: image_url
-            full_name: full_name
-            introduction: introduction
-            is_verified: is_verified
-            platform_account_type: platform_account_type
-            gender: gender
-            age_group: age_group
-            language: language
-            follower_count: follower_count
-            subscriber_count: subscriber_count
-            content_count: content_count
-            engagement_rate: engagement_rate
-            location:
-                city: city
-                state: state
-                country: country
-            contact_details:
-                type: contact_type
-                value: contact_value
 
 
     profiles_search_export_response:
