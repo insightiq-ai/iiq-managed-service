@@ -1,4 +1,5 @@
 import importlib
+from typing import List, Dict
 
 from app.utils.constants import PROFESSIONAL_WORK_PLATFORM_IDS
 
@@ -23,3 +24,17 @@ def get_method_from_method_path_string(method_path: str):
 
 def is_professional_platform(work_platform_id: str) -> bool:
     return work_platform_id in PROFESSIONAL_WORK_PLATFORM_IDS
+
+
+def add_iiq_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
+    iiq_id = data.get(id_key)
+    for item in data.get('data', []):
+        item['id'] = iiq_id
+    return data.get('data', [])
+
+
+def add_job_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
+    iiq_id = data.get(id_key)
+    for item in data.get('data', []):
+        item['job_id'] = iiq_id
+    return data.get('data', [])
