@@ -333,12 +333,12 @@ class DbEventHandler(BaseEvent):
         await cls.persist_to_db(table_mappings=AUDIENCE_OVERLAP_DATA_TABLE_MAPPINGS, data=data)
 
     @classmethod
-    async def professional_contents_fetch_request_event_handler(cls, data: Dict):
+    async def professional_contents_fetch_request_handler(cls, data: Dict):
         from app.events.db.mapper_config import PROFESSIONAL_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_REQUEST_TABLE_MAPPINGS, data=data)
 
     @classmethod
-    async def professional_contents_fetch_request_success_handler(cls, data: Dict):
+    async def professional_contents_fetch_success_handler(cls, data: Dict):
         from app.events.db.mapper_config import PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, \
             PROFESSIONAL_CONTENTS_FETCH_DATA_TABLE_MAPPINGS
 
@@ -349,7 +349,7 @@ class DbEventHandler(BaseEvent):
         await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_DATA_TABLE_MAPPINGS, data=data_with_iiq_id)
 
     @classmethod
-    async def professional_contents_fetch_request_failure_handler(cls, data: Dict):
+    async def professional_contents_fetch_failure_handler(cls, data: Dict):
         from app.events.db.mapper_config import PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
 

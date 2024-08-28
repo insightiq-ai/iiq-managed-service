@@ -228,13 +228,13 @@ class BaseEvent(ABC):
         pass
 
     @classmethod
-    async def professional_contents_fetch_request_event_handler(cls, data: Dict):
+    async def professional_contents_fetch_request_handler(cls, data: Dict):
         pass
 
     @classmethod
-    async def professional_contents_fetch_request_success_handler(cls, data: Dict):
+    async def professional_contents_fetch_success_handler(cls, data: Dict):
         pass
 
     @classmethod
-    async def professional_contents_fetch_request_failure_handler(cls, data: Dict):
+    async def professional_contents_fetch_failure_handler(cls, data: Dict):
         pass

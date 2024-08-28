@@ -1,5 +1,7 @@
 import importlib
 
+from app.utils.constants import PROFESSIONAL_WORK_PLATFORM_IDS
+
 
 def get_method_from_method_path_string(method_path: str):
     # Split the path into module and function components
@@ -17,3 +19,7 @@ def get_method_from_method_path_string(method_path: str):
         print(f"Module {module_name} not found")
     except AttributeError:
         print(f"Method {method_name} not found in module {module_name}")
+
+
+def is_professional_platform(work_platform_id: str) -> bool:
+    return work_platform_id in PROFESSIONAL_WORK_PLATFORM_IDS
