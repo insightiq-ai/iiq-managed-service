@@ -266,6 +266,6 @@ async def post_professional_contents_fetch(request_body: object, params: Optiona
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.professional_contents_fetch_request_event_handler(data=response_data)
+        await executor_event.professional_contents_fetch_request_handler(data=response_data)
 
     return response_data
