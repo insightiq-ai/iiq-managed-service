@@ -5,7 +5,7 @@ from app.events.base_event import BaseEvent
 from app.events.db.deps import AsyncDataStore
 from app.events.db.repository.base_templated import base_templated_repository
 from app.events.db.session import AsyncSessionLocal
-from app.utils.generic_utils import add_job_id_to_data, add_iiq_id_to_data
+from app.utils.generic_utils import add_job_id_to_data
 from app.utils.mapping_utils import flatten_dict, map_obj_to_another_obj, map_obj_list_to_another_list,\
     post_process_obj, post_process_obj_list
 
@@ -309,7 +309,7 @@ class DbEventHandler(BaseEvent):
 
         await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
 
-        data_with_iiq_id = add_iiq_id_to_data(data)
+        data_with_iiq_id = add_job_id_to_data(data)
 
         await cls.persist_to_db(table_mappings=ASYNC_CONTENTS_FETCH_DATA_TABLE_MAPPINGS, data=data_with_iiq_id)
 

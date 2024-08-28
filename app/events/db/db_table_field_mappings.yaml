@@ -720,7 +720,7 @@ mappings:
         schema: iiq_schema
         unique: async_contents_fetch_request_iiq_id, platform_content_id
         fields:
-            id: async_contents_fetch_request_iiq_id
+            job_id: async_contents_fetch_request_iiq_id
             work_platform:
                 id: work_platform_id
                 name: work_platform_name
