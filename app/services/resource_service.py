@@ -277,8 +277,8 @@ async def fetch_async_contents_by_id(id: str) -> Dict:
 
 
 @retry(attempts=3, delay=1, retry_exceptions=(TooManyRequestException,))
-async def fetch_async_professional_contents_by_job_id(id: str) -> Dict:
-    url = urllib.parse.urljoin(get_base_url(), f"/v1/professional/creators/contents/fetch/{id}")
+async def fetch_async_professional_contents_by_job_id(job_id: str) -> Dict:
+    url = urllib.parse.urljoin(get_base_url(), f"/v1/professional/creators/contents/fetch/{job_id}")
 
     return await fetch_all_responses_iteratively(url=url)
 

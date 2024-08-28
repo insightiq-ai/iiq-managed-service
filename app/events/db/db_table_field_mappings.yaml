@@ -833,7 +833,7 @@ mappings:
         schema: iiq_schema
         unique: professional_contents_fetch_request_iiq_id, platform_content_id
         fields:
-            id: professional_contents_fetch_request_iiq_id
+            job_id: professional_contents_fetch_request_iiq_id
             work_platform:
                 id: work_platform_id
                 name: work_platform_name
