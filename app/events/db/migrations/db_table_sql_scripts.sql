@@ -868,7 +868,7 @@ ALTER TABLE iiq_schema.professional_contents_fetch_request OWNER TO iiq;
 CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_data
 (
     id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    iiq_id                 UUID      NOT NULL,
+    profiles_search_export_request_id        UUID      NOT NULL,
     status                 VARCHAR(50),
     work_platform_id       UUID,
     work_platform_name     VARCHAR(255),
@@ -893,14 +893,11 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_data
     contact_type           VARCHAR(50),
     contact_value          VARCHAR(255),
     total_results          VARCHAR(255),
-    limit                  VARCHAR(255),
-    offset                 VARCHAR(255),
     created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    CONSTRAINT             unique_profiles_search_export_data UNIQUE (iiq_id)
+    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now())
 );
-
 ALTER TABLE iiq_schema.profiles_search_export_data OWNER TO iiq;
+
 
 CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_request
 (
@@ -988,39 +985,4 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_request
     updated_at                            TIMESTAMP DEFAULT timezone('utc'::text, now()),
     CONSTRAINT                            unique_profiles_search_export_request UNIQUE (iiq_id)
 );
-
 ALTER TABLE iiq_schema.profiles_search_export_request OWNER TO iiq;
-
-
-CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_data
-(
-    id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
-    profiles_search_export_request_id                 UUID      NOT NULL,
-    status                 VARCHAR(50),
-    work_platform_id       UUID,
-    work_platform_name     VARCHAR(255),
-    work_platform_logo_url VARCHAR(255),
-    platform_username      VARCHAR(255),
-    url                    VARCHAR(255),
-    image_url              VARCHAR(255),
-    full_name              VARCHAR(255),
-    introduction           VARCHAR(2048),
-    is_verified            BOOLEAN,
-    platform_account_type  VARCHAR(255),
-    gender                 VARCHAR(50),
-    age_group              VARCHAR(50),
-    language               VARCHAR(50),
-    follower_count         INTEGER,
-    subscriber_count       INTEGER,
-    content_count          INTEGER,
-    engagement_rate        FLOAT,
-    city                   VARCHAR(255),
-    state                  VARCHAR(255),
-    country                VARCHAR(255),
-    contact_type           VARCHAR(50),
-    contact_value          VARCHAR(255),
-    created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now())
-);
-
-ALTER TABLE iiq_schema.profiles_search_export_data OWNER TO iiq;

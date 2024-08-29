@@ -953,7 +953,6 @@ mappings:
                 id: work_platform_id
                 name: work_platform_name
                 logo_url: work_platform_logo_url
-            work_platform_id: work_platform_id
             follower_count_min: follower_count_min
             follower_count_max: follower_count_max
             subscriber_count_min: subscriber_count_min
