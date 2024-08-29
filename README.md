@@ -260,67 +260,136 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
 
 
 ## Database Table Mappings
+
+
+### `async_contents_fetch_data`
+
+This table stores the fetched content data related to a social creator. The unique key for this table is a combination of `async_contents_fetch_request_iiq_id` and `platform_content_id`.
   
-  ### `async_contents_fetch_data`
+- Schema: `iiq_schema`
+  - Fields:
+    - `id`: Maps to `async_contents_fetch_request_iiq_id`
+    - `work_platform`: Maps to the platform details, including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+    - `platform_content_id`: Maps to `platform_content_id`
+    - `title`, `format`, `type`, `url`, `media_url`, `thumbnail_url`, `duration`, `description`, `published_at`, `is_reposted`
+    - `profile`: Maps to profile details like `platform_username`, `profile_url`, `external_id`, `profile_image_url`, and `is_verified`
+    - `audio_track_info`: Maps to audio track details such as `audio_track_id`, `audio_track_title`, `audio_track_artist`, and `audio_track_original`
+    - `engagement`: Maps to engagement metrics including `like_count`, `applause_count`, `support_count`, `love_count`, `interest_count`, `laugh_count`, `comment_count`, `view_count`, `share_count`
+    - `collaborators`, `sponsors`, `mentions`, `links`, `hashtags`: Handled via JSON fields with appropriate value processors
   
-  This table stores the fetched content data related to a social creator. The unique key for this table is a combination of `async_contents_fetch_request_iiq_id` and `platform_content_id`.
+  - Value Processors:
+    - `published_at`: Casts ISO formatted string to datetime.
+    - `collaborators_json`, `sponsors_json`, `mentions_json`, `links_json`, `hashtags_json`: Cast to JSON.
+
+### `async_contents_fetch_request`
+
+This table stores the request details for fetching content data asynchronously.
   
-  - Schema: `iiq_schema`
-    - Fields:
-      - `id`: Maps to `async_contents_fetch_request_iiq_id`
-      - `work_platform`: Maps to the platform details, including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
-      - `platform_content_id`: Maps to `platform_content_id`
-      - `title`, `format`, `type`, `url`, `media_url`, `thumbnail_url`, `duration`, `description`, `published_at`, `is_reposted`
-      - `profile`: Maps to profile details like `platform_username`, `profile_url`, `external_id`, `profile_image_url`, and `is_verified`
-      - `audio_track_info`: Maps to audio track details such as `audio_track_id`, `audio_track_title`, `audio_track_artist`, and `audio_track_original`
-      - `engagement`: Maps to engagement metrics including `like_count`, `applause_count`, `support_count`, `love_count`, `interest_count`, `laugh_count`, `comment_count`, `view_count`, `share_count`
-      - `collaborators`, `sponsors`, `mentions`, `links`, `hashtags`: Handled via JSON fields with appropriate value processors
-  
-    - Value Processors:
-      - `published_at`: Casts ISO formatted string to datetime.
-      - `collaborators_json`, `sponsors_json`, `mentions_json`, `links_json`, `hashtags_json`: Cast to JSON.
-  
-  ### `async_contents_fetch_request`
-  
-  This table stores the request details for fetching content data asynchronously.
-  
-  - Schema: `iiq_schema`
-    - Fields:
-      - `id`: Maps to `iiq_id`
-      - `status`: Maps to `status`
-      - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, `work_platform_logo_url`
-      - `profile_url`, `content_url`
+- Schema: `iiq_schema`
+  - Fields:
+    - `id`: Maps to `iiq_id`
+    - `status`: Maps to `status`
+    - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, `work_platform_logo_url`
+    - `profile_url`, `content_url`
 
 
-  ### `audience_overlap_request`
+### `audience_overlap_data`
 
-  This table stores the request details for audience overlap calculations.
+This table stores the results of the audience overlap calculations.
 
-  - **Schema**: `iiq_schema`
-    - **Unique Key**: `id`
-    - **Fields**:
-      - `id`: Maps to `id`, which uniquely identifies the request.
-      - `identifiers`: Maps to a list of identifiers used for the audience overlap calculation.
-      - `status`: Maps to the current status of the request.
-      - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `id`
+  - **Fields**:
+    - `id`: Maps to `id`, which uniquely identifies the data.
+    - `status`: Maps to the current status of the data processing.
+    - `total_follower_count`: Maps to the total number of followers across all platforms.
+    - `unique_follower_count`: Maps to the count of unique followers across all platforms.
+    - `total_subscriber_count`: Maps to the total number of subscribers across all platforms.
+    - `unique_subscriber_count`: Maps to the count of unique subscribers across all platforms.
+    - `profiles`: Maps to JSON data containing details of profiles involved in the overlap, processed by the `cast_to_json` value processor.
+    - `error`: Maps to any error message or details encountered during the overlap calculation.
+    - `ignored_profiles`: Maps to JSON data containing details of profiles that were ignored in the overlap, processed by the `cast_to_json` value processor.
 
-  ### `audience_overlap_data`
+  - **Value Processors**:
+    - `profiles_json`: Casts the `profiles` data to JSON format.
+    - `ignored_profiles_json`: Casts the `ignored_profiles` data to JSON format.
 
-  This table stores the results of the audience overlap calculations.
+### `audience_overlap_request`
 
-  - **Schema**: `iiq_schema`
-    - **Unique Key**: `id`
-    - **Fields**:
-      - `id`: Maps to `id`, which uniquely identifies the data.
-      - `status`: Maps to the current status of the data processing.
-      - `total_follower_count`: Maps to the total number of followers across all platforms.
-      - `unique_follower_count`: Maps to the count of unique followers across all platforms.
-      - `total_subscriber_count`: Maps to the total number of subscribers across all platforms.
-      - `unique_subscriber_count`: Maps to the count of unique subscribers across all platforms.
-      - `profiles`: Maps to JSON data containing details of profiles involved in the overlap, processed by the `cast_to_json` value processor.
-      - `error`: Maps to any error message or details encountered during the overlap calculation.
-      - `ignored_profiles`: Maps to JSON data containing details of profiles that were ignored in the overlap, processed by the `cast_to_json` value processor.
+This table stores the request details for audience overlap calculations.
 
-    - **Value Processors**:
-      - `profiles_json`: Casts the `profiles` data to JSON format.
-      - `ignored_profiles_json`: Casts the `ignored_profiles` data to JSON format.
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `id`
+  - **Fields**:
+    - `id`: Maps to `id`, which uniquely identifies the request.
+    - `identifiers`: Maps to a list of identifiers used for the audience overlap calculation.
+    - `status`: Maps to the current status of the request.
+    - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+
+
+### `async_profile_analytics`
+
+This table stores detailed analytics data for profiles, including various metrics and related information across different work platforms.
+
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `iiq_id`
+  - **Fields**:
+    - `id`: Maps to `iiq_id`, which uniquely identifies the analytics record.
+    - `status`: Maps to the current status of the analytics data processing.
+    - `identifier`: Maps to the identifier associated with the analytics record.
+    - `report_generated_at`: Maps to the timestamp when the report was generated.
+    - `updated_at`: Maps to the timestamp when the record was last updated.
+    - `work_platform`:
+      - `id`: Maps to `work_platform_id`, which identifies the platform.
+      - `name`: Maps to `work_platform_name`, which names the platform.
+      - `logo_url`: Maps to `work_platform_logo_url`, which stores the platform's logo URL.
+    - `profile`:
+      - `platform_username`: Maps to `platform_username`, the username on the platform.
+      - `url`: Maps to `profile_url`, the profile URL on the platform.
+      - `image_url`: Maps to `profile_image_url`, the profile image URL.
+      - `follower_count`: Maps to `profile_follower_count`, the number of followers.
+      - `subscriber_count`: Maps to `profile_subscriber_count`, the number of subscribers.
+      - `is_verified`: Maps to `profile_is_verified`, the verification status of the profile.
+      - `full_name`: Maps to `profile_full_name`, the full name of the profile owner.
+      - `introduction`: Maps to `profile_introduction`, the introduction or bio of the profile.
+      - `platform_account_type`: Maps to `profile_platform_account_type`, the type of account on the platform.
+      - `gender`: Maps to `profile_gender`, the gender associated with the profile.
+      - `age_group`: Maps to `profile_age_group`, the age group of the profile owner.
+      - `language`: Maps to `profile_language`, the language associated with the profile.
+      - `average_likes`: Maps to `profile_average_likes`, the average number of likes on posts.
+      - `average_comments`: Maps to `profile_average_comments`, the average number of comments on posts.
+      - `average_views`: Maps to `profile_average_views`, the average number of views on posts.
+      - `average_reels_views`: Maps to `profile_average_reels_views`, the average number of views on reels.
+      - `engagement_rate`: Maps to `profile_engagement_rate`, the engagement rate of the profile.
+      - `content_count`: Maps to `profile_content_count`, the total count of content posted by the profile.
+      - `sponsored_posts_performance`: Maps to `profile_sponsored_posts_performance`, the performance metrics of sponsored posts.
+      - `reputation_history`: Maps to `profile_reputation_history`, the reputation history of the profile.
+      - `location`: Maps to `profile_location`, the location details of the profile.
+      - `top_hashtags`: Maps to `profile_top_hashtags`, the top hashtags used by the profile.
+      - `top_mentions`: Maps to `profile_top_mentions`, the top mentions made by the profile.
+      - `top_interests`: Maps to `profile_top_interests`, the top interests associated with the profile.
+      - `brand_affinity`: Maps to `profile_brand_affinity`, the brand affinity associated with the profile.
+      - `top_contents`: Maps to `profile_top_contents`, the top content pieces posted by the profile.
+      - `recent_contents`: Maps to `profile_recent_contents`, the most recent content posted by the profile.
+      - `sponsored_contents`: Maps to `profile_sponsored_contents`, the sponsored content posted by the profile.
+      - `lookalikes`: Maps to `profile_lookalikes`, the profiles that are lookalikes of the current profile.
+      - `audience`: Maps to `profile_audience`, the audience associated with the profile.
+      - `engagement_rate_histogram`: Maps to `profile_engagement_rate_histogram`, the engagement rate histogram of the profile.
+      - `audience_likers`: Maps to `profile_audience_likers`, the likers in the profile's audience.
+      - `contact_details`: Maps to `profile_contact_details`, the contact details associated with the profile.
+
+  - **Value Processors**:
+    - `profile_reputation_history`: Casts `profile_reputation_history` to JSON format.
+    - `profile_location`: Casts `profile_location` to JSON format.
+    - `profile_top_hashtags`: Casts `profile_top_hashtags` to JSON format.
+    - `profile_top_mentions`: Casts `profile_top_mentions` to JSON format.
+    - `profile_top_interests`: Casts `profile_top_interests` to JSON format.
+    - `profile_brand_affinity`: Casts `profile_brand_affinity` to JSON format.
+    - `profile_top_contents`: Casts `profile_top_contents` to JSON format.
+    - `profile_recent_contents`: Casts `profile_recent_contents` to JSON format.
+    - `profile_sponsored_contents`: Casts `profile_sponsored_contents` to JSON format.
+    - `profile_lookalikes`: Casts `profile_lookalikes` to JSON format.
+    - `profile_audience`: Casts `profile_audience` to JSON format.
+    - `profile_engagement_rate_histogram`: Casts `profile_engagement_rate_histogram` to JSON format.
+    - `profile_audience_likers`: Casts `profile_audience_likers` to JSON format.
+    - `profile_contact_details`: Casts `profile_contact_details` to JSON format.
