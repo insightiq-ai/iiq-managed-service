@@ -914,7 +914,6 @@ mappings:
         unique_key: iiq_id
         fields:
             job_id: profiles_search_export_request_id
-            status: status
             work_platform:
                 id: work_platform_id
                 name: work_platform_name

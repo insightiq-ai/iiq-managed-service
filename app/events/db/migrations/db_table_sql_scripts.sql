@@ -869,7 +869,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_data
 (
     id                     UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
     profiles_search_export_request_id        UUID      NOT NULL,
-    status                 VARCHAR(50),
     work_platform_id       UUID,
     work_platform_name     VARCHAR(255),
     work_platform_logo_url VARCHAR(255),
@@ -894,7 +893,8 @@ CREATE TABLE IF NOT EXISTS iiq_schema.profiles_search_export_data
     contact_value          VARCHAR(255),
     total_results          VARCHAR(255),
     created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
-    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now())
+    updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    CONSTRAINT             unique_profiles_search_export_data UNIQUE (profiles_search_export_request_id, platform_username)
 );
 ALTER TABLE iiq_schema.profiles_search_export_data OWNER TO iiq;
 
