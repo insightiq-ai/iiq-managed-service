@@ -353,6 +353,7 @@ class DbEventHandler(BaseEvent):
     async def professional_contents_fetch_failure_handler(cls, data: Dict):
         from app.events.db.mapper_config import PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
+
     @classmethod
     async def profiles_search_export_request_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_REQUEST_TABLE_MAPPINGS
@@ -363,7 +364,7 @@ class DbEventHandler(BaseEvent):
         from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
 
-        data_with_iiq_id = cls.add_job_id_to_data(data)
+        data_with_iiq_id = add_job_id_to_data(data)
 
         await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, data=data_with_iiq_id)
 
@@ -371,17 +372,3 @@ class DbEventHandler(BaseEvent):
     async def profiles_search_export_failure_event_handler(cls, data: Dict):
         from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
-
-    @staticmethod
-    def add_iiq_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
-        iiq_id = data.get(id_key)
-        for item in data.get('data', []):
-            item['id'] = iiq_id
-        return data.get('data', [])
-
-    @staticmethod
-    def add_job_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
-        iiq_id = data.get(id_key)
-        for item in data.get('data', []):
-            item['job_id'] = iiq_id
-        return data.get('data', [])
