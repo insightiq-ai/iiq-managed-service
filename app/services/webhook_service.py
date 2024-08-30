@@ -187,9 +187,9 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
         elif webhook_event == WebhookEvent.AUDIENCE_OVERLAP_FAILURE:
             await executor_event.audience_overlap_failure_event_handler(data=data)
         elif webhook_event == WebhookEvent.CREATOR_SEARCH_EXPORT_SUCCESS:
-            await executor_event.social_profiles_search_export_success_event_handler(data=data)
+            await executor_event.social_profiles_search_export_success_handler(data=data)
         elif webhook_event == WebhookEvent.CREATOR_SEARCH_EXPORT_FAILURE:
-            await executor_event.social_profiles_search_export_failure_event_handler(data=data)
+            await executor_event.social_profiles_search_export_failure_handler(data=data)
 
 
 async def add_update_account(webhook_request_data: WebhookRequestData):

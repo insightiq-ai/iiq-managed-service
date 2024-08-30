@@ -360,7 +360,7 @@ class DbEventHandler(BaseEvent):
         await cls.persist_to_db(table_mappings=SOCIAL_PROFILES_SEARCH_EXPORT_REQUEST_TABLE_MAPPINGS, data=data)
 
     @classmethod
-    async def social_profiles_search_export_success_event_handler(cls, data: Dict):
+    async def social_profiles_search_export_success_handler(cls, data: Dict):
         from app.events.db.mapper_config import SOCIAL_PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, SOCIAL_PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=SOCIAL_PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
 
@@ -369,6 +369,6 @@ class DbEventHandler(BaseEvent):
         await cls.persist_to_db(table_mappings=SOCIAL_PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, data=data_with_iiq_id)
 
     @classmethod
-    async def social_profiles_search_export_failure_event_handler(cls, data: Dict):
+    async def social_profiles_search_export_failure_handler(cls, data: Dict):
         from app.events.db.mapper_config import SOCIAL_PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
         await cls.persist_to_db(table_mappings=SOCIAL_PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
