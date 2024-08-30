@@ -355,20 +355,20 @@ class DbEventHandler(BaseEvent):
         await cls.persist_to_db(table_mappings=PROFESSIONAL_CONTENTS_FETCH_RESPONSE_TABLE_MAPPINGS, data=data)
 
     @classmethod
-    async def profiles_search_export_request_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_REQUEST_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_REQUEST_TABLE_MAPPINGS, data=data)
+    async def social_profiles_search_export_request_handler(cls, data: Dict):
+        from app.events.db.mapper_config import SOCIAL_PROFILES_SEARCH_EXPORT_REQUEST_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=SOCIAL_PROFILES_SEARCH_EXPORT_REQUEST_TABLE_MAPPINGS, data=data)
 
     @classmethod
-    async def profiles_search_export_success_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
+    async def social_profiles_search_export_success_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import SOCIAL_PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, SOCIAL_PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=SOCIAL_PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
 
         data_with_iiq_id = add_job_id_to_data(data)
 
-        await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, data=data_with_iiq_id)
+        await cls.persist_to_db(table_mappings=SOCIAL_PROFILES_SEARCH_EXPORT_DATA_TABLE_MAPPINGS, data=data_with_iiq_id)
 
     @classmethod
-    async def profiles_search_export_failure_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
+    async def social_profiles_search_export_failure_event_handler(cls, data: Dict):
+        from app.events.db.mapper_config import SOCIAL_PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=SOCIAL_PROFILES_SEARCH_EXPORT_RESPONSE_TABLE_MAPPINGS, data=data)
