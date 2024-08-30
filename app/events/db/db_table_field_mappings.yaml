@@ -908,12 +908,12 @@ mappings:
             content_url: content_url
 
 
-    profiles_search_export_data:
-        name: profiles_search_export_data
+    social_profiles_search_export_data:
+        name: social_profiles_search_export_data
         schema: iiq_schema
         unique_key: iiq_id
         fields:
-            job_id: profiles_search_export_request_id
+            job_id: social_profiles_search_export_request_iiq_id
             work_platform:
                 id: work_platform_id
                 name: work_platform_name
@@ -932,17 +932,21 @@ mappings:
             subscriber_count: subscriber_count
             content_count: content_count
             engagement_rate: engagement_rate
-            location:
-                city: city
-                state: state
-                country: country
-            contact_details:
-                type: contact_type
-                value: contact_value
+            average_likes: engagement_rate
+            average_views: average_views
+            creator_location: creator_location
+            contact_details: contact_details
+            filter_match: filter_match
+            livestream_metrics: livestream_metrics
+        value_post_processors:
+            creator_location: app.events.db.value_post_processors.cast_to_json
+            contact_details: app.events.db.value_post_processors.cast_to_json
+            filter_match: app.events.db.value_post_processors.cast_to_json
+            livestream_metrics: app.events.db.value_post_processors.cast_to_json
 
 
-    profiles_search_export_request:
-        name: profiles_search_export_request
+    social_profiles_search_export_request:
+        name: social_profiles_search_export_request
         schema: iiq_schema
         unique_key: iiq_id
         fields:
@@ -952,21 +956,13 @@ mappings:
                 id: work_platform_id
                 name: work_platform_name
                 logo_url: work_platform_logo_url
-            follower_count_min: follower_count_min
-            follower_count_max: follower_count_max
-            subscriber_count_min: subscriber_count_min
-            subscriber_count_max: subscriber_count_max
-            content_count_min: content_count_min
-            content_count_max: content_count_max
-            audience_gender_type: audience_gender_type
-            audience_gender_operator: audience_gender_operator
-            audience_gender_percentage_value: audience_gender_percentage_value
+            follower_count: follower_count
+            subscriber_count: subscriber_count
+            content_count: content_count
+            audience_gender: audience_gender
             creator_gender: creator_gender
-            audience_age_min: audience_age_min
-            audience_age_max: audience_age_max
-            audience_age_percentage: audience_age_percentage
-            creator_age_min: creator_age_min
-            creator_age_max: creator_age_max
+            audience_age: audience_age
+            creator_age: creator_age
             description_keywords: description_keywords
             is_verified: is_verified
             has_contact_details: has_contact_details
@@ -979,74 +975,77 @@ mappings:
             creator_interests: creator_interests
             audience_brand_affinities: audience_brand_affinities
             creator_brand_affinities: creator_brand_affinities
-            average_likes_min: average_likes_min
-            average_likes_max: average_likes_max
-            average_views_min: average_views_min
-            average_views_max: average_views_max
-            engagement_rate_percentage_value: engagement_rate_percentage_value
+            average_likes: average_likes
+            average_views: average_views
+            engagement_rate: engagement_rate
             has_sponsored_posts: has_sponsored_posts
             brand_sponsors: brand_sponsors
-            instagram_options_reel_views_min: instagram_options_reel_views_min
-            instagram_options_reel_views_max: instagram_options_reel_views_max
+            instagram_options: instagram_options
             audience_locations: audience_locations
             creator_locations: creator_locations
-            follower_growth_interval: follower_growth_interval
-            follower_growth_interval_unit: follower_growth_interval_unit
-            follower_growth_operator: follower_growth_operator
-            follower_growth_percentage_value: follower_growth_percentage_value
-            subscriber_growth_interval: subscriber_growth_interval
-            subscriber_growth_interval_unit: subscriber_growth_interval_unit
-            subscriber_growth_operator: subscriber_growth_operator
-            subscriber_growth_percentage_value: subscriber_growth_percentage_value
-            bio_phrase: bio_phrase
             hashtags: hashtags
             mentions: mentions
-            topic_relevance_name: topic_relevance_name
-            topic_relevance_weight: topic_relevance_weight
-            topic_relevance_threshold: topic_relevance_threshold
+            topic_relevance: topic_relevance
+            creator_age_bracket: creator_age_bracket
             audience_lookalikes: audience_lookalikes
+            creator_lookalikes: creator_lookalikes
             platform_account_type: platform_account_type
             creator_account_type: creator_account_type
-            creator_lookalikes: creator_lookalikes
-            creator_location: creator_location
-            audience_location_name: audience_location_name
-            audience_location_percentage_value: audience_location_percentage_value
-            audience_location_operator: audience_location_operator
-            sort_by_field: sort_by_field
-            sort_by_order: sort_by_order
-            max_results: max_results
-            audience_ethnicity_type: audience_ethnicity_type
-            audience_ethnicity_operator: audience_ethnicity_operator
-            audience_ethnicity_percentage_value: audience_ethnicity_percentage_value
-            views_growth_interval: views_growth_interval
-            views_growth_interval_unit: views_growth_interval_unit
-            views_growth_operator: views_growth_operator
-            views_growth_percentage_value: views_growth_percentage_value
+            audience_ethnicity: audience_ethnicity
+            views_growth: views_growth
             audience_source: audience_source
-            total_engagements_min: total_engagements_min
-            total_engagements_max: total_engagements_max
-            audience_credibility_category: audience_credibility_category
+            audience_credibility_score: audience_credibility_score
+            is_official_artist: is_official_artist
+            has_audience_info: has_audience_info
+            share_count: share_count
+            save_count: save_count
+            exclude_private_profiles: exclude_private_profiles
+            platform_username: platform_username
+            livestream_options: livestream_options
         value_post_processors:
-            specific_contact_details: app.events.db.value_post_processors.cast_iso_formatted_string_to_datetime
+            follower_count: app.events.db.value_post_processors.cast_to_json
+            subscriber_count: app.events.db.value_post_processors.cast_to_json
+            content_count: app.events.db.value_post_processors.cast_to_json
+            audience_age: app.events.db.value_post_processors.cast_to_json
+            creator_age: app.events.db.value_post_processors.cast_to_json
+            specific_contact_details: app.events.db.value_post_processors.cast_to_json
             audience_language: app.events.db.value_post_processors.cast_to_json
             audience_interests: app.events.db.value_post_processors.cast_to_json
             audience_interest_affinities: app.events.db.value_post_processors.cast_to_json
             creator_interests: app.events.db.value_post_processors.cast_to_json
             audience_brand_affinities: app.events.db.value_post_processors.cast_to_json
             creator_brand_affinities: app.events.db.value_post_processors.cast_to_json
+            average_likes: app.events.db.value_post_processors.cast_to_json
+            average_views: app.events.db.value_post_processors.cast_to_json
+            engagement_rate: app.events.db.value_post_processors.cast_to_json
             brand_sponsors: app.events.db.value_post_processors.cast_to_json
-            audience_locations: app.events.db.value_post_processors.cast_to_json
-            creator_locations: app.events.db.value_post_processors.cast_to_json
+            instagram_options: app.events.db.value_post_processors.cast_to_json
+            audience_location: app.events.db.value_post_processors.cast_to_json
+            creator_location: app.events.db.value_post_processors.cast_to_json
             hashtags: app.events.db.value_post_processors.cast_to_json
             mentions: app.events.db.value_post_processors.cast_to_json
-            topic_relevance_name: app.events.db.value_post_processors.cast_to_json
-            creator_location: app.events.db.value_post_processors.cast_to_json
-            audience_location_name: app.events.db.value_post_processors.cast_to_json
-            audience_credibility_category: app.events.db.value_post_processors.cast_to_json
+            topic_relevance: app.events.db.value_post_processors.cast_to_json
+            creator_age_bracket: app.events.db.value_post_processors.cast_to_json
+            audience_locations: app.events.db.value_post_processors.cast_to_json
+            creator_locations: app.events.db.value_post_processors.cast_to_json
+            follower_growth: app.events.db.value_post_processors.cast_to_json
+            subscriber_growth: app.events.db.value_post_processors.cast_to_json
+            creator_account_type: app.events.db.value_post_processors.cast_to_json
+            audience_ethnicity: app.events.db.value_post_processors.cast_to_json
+            views_growth: app.events.db.value_post_processors.cast_to_json
+            share_count: app.events.db.value_post_processors.cast_to_json
+            save_count: app.events.db.value_post_processors.cast_to_json
+            livestream_options: app.events.db.value_post_processors.cast_to_json
+            exclude_private_profiles: app.events.db.value_post_processors.cast_string_to_bool
+            has_audience_info: app.events.db.value_post_processors.cast_string_to_bool
+            is_official_artist: app.events.db.value_post_processors.cast_string_to_bool
+            has_sponsored_posts: app.events.db.value_post_processors.cast_string_to_bool
+            has_contact_details: app.events.db.value_post_processors.cast_string_to_bool
+            is_verified: app.events.db.value_post_processors.cast_string_to_bool
 
 
-    profiles_search_export_response:
-        name: profiles_search_export_request
+    social_profiles_search_export_response:
+        name: social_profiles_search_export_request
         schema: iiq_schema
         unique_key: iiq_id
         fields:

@@ -287,6 +287,6 @@ async def post_profiles_search_export(request_body: object, params: Optional[Dic
         return None
 
     for executor_event in EventExecutorRegistry.get_all_events():
-        await executor_event.profiles_search_export_request_event_handler(data=response_data)
+        await executor_event.social_profiles_search_export_request_handler(data=response_data)
 
     return response_data

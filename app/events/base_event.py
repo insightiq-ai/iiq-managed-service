@@ -240,13 +240,13 @@ class BaseEvent(ABC):
         pass
 
     @classmethod
-    async def profiles_search_export_request_event_handler(cls, data: Dict):
+    async def social_profiles_search_export_request_handler(cls, data: Dict):
         pass
 
     @classmethod
-    async def profiles_search_export_success_event_handler(cls, data: Dict):
+    async def social_profiles_search_export_success_handler(cls, data: Dict):
         pass
 
     @classmethod
-    async def profiles_search_export_failure_event_handler(cls, data: Dict):
+    async def social_profiles_search_export_failure_handler(cls, data: Dict):
         pass
