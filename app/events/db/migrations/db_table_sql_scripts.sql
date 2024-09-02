@@ -680,7 +680,7 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics
     profile_subscriber_count         INTEGER,
     profile_is_verified              BOOLEAN,
     profile_full_name                VARCHAR(255),
-    profile_introduction             VARCHAR(255),
+    profile_introduction             VARCHAR(2048),
     profile_platform_account_type    VARCHAR(255),
     profile_gender                   VARCHAR(50),
     profile_age_group                VARCHAR(50),
