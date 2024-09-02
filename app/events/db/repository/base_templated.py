@@ -67,8 +67,9 @@ class BaseTemplatedRepository:
         if not data:
             return
 
-        # Add or update the 'updated_at' field with the current datetime object
-        data['updated_at'] = datetime.utcnow()
+        # Check if 'updated_at' is a key in the data, and update it if it exists
+        if 'updated_at' in data:
+            data['updated_at'] = datetime.utcnow()
 
         columns_set: Set[str] = set(data.keys())
         if not await self.validate_unique_key(unique_key=unique_key, columns_set=columns_set):
@@ -91,10 +92,11 @@ class BaseTemplatedRepository:
             return
         row = data[0]
 
-        # Add or update the 'updated_at' field with the current datetime object for each row
-        current_timestamp = datetime.utcnow()
-        for row in data:
-            row['updated_at'] = current_timestamp
+        # Check if 'updated_at' is a column and update it if it exists
+        if 'updated_at' in row:
+            current_timestamp = datetime.utcnow()
+            for row in data:
+                row['updated_at'] = current_timestamp
 
         columns_set: Set[str] = set(row.keys())
 
