@@ -6,6 +6,7 @@ from sqlalchemy.orm import declarative_base
 
 from app.events.db.deps import AsyncDataStore
 from app.events.db.repository.jsql import jsql
+from app.utils.generic_utils import find_column_name_in_table
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -67,8 +68,10 @@ class BaseTemplatedRepository:
         if not data:
             return
 
-        # Check if 'updated_at' is a key in the data, and update it if it exists
-        if 'updated_at' in data:
+        # Check if the 'updated_at' column exists in the table
+        column_name = await find_column_name_in_table('updated_at', schema=schema, table=table, db=ds.db)
+
+        if column_name:
             data['updated_at'] = datetime.utcnow()
 
         columns_set: Set[str] = set(data.keys())
@@ -92,8 +95,10 @@ class BaseTemplatedRepository:
             return
         row = data[0]
 
-        # Check if 'updated_at' is a column and update it if it exists
-        if 'updated_at' in row:
+        # Check if the 'updated_at' column exists in the table
+        column_name = await find_column_name_in_table('updated_at', schema=schema, table=table, db=ds.db)
+
+        if column_name:
             current_timestamp = datetime.utcnow()
             for row in data:
                 row['updated_at'] = current_timestamp
