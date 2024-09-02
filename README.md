@@ -104,8 +104,11 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
   - [profile_quick_search](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-quick-search#Responses)
   - [profile_contact_info](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-contact-info#Responses)
   - [professional_profile_analytics](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#Responses)
-  - [async_contents_fetch](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch)
+  - [professional_contents_fetch](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-professional-creator-content-fetch)
+  - [social_contents_fetch](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch)
+  - [social_profile_analytics](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-profile-analytics)
   - [audience_overlap](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-audience-overlap)
+  - [search_export](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-profile-search-export)
 
 
 ## APIs
@@ -259,7 +262,76 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
            Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#Responses)
 
 
+  - Get asynchronous content fetch results for a social creator:
+      - Retrieve content data asynchronously using a creator's social profile.
+        - **POST** <BASE-URL>/v1/social/creators/async/contents/fetch
+
+           Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#request-body)
+
+           Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#Responses)
+
+
+  - Get asynchronous content fetch results for a social creator:
+      - Retrieve content data asynchronously using a creator's social profile.
+        - **POST** <BASE-URL>/v1/social/creators/async/contents/fetch
+
+           Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#request-body)
+
+           Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#Responses)
+
+
 ## Database Table Mappings
+
+
+### `professional_contents_fetch_data`
+
+This table stores the fetched content data for professional platforms.
+
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `professional_contents_fetch_request_iiq_id`, `platform_content_id`
+  - **Fields**:
+    - `job_id`: Maps to `professional_contents_fetch_request_iiq_id`, which links the data to the request.
+    - `work_platform`: Maps to platform details, including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+    - `profile`: Maps to profile details, including `platform_username`, `profile_url`, `external_id`, `profile_image_url`, and `is_verified`.
+    - `audio_track_info`: Maps to audio track details, including `audio_track_id`, `audio_track_title`, `audio_track_artist`, and `audio_track_original`.
+    - `engagement`: Maps to engagement metrics, including `like_count`, `applause_count`, `support_count`, `love_count`, `interest_count`, `laugh_count`, `comment_count`, `view_count`, and `share_count`.
+    - `platform_content_id`: Maps to the unique content identifier on the platform.
+    - `title`: Maps to the title of the content.
+    - `format`: Maps to the format of the content.
+    - `type`: Maps to the type of the content.
+    - `url`: Maps to the content URL.
+    - `media_url`: Maps to the media URL associated with the content.
+    - `thumbnail_url`: Maps to the thumbnail URL of the content.
+    - `duration`: Maps to the duration of the content.
+    - `description`: Maps to the description of the content.
+    - `published_at`: Maps to the publication date and time of the content.
+    - `is_reposted`: Maps to whether the content is reposted.
+    - `collaborators`: Maps to JSON data containing collaborator details, processed by the `cast_to_json` value processor.
+    - `sponsors`: Maps to JSON data containing sponsor details, processed by the `cast_to_json` value processor.
+    - `mentions`: Maps to JSON data containing mentions details, processed by the `cast_to_json` value processor.
+    - `links`: Maps to JSON data containing link details, processed by the `cast_to_json` value processor.
+    - `hashtags`: Maps to JSON data containing hashtag details, processed by the `cast_to_json` value processor.
+
+  - **Value Processors**:
+    - `published_at`: Casts the `published_at` field to a datetime object using the `cast_iso_formatted_string_to_datetime` processor.
+    - `collaborators_json`: Casts the `collaborators` data to JSON format.
+    - `sponsors_json`: Casts the `sponsors` data to JSON format.
+    - `mentions_json`: Casts the `mentions` data to JSON format.
+    - `links_json`: Casts the `links` data to JSON format.
+    - `hashtags_json`: Casts the `hashtags` data to JSON format.
+
+### `professional_contents_fetch_request`
+
+This table stores the request details for fetching professional content.
+
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `iiq_id`
+  - **Fields**:
+    - `id`: Maps to `iiq_id`, which uniquely identifies the request.
+    - `status`: Maps to the current status of the request.
+    - `work_platform`: Maps to platform details, including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+    - `profile_url`: Maps to the profile URL associated with the request.
+    - `content_url`: Maps to the content URL associated with the request.
 
 
 ### `async_contents_fetch_data`
@@ -291,40 +363,6 @@ This table stores the request details for fetching content data asynchronously.
     - `status`: Maps to `status`
     - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, `work_platform_logo_url`
     - `profile_url`, `content_url`
-
-
-### `audience_overlap_data`
-
-This table stores the results of the audience overlap calculations.
-
-- **Schema**: `iiq_schema`
-  - **Unique Key**: `id`
-  - **Fields**:
-    - `id`: Maps to `id`, which uniquely identifies the data.
-    - `status`: Maps to the current status of the data processing.
-    - `total_follower_count`: Maps to the total number of followers across all platforms.
-    - `unique_follower_count`: Maps to the count of unique followers across all platforms.
-    - `total_subscriber_count`: Maps to the total number of subscribers across all platforms.
-    - `unique_subscriber_count`: Maps to the count of unique subscribers across all platforms.
-    - `profiles`: Maps to JSON data containing details of profiles involved in the overlap, processed by the `cast_to_json` value processor.
-    - `error`: Maps to any error message or details encountered during the overlap calculation.
-    - `ignored_profiles`: Maps to JSON data containing details of profiles that were ignored in the overlap, processed by the `cast_to_json` value processor.
-
-  - **Value Processors**:
-    - `profiles_json`: Casts the `profiles` data to JSON format.
-    - `ignored_profiles_json`: Casts the `ignored_profiles` data to JSON format.
-
-### `audience_overlap_request`
-
-This table stores the request details for audience overlap calculations.
-
-- **Schema**: `iiq_schema`
-  - **Unique Key**: `id`
-  - **Fields**:
-    - `id`: Maps to `id`, which uniquely identifies the request.
-    - `identifiers`: Maps to a list of identifiers used for the audience overlap calculation.
-    - `status`: Maps to the current status of the request.
-    - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
 
 
 ### `async_profile_analytics`
@@ -393,3 +431,136 @@ This table stores detailed analytics data for profiles, including various metric
     - `profile_engagement_rate_histogram`: Casts `profile_engagement_rate_histogram` to JSON format.
     - `profile_audience_likers`: Casts `profile_audience_likers` to JSON format.
     - `profile_contact_details`: Casts `profile_contact_details` to JSON format.
+
+
+### `audience_overlap_data`
+
+This table stores the results of the audience overlap calculations.
+
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `id`
+  - **Fields**:
+    - `id`: Maps to `id`, which uniquely identifies the data.
+    - `status`: Maps to the current status of the data processing.
+    - `total_follower_count`: Maps to the total number of followers across all platforms.
+    - `unique_follower_count`: Maps to the count of unique followers across all platforms.
+    - `total_subscriber_count`: Maps to the total number of subscribers across all platforms.
+    - `unique_subscriber_count`: Maps to the count of unique subscribers across all platforms.
+    - `profiles`: Maps to JSON data containing details of profiles involved in the overlap, processed by the `cast_to_json` value processor.
+    - `error`: Maps to any error message or details encountered during the overlap calculation.
+    - `ignored_profiles`: Maps to JSON data containing details of profiles that were ignored in the overlap, processed by the `cast_to_json` value processor.
+
+  - **Value Processors**:
+    - `profiles_json`: Casts the `profiles` data to JSON format.
+    - `ignored_profiles_json`: Casts the `ignored_profiles` data to JSON format.
+
+### `audience_overlap_request`
+
+This table stores the request details for audience overlap calculations.
+
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `id`
+  - **Fields**:
+    - `id`: Maps to `id`, which uniquely identifies the request.
+    - `identifiers`: Maps to a list of identifiers used for the audience overlap calculation.
+    - `status`: Maps to the current status of the request.
+    - `work_platform`: Maps to platform details including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+
+
+### `social_profiles_search_export_data`
+
+This table stores the exported data for social profile searches, capturing various details about the profiles.
+
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `iiq_id`
+  - **Fields**:
+    - `job_id`: Maps to `social_profiles_search_export_request_iiq_id`, linking the data to the request.
+    - `work_platform`: Maps to platform details, including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+    - `platform_username`: Maps to the username on the platform.
+    - `url`: Maps to the profile URL.
+    - `image_url`: Maps to the profile image URL.
+    - `full_name`: Maps to the full name of the profile owner.
+    - `introduction`: Maps to the profile introduction or bio.
+    - `is_verified`: Maps to whether the profile is verified.
+    - `platform_account_type`: Maps to the type of account on the platform.
+    - `gender`: Maps to the gender of the profile owner.
+    - `age_group`: Maps to the age group of the profile owner.
+    - `language`: Maps to the language(s) used by the profile owner.
+    - `follower_count`: Maps to the number of followers.
+    - `subscriber_count`: Maps to the number of subscribers.
+    - `content_count`: Maps to the number of contents/posts made by the profile.
+    - `engagement_rate`: Maps to the engagement rate of the profile.
+    - `average_likes`: Maps to the average number of likes received by the profile.
+    - `average_views`: Maps to the average number of views received by the profile.
+    - `creator_location`: Maps to the location of the profile owner.
+    - `contact_details`: Maps to the contact details of the profile owner.
+    - `filter_match`: Maps to filter match criteria.
+    - `livestream_metrics`: Maps to metrics related to live streams.
+
+  - **Value Processors**:
+    - `creator_location`: Casts the `creator_location` field to JSON format.
+    - `contact_details`: Casts the `contact_details` field to JSON format.
+    - `filter_match`: Casts the `filter_match` field to JSON format.
+    - `livestream_metrics`: Casts the `livestream_metrics` field to JSON format.
+
+### `social_profiles_search_export_request`
+
+This table stores the request details for exporting social profile search data.
+
+- **Schema**: `iiq_schema`
+  - **Unique Key**: `iiq_id`
+  - **Fields**:
+    - `id`: Maps to `iiq_id`, which uniquely identifies the request.
+    - `status`: Maps to the current status of the request.
+    - `work_platform`: Maps to platform details, including `work_platform_id`, `work_platform_name`, and `work_platform_logo_url`.
+    - `follower_count`: Maps to the number of followers as a filter criterion.
+    - `subscriber_count`: Maps to the number of subscribers as a filter criterion.
+    - `content_count`: Maps to the number of contents/posts as a filter criterion.
+    - `audience_gender`: Maps to the gender of the audience.
+    - `creator_gender`: Maps to the gender of the profile owner.
+    - `audience_age`: Maps to the age of the audience.
+    - `creator_age`: Maps to the age of the profile owner.
+    - `description_keywords`: Maps to the keywords in the description as a filter criterion.
+    - `is_verified`: Maps to whether the profile is verified as a filter criterion.
+    - `has_contact_details`: Maps to whether the profile has contact details.
+    - `specific_contact_details`: Maps to specific contact details required.
+    - `last_post_timestamp`: Maps to the timestamp of the last post by the profile.
+    - `audience_language`: Maps to the language(s) of the audience.
+    - `creator_language`: Maps to the language(s) of the profile owner.
+    - `audience_interests`: Maps to the interests of the audience.
+    - `audience_interest_affinities`: Maps to the interest affinities of the audience.
+    - `creator_interests`: Maps to the interests of the profile owner.
+    - `audience_brand_affinities`: Maps to the brand affinities of the audience.
+    - `creator_brand_affinities`: Maps to the brand affinities of the profile owner.
+    - `average_likes`: Maps to the average number of likes as a filter criterion.
+    - `average_views`: Maps to the average number of views as a filter criterion.
+    - `engagement_rate`: Maps to the engagement rate as a filter criterion.
+    - `has_sponsored_posts`: Maps to whether the profile has sponsored posts.
+    - `brand_sponsors`: Maps to the brands sponsoring the profile.
+    - `instagram_options`: Maps to options specific to Instagram profiles.
+    - `audience_locations`: Maps to the locations of the audience.
+    - `creator_locations`: Maps to the locations of the profile owner.
+    - `hashtags`: Maps to hashtags used by the profile.
+    - `mentions`: Maps to mentions by or of the profile.
+    - `topic_relevance`: Maps to the relevance of topics to the profile.
+    - `creator_age_bracket`: Maps to the age bracket of the profile owner.
+    - `audience_lookalikes`: Maps to lookalike audiences.
+    - `creator_lookalikes`: Maps to lookalike creators.
+    - `platform_account_type`: Maps to the type of account on the platform.
+    - `creator_account_type`: Maps to the type of account for the profile owner.
+    - `audience_ethnicity`: Maps to the ethnicity of the audience.
+    - `views_growth`: Maps to the growth in views over time.
+    - `audience_source`: Maps to the source of the audience.
+    - `audience_credibility_score`: Maps to the credibility score of the audience.
+    - `is_official_artist`: Maps to whether the profile owner is an official artist.
+    - `has_audience_info`: Maps to whether the profile has detailed audience information.
+    - `share_count`: Maps to the number of shares as a filter criterion.
+    - `save_count`: Maps to the number of saves as a filter criterion.
+    - `exclude_private_profiles`: Maps to whether private profiles should be excluded.
+    - `platform_username`: Maps to the platform username as a filter criterion.
+    - `livestream_options`: Maps to options related to live streaming.
+
+  - **Value Processors**:
+    - Various fields are cast to JSON format, such as `follower_count`, `audience_age`, `audience_language`, `brand_sponsors`, etc., to handle complex data structures.
+    - Fields like `exclude_private_profiles`, `has_audience_info`, `is_official_artist`, `has_sponsored_posts`, `has_contact_details`, and `is_verified` are cast to boolean values using specific value processors like `cast_string_to_bool`.
+
