@@ -963,5 +963,4 @@ CREATE TABLE IF NOT EXISTS iiq_schema.social_profiles_search_export_request
     updated_at                             TIMESTAMP DEFAULT timezone('utc'::text, now()),
     CONSTRAINT unique_social_profiles_search_export_request UNIQUE (iiq_id)
 );
-
 ALTER TABLE iiq_schema.social_profiles_search_export_request OWNER TO iiq;

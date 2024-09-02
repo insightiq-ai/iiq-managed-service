@@ -1,4 +1,5 @@
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Set
+from datetime import datetime
 
 from sqlalchemy import text
 from sqlalchemy.orm import declarative_base
@@ -65,7 +66,11 @@ class BaseTemplatedRepository:
                          schema: Optional[str] = None):
         if not data:
             return
-        columns_set: set = set(data.keys())
+
+        # Add or update the 'updated_at' field with the current datetime object
+        data['updated_at'] = datetime.utcnow()
+
+        columns_set: Set[str] = set(data.keys())
         if not await self.validate_unique_key(unique_key=unique_key, columns_set=columns_set):
             return await self.insert_one(ds=ds, table=table, data=data, schema=schema)
 
@@ -85,7 +90,13 @@ class BaseTemplatedRepository:
         if not data:
             return
         row = data[0]
-        columns_set: set = set(row.keys())
+
+        # Add or update the 'updated_at' field with the current datetime object for each row
+        current_timestamp = datetime.utcnow()
+        for row in data:
+            row['updated_at'] = current_timestamp
+
+        columns_set: Set[str] = set(row.keys())
 
         if not await self.validate_unique_key(unique_key=unique_key, columns_set=columns_set):
             return await self.insert_batch(ds=ds, table=table, data=data, schema=schema)
@@ -93,12 +104,12 @@ class BaseTemplatedRepository:
         columns = list(columns_set)
 
         query_template = '''
-                    INSERT INTO {% if schema %}{{schema}}.{% endif %}{{ table }} 
-                    ({% for col in cols %}{{ col }}{{ comma if not loop.last }}{% endfor %}) 
-                    VALUES ({% for col in cols %}:{{ col }}{{ comma if not loop.last }}{% endfor %}) 
-                    ON CONFLICT ({{unique_key}}) DO UPDATE SET 
-                    {% for col in cols %}{{ col }}=EXCLUDED.{{col}}{{ comma if not loop.last }}{% endfor %} 
-                '''
+            INSERT INTO {% if schema %}{{schema}}.{% endif %}{{ table }} 
+            ({% for col in cols %}{{ col }}{{ comma if not loop.last }}{% endfor %}) 
+            VALUES ({% for col in cols %}:{{ col }}{{ comma if not loop.last }}{% endfor %}) 
+            ON CONFLICT ({{unique_key}}) DO UPDATE SET 
+            {% for col in cols %}{{ col }}=EXCLUDED.{{col}}{{ comma if not loop.last }}{% endfor %} 
+        '''
         await self.sqlmany(ds=ds, query=query_template, rows=data, cols=columns, unique_key=unique_key,
                            table=table, schema=schema)
 
