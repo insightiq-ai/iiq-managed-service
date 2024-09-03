@@ -36,7 +36,7 @@ def add_job_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
     return data.get('data', [])
 
 
-async def fetch_column_names_in_table(schema: str, table: str, db: AsyncSession) -> Optional[List[str]]:
+async def fetch_column_names_in_table(schema: str, table: str, db: AsyncSession) -> list[str]:
     query = text(
         """
         SELECT column_name
@@ -45,14 +45,8 @@ async def fetch_column_names_in_table(schema: str, table: str, db: AsyncSession)
         """
     )
 
-    # Execute the query
     result = await db.execute(query, {'schema': schema, 'table': table})
-
-    # Fetch all rows from the result
     rows = result.fetchall()
 
-    # Extract column names from rows
-    column_names = [row[0] for row in rows]  # Access using index if rows are tuples
-
-    return column_names if column_names else None
+    return [row[0] for row in rows]
 
