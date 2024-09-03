@@ -650,15 +650,13 @@ mappings:
             projects: app.events.db.value_post_processors.cast_to_json
 
 
-    async_profile_analytics:
-        name: async_profile_analytics
+    async_profile_analytics_data:
+        name: async_profile_analytics_data
         schema: iiq_schema
         unique_key: iiq_id
         fields:
             id: iiq_id
             status: status
-            identifier: identifier
-            report_generated_at: report_generated_at
             updated_at: updated_at
             work_platform:
                 id: work_platform_id
@@ -713,6 +711,29 @@ mappings:
             profile_engagement_rate_histogram: app.events.db.value_post_processors.cast_to_json
             profile_audience_likers: app.events.db.value_post_processors.cast_to_json
             profile_contact_details: app.events.db.value_post_processors.cast_to_json
+
+
+    async_profile_analytics_request:
+        name: async_profile_analytics_request
+        schema: iiq_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            status: status
+            identifier: identifier
+            work_platform:
+                id: work_platform_id
+                name: work_platform_name
+                logo_url: work_platform_logo_url
+
+
+    async_profile_analytics_response:
+        name: async_profile_analytics_request
+        schema: iiq_schema
+        unique_key: iiq_id
+        fields:
+            id: iiq_id
+            status: status
 
 
     async_contents_fetch_data:
@@ -1041,7 +1062,6 @@ mappings:
             is_official_artist: app.events.db.value_post_processors.cast_string_to_bool
             has_sponsored_posts: app.events.db.value_post_processors.cast_string_to_bool
             has_contact_details: app.events.db.value_post_processors.cast_string_to_bool
-            is_verified: app.events.db.value_post_processors.cast_string_to_bool
 
 
     social_profiles_search_export_response:

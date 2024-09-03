@@ -657,22 +657,16 @@ ALTER TABLE iiq_schema.professional_profile_analytics
     OWNER TO iiq;
 
 
-CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics
+CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics_data
 (
     id                               UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
     iiq_id                           UUID                                 NOT NULL,
     created_at                       TIMESTAMP DEFAULT timezone('utc'::text, now()),
     updated_at                       TIMESTAMP DEFAULT timezone('utc'::text, now()),
     status                           VARCHAR(100),
-    identifier                       VARCHAR(100),
-    report_generated_at              TIMESTAMP,
-
-    -- Work Platform Fields
     work_platform_id                 UUID,
-    work_platform_name               VARCHAR(255),
+    work_platform_name               VARCHAR(1000),
     work_platform_logo_url           VARCHAR(500),
-
-    -- Profile Fields (Flattened)
     platform_username                VARCHAR(500),
     profile_url                      VARCHAR(2048),
     profile_image_url                VARCHAR(2048),
@@ -681,7 +675,7 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics
     profile_is_verified              BOOLEAN,
     profile_full_name                VARCHAR(500),
     profile_introduction             VARCHAR(2048),
-    profile_platform_account_type    VARCHAR(255),
+    profile_platform_account_type    VARCHAR(1000),
     profile_gender                   VARCHAR(50),
     profile_age_group                VARCHAR(50),
     profile_language                 VARCHAR(50),
@@ -692,8 +686,6 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics
     profile_engagement_rate          FLOAT,
     profile_content_count            INTEGER,
     profile_sponsored_posts_performance FLOAT,
-
-    -- JSON Fields for Complex Data
     profile_reputation_history       JSONB,
     profile_location                 JSONB,
     profile_top_hashtags             JSONB,
@@ -708,9 +700,25 @@ CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics
     profile_engagement_rate_histogram JSONB,
     profile_audience_likers          JSONB,
     profile_contact_details          JSONB,
-    CONSTRAINT unique_async_profile_analytics UNIQUE (iiq_id)
+    CONSTRAINT unique_async_profile_analytics_data UNIQUE (iiq_id)
 );
-ALTER TABLE iiq_schema.async_profile_analytics OWNER TO iiq;
+ALTER TABLE iiq_schema.async_profile_analytics_data OWNER TO iiq;
+
+
+CREATE TABLE IF NOT EXISTS iiq_schema.async_profile_analytics_request
+(
+    id                               UUID      DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    iiq_id                           UUID                                 NOT NULL,
+    created_at                       TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    updated_at                       TIMESTAMP DEFAULT timezone('utc'::text, now()),
+    status                           VARCHAR(100),
+    identifier                       VARCHAR(100),
+    work_platform_id                 UUID,
+    work_platform_name               VARCHAR(1000),
+    work_platform_logo_url           VARCHAR(500),
+    CONSTRAINT unique_async_profile_analytics_request UNIQUE (iiq_id)
+);
+ALTER TABLE iiq_schema.async_profile_analytics_request OWNER TO iiq;
 
 
 CREATE TABLE IF NOT EXISTS iiq_schema.async_contents_fetch_data
@@ -886,13 +894,13 @@ CREATE TABLE IF NOT EXISTS iiq_schema.social_profiles_search_export_data
     follower_count         INTEGER,
     subscriber_count       INTEGER,
     content_count          INTEGER,
-    engagement_rate        INTEGER,
+    engagement_rate        FLOAT,
     average_likes          INTEGER,
     average_views          INTEGER,
-    creator_location         JSONB,
-    contact_details          JSONB,
-    filter_match             JSONB,
-    livestream_metrics       JSONB,
+    creator_location       JSONB,
+    contact_details        JSONB,
+    filter_match           JSONB,
+    livestream_metrics     JSONB,
     created_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
     updated_at             TIMESTAMP DEFAULT timezone('utc'::text, now()),
     CONSTRAINT             unique_social_profiles_search_export_data UNIQUE (social_profiles_search_export_request_iiq_id, platform_username)
