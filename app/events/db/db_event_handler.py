@@ -285,18 +285,19 @@ class DbEventHandler(BaseEvent):
 
     @classmethod
     async def async_profile_analytics_request_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
+        from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_REQUEST_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_REQUEST_TABLE_MAPPINGS, data=data)
 
     @classmethod
     async def async_profile_analytics_success_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
+        from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_RESPONSE_TABLE_MAPPINGS, ASYNC_PROFILE_ANALYTICS_DATA_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_RESPONSE_TABLE_MAPPINGS, data=data)
+        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_DATA_TABLE_MAPPINGS, data=data)
 
     @classmethod
     async def async_profile_analytics_failure_event_handler(cls, data: Dict):
-        from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS
-        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_TABLE_MAPPINGS, data=data)
+        from app.events.db.mapper_config import ASYNC_PROFILE_ANALYTICS_RESPONSE_TABLE_MAPPINGS
+        await cls.persist_to_db(table_mappings=ASYNC_PROFILE_ANALYTICS_RESPONSE_TABLE_MAPPINGS, data=data)
 
     @classmethod
     async def async_contents_fetch_request_event_handler(cls, data: Dict):
