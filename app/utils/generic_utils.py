@@ -36,27 +36,23 @@ def add_job_id_to_data(data: Dict, id_key: str = 'id') -> List[Dict]:
     return data.get('data', [])
 
 
-async def find_column_name_in_table(column_name: str, schema: str, table: str, db: AsyncSession) -> Optional[str]:
-    """
-    Check if a column exists in a specific table within a schema.
-
-    :param column_name: The name of the column to check for.
-    :param schema: The schema where the table is located.
-    :param table: The table where the column should be checked.
-    :param db: The asynchronous database session.
-    :return: The column name if it exists, otherwise None.
-    """
+async def fetch_column_names_in_table(schema: str, table: str, db: AsyncSession) -> Optional[List[str]]:
     query = text(
         """
         SELECT column_name
         FROM information_schema.columns
-        WHERE table_schema = :schema
-          AND table_name = :table
-          AND column_name = :column_name
+        WHERE table_schema = :schema AND table_name = :table
         """
     )
 
-    result = await db.execute(query, {'schema': schema, 'table': table, 'column_name': column_name})
-    column = result.fetchone()
-    return column[0] if column else None
+    # Execute the query
+    result = await db.execute(query, {'schema': schema, 'table': table})
+
+    # Fetch all rows from the result
+    rows = result.fetchall()
+
+    # Extract column names from rows
+    column_names = [row[0] for row in rows]  # Access using index if rows are tuples
+
+    return column_names if column_names else None
 
