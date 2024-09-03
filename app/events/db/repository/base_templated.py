@@ -6,7 +6,7 @@ from sqlalchemy.orm import declarative_base
 
 from app.events.db.deps import AsyncDataStore
 from app.events.db.repository.jsql import jsql
-from app.utils.generic_utils import find_column_name_in_table
+from app.utils.generic_utils import fetch_column_names_in_table
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -68,10 +68,11 @@ class BaseTemplatedRepository:
         if not data:
             return
 
-        # Check if the 'updated_at' column exists in the table
-        column_name = await find_column_name_in_table('updated_at', schema=schema, table=table, db=ds.db)
+        # Fetch column names from the table
+        column_names = await fetch_column_names_in_table(schema=schema, table=table, db=ds.db)
 
-        if column_name:
+        # Check if 'updated_at' column is present in column_names
+        if 'updated_at' in column_names:
             data['updated_at'] = datetime.utcnow()
 
         columns_set: Set[str] = set(data.keys())
@@ -93,17 +94,18 @@ class BaseTemplatedRepository:
                            schema: Optional[str] = None):
         if not data:
             return
-        row = data[0]
 
-        # Check if the 'updated_at' column exists in the table
-        column_name = await find_column_name_in_table('updated_at', schema=schema, table=table, db=ds.db)
+        # Fetch column names from the table
+        column_names = await fetch_column_names_in_table(schema=schema, table=table, db=ds.db)
 
-        if column_name:
+        # Check if 'updated_at' column is present in column_names
+        if 'updated_at' in column_names:
             current_timestamp = datetime.utcnow()
             for row in data:
                 row['updated_at'] = current_timestamp
 
-        columns_set: Set[str] = set(row.keys())
+        # Determine the columns present in the data
+        columns_set: Set[str] = set(data[0].keys())
 
         if not await self.validate_unique_key(unique_key=unique_key, columns_set=columns_set):
             return await self.insert_batch(ds=ds, table=table, data=data, schema=schema)
