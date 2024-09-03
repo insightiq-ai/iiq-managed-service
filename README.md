@@ -237,8 +237,9 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
 
   - [Async] Get contact details of a professional:
     - Get analytics of profile using publicly available data based on their profile link.
-      - This API has 1 table:
-        - async_profile_analytics: This table stores detailed analytics data for profiles, including various metrics and related information across different work platforms. The data and the details for the each fetch request will be stored in this single table.
+      - This API has 2 tables:
+        - async_profile_analytics_request: This table stores the request details for fetching profiles asynchronously. 
+        - async_profile_analytics_data: This table stores detailed analytics data for profiles, including various metrics and related information across different work platforms. For each fetch request you make, if it is successful, all the corresponding data will be stored in this table. You can find that using the async_contents_fetch_request_iiq_id.
 
       - **POST** <BASE-URL>/v1/professional/creators/profiles/analytics
 
