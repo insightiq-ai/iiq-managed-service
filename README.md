@@ -276,9 +276,8 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
 
   - **[Async]** Get overlapping audience among a set of creators:
       - Find the unique and overlapping audience among the followers of a set of creators of the same platform.
-      - This API has 2 tables:
-        - audience_overlap_request: This table stores the request details for audience overlap calculations. For each fetch request you make, there will be 1 entry created in this table.
-        - audience_overlap_data: This table stores the results of the audience overlap calculations. For each fetch request you make, if it is successful, all the corresponding data will be stored in this table. You can find that using the audience_overlap_request_iiq_id.
+      - This API has 1 table:
+        - audience_overlap: This table stores both the request details and results for audience overlap calculations. For each fetch request you make, if it is successful, there will be 1 entry created in this table.
 
       - **POST** <BASE-URL>/v1/social/creators/audience-overlap
 
