@@ -235,7 +235,7 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
          Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-contact-info#Responses)
 
 
-  - [Async] Get contact details of a professional:
+  - **[Async]** Get contact details of a professional:
     - Get analytics of profile using publicly available data based on their profile link.
       - This API has 2 tables:
         - async_profile_analytics_request: This table stores the request details for fetching profiles asynchronously. 
@@ -248,53 +248,53 @@ For few products like CREATOR_SEARCH, PUBLIC_CONTENT_SEARCH, api integration is 
          Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-profile-analytics#Responses)
 
 
-  - [Async] Get asynchronous content fetch results for a social creator:
+  - **[Async]** Get asynchronous content fetch results for a social creator:
       - Retrieve content data asynchronously using a creator's social profile.
       - This API has 2 tables:
         - async_contents_fetch_request: This table stores the request details for fetching content data asynchronously. For each fetch request you make, there will be 1 entry created in this table.
         - async_contents_fetch_data: This table stores the fetched content data related to a social creator. The unique key for this table is a combination of `async_contents_fetch_request_iiq_id` and `platform_content_id`. For each fetch request you make, if it is successful, all the corresponding data will be stored in this table. You can find that using the async_contents_fetch_request_iiq_id.
 
-          - **POST** <BASE-URL>/v1/social/creators/async/contents/fetch
+      - **POST** <BASE-URL>/v1/social/creators/async/contents/fetch
 
-             Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#request-body)
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#request-body)
 
-             Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#Responses)
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/get-a-v-1-social-creator-async-content-fetch#Responses)
 
 
-  - [Async] Get asynchronous content fetch results for a professional creator:
+  - **[Async]** Get asynchronous content fetch results for a professional creator:
       - Retrieve LinkedIn content data asynchronously using a creator's professional profile.
       - This API has 2 tables:
         - professional_contents_fetch_request: This table stores the request details for fetching professional content. For each fetch request you make, there will be 1 entry created in this table.
         - professional_contents_fetch_data: This table stores the fetched content data for professional platforms. For each fetch request you make, if it is successful, all the corresponding data will be stored in this table. You can find that using the professional_contents_fetch_request_iiq_id.
 
-          - **POST** <BASE-URL>/v1/social/creators/async/contents/fetch
+      - **POST** <BASE-URL>/v1/social/creators/async/contents/fetch
 
-             Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-content-fetch#request-body)
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-content-fetch#request-body)
 
-             Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-content-fetch#Responses)
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-professional-creator-content-fetch#Responses)
 
 
-  - [Async] Get overlapping audience among a set of creators:
+  - **[Async]** Get overlapping audience among a set of creators:
       - Find the unique and overlapping audience among the followers of a set of creators of the same platform.
       - This API has 2 tables:
         - audience_overlap_request: This table stores the request details for audience overlap calculations. For each fetch request you make, there will be 1 entry created in this table.
         - audience_overlap_data: This table stores the results of the audience overlap calculations. For each fetch request you make, if it is successful, all the corresponding data will be stored in this table. You can find that using the audience_overlap_request_iiq_id.
 
-        - **POST** <BASE-URL>/v1/social/creators/audience-overlap
+      - **POST** <BASE-URL>/v1/social/creators/audience-overlap
 
-           Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-audience-overlap#request-body)
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-audience-overlap#request-body)
 
-           Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-audience-overlapt#request-body#Responses)
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-audience-overlapt#request-body#Responses)
 
 
-  - [Async] Get creator profiles using custom filters:
+  - **[Async]** Get creator profiles using custom filters:
       - Search for creator profiles using publicly available data based on available filters.
       - This API has 2 tables:
         - social_profiles_search_export_request: This table stores the request details for exporting social profile search data. For each fetch request you make, there will be 1 entry created in this table.
         - social_profiles_search_export_data: This table stores the exported data for social profile searches, capturing various details about the profiles. For each fetch request you make, if it is successful, all the corresponding data will be stored in this table. You can find that using the social_profiles_search_export_request_iiq_id.
 
-        - **POST** <BASE-URL>/v1/social/creators/profiles/search-export
+      - **POST** <BASE-URL>/v1/social/creators/profiles/search-export
 
-           Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-search-export#request-body)
+         Request-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-search-export#request-body)
 
-           Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-search-export#Responses)
+         Response-body: [Click here](https://docs.insightiq.ai/docs/api-reference/api/ref/operations/create-a-v-1-social-creator-profile-search-export#Responses)
