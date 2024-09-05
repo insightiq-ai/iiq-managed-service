@@ -178,7 +178,7 @@ async def send_events(webhook_event: WebhookEvent, data: Dict, category: Optiona
             else:
                 await executor_event.async_contents_fetch_success_event_handler(data=data)
         elif webhook_event == WebhookEvent.CONTENTS_FETCH_FAILURE:
-            if is_professional_platform(data.get('data')):
+            if is_professional_platform(data.get('data')[0]['work_platform_id']):
                 await executor_event.professional_contents_fetch_failure_handler(data=data)
             else:
                 await executor_event.async_contents_fetch_failure_event_handler(data=data)
@@ -491,6 +491,9 @@ async def process_professional_contents_fetch_event(webhook_request_data: Webhoo
     if not professional_contents:
         logging.error(f"Professional-Contents do not exists with publish-id: {event.job_id}")
         return
+
+    if webhook_request_data.event == WebhookEvent.CONTENTS_FETCH_FAILURE:
+        professional_contents['data'].append({'work_platform_id': webhook_request_data.work_platform.id})
 
     await send_events(webhook_event=webhook_request_data.event, data=professional_contents)
 
